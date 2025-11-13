@@ -1,0 +1,18 @@
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - ipykernel
+  - numpy=1.26.4
+  - pip
+  - pytorch=2.7.1
+  - pytorch_geometric=2.6.1
+  - pytorch_scatter=2.1.2
+  - tqdm
+  - xtb=6.7.1
+  - matplotlib
+  - seaborn
+  - pip:
+      - unimol_tools==0.1.4.post1
+      - rdkit==2025.09.1
+      - huggingface_hub
