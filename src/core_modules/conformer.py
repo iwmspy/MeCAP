@@ -46,9 +46,6 @@ import pandas as pd
 from rdkit import Chem
 from rdkit.Chem import AllChem
 
-# ----------------------------
-# Core API
-# ----------------------------
 
 def inner_smi2coords_unimol(smi, seed=42, mode='fast', remove_hs=True, return_mol=False):
     '''
@@ -169,7 +166,7 @@ def write_sdf_from_smiles(
     uhf: int = 0,
     seed: int = 123,
     init_mode: Optional[str] = "esnuel",
-    final_mode: str = "xtb",            # NEW
+    final_mode: str = "xtb", 
     save_mode: str = "archive",
     archive_format: str = "tar.xz",
     xtb_threads: Optional[int] = None,
@@ -268,7 +265,7 @@ def _single_job(
             "status": "ok",
             "sdf_path": str(sdf_path),
             "name_used": safe,
-            "final_mode": final_mode,       # NEW: record mode
+            "final_mode": final_mode, 
             "mmff_min_conf_rdkit_index": mol.GetIntProp("mmff_min_conf_rdkit_index") if mol.HasProp("mmff_min_conf_rdkit_index") else None,
             "elapsed_sec": round(time.time() - t0, 3),
         }
@@ -374,7 +371,6 @@ def conformergen_batch(
                 idx, smi, nm, str(out_dir_path), init_mode, final_mode,   # pass final_mode
                 gfn_level, uhf, seed, save_mode, archive_format, xtb_threads, work_parent
             )
-            # ...
             fut2meta[fut] = (idx, nm)
             started += 1
             if started % 10 == 1 or started == total:
@@ -406,7 +402,7 @@ def conformergen_batch(
     df_out = df.copy()
     # Initialize columns
     add_cols = ["sdf_path", "status", "error", "elapsed_sec", "name_used", "final_mode", "mmff_min_conf_rdkit_index"]
-    # ...
+
     for c in add_cols:
         if c not in df_out.columns:
             df_out[c] = None
@@ -534,7 +530,6 @@ def diverse_conf_from_sdf_file(
         return (False, None)
 
     writer = Chem.SDWriter(outfile)
-    # writer.SetKekulize(False)
 
     any_success = False
     max_rmsd: Optional[float] = None
