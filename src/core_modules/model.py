@@ -3,7 +3,7 @@
 # -------------------------
 
 import os
-from typing import Optional, Tuple, Dict
+from typing import Optional, Tuple
 
 import torch
 import torch.nn as nn
@@ -424,7 +424,6 @@ class UniMolV2Model(_BaseUniMolAtomModel):
         num_spatial = 512
 
         K = 128
-        n_edge_type = 1
 
         self.atom_feature = AtomFeature(
             num_atom=num_atom,

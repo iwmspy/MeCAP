@@ -13,7 +13,6 @@ All comments are in English.
 import argparse
 import sys
 from pathlib import Path
-import pandas as pd
 
 from core_modules.conformer import xtb_optimize_sdf_dir  # noqa: F401
 

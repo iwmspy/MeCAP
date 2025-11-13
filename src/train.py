@@ -4,7 +4,6 @@
 # - Supports per-row SDF filenames or a single SDF with multiple molecules
 # - Train/val/test split from a CSV column with values 'train','val','test'
 # - Saves best and last checkpoints, evaluates test on best epoch, logs to file
-# Comments are in English only.
 
 from __future__ import annotations
 
@@ -314,7 +313,7 @@ def parse_args():
         "--feature_workers",
         type=int,
         default=0,
-        help="Workers for parallel v2 feature conversion (0=off; robust path that re-reads SDFs in workers)",
+        help="Workers for parallel feature conversion (0=off; robust path that re-reads SDFs in workers)",
     )
     return p.parse_args()
 

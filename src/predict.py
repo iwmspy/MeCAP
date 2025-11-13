@@ -4,12 +4,6 @@
 # - Supports per-row SDF filenames or a single SDF with multiple molecules
 # - Train/val/test split from a CSV column with values 'train','val','test'
 # - Saves best and last checkpoints, evaluates test on best epoch, logs to file
-# Comments are in English only.
-
-# -*- coding: utf-8 -*-
-# Predict-only utility: load a trained checkpoint, run batched inference,
-# and return a DataFrame equal to the original CSV with a prediction column attached.
-# Comments are in English only.
 
 from __future__ import annotations
 
@@ -239,7 +233,7 @@ def parse_args():
         "--feature_workers",
         type=int,
         default=0,
-        help="Workers for parallel v2 feature conversion (0=off; robust path that re-reads SDFs in workers)",
+        help="Workers for parallel feature conversion (0=off; robust path that re-reads SDFs in workers)",
     )
     p.add_argument("--device", type=str, default=None)
 

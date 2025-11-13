@@ -18,7 +18,6 @@ Notes:
 """
 
 import os
-import sys
 import argparse
 import pandas as pd
 from typing import List, Tuple, Dict, Any, Optional, Set, Tuple as Tup

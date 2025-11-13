@@ -458,8 +458,8 @@ def generate_far_conformer(
     params.useSmallRingTorsions = True
     params.useMacrocycleTorsions = True
     params.enforceChirality = True
-
     params.randomSeed = int(random_seed)
+    
     new_ids = AllChem.EmbedMultipleConfs(work, numConfs=num_confs, params=params)
 
     if not new_ids:
