@@ -1,14 +1,19 @@
 #!/bin/bash
 
 CONDA_EV=~/miniconda3
-WORK_ROT=~/work/UniMea_dev
+
+SCRIPT_DIR="$(
+  cd -- "$(dirname -- "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd
+)"
+
+WORK_ROT="$(
+  cd -- "$SCRIPT_DIR/../../.." >/dev/null 2>&1 && pwd
+)"
 
 cd ${WORK_ROT} || exit
 
-LAYER=0
-RUN_NAME=mecap_ref_maa_layer_${LAYER}
+RUN_NAME=mecap_cpbased_maa_layer_0
 SRCP_DIR=src
-RUN_MODE=train
 
 BASE_DIR=${WORK_ROT}/data/references
 RESL_DIR=${WORK_ROT}/data/results
@@ -22,11 +27,13 @@ conda activate ${ENV_NAME}
 
 cd ${SRCP_DIR} || exit
 
+RUN_MODE=train
+
 ${EXEC_PAT} -m ${RUN_MODE} \
   --data ${BASE_DIR}/QMdata4ML/df_elec_x_with_name_fold.csv \
   --atom_index_col elec_sites \
   --target_cols MAA_values \
-  --split_col Set_fold1 \
+  --split_col Set_cpbased_fold1 \
   --sdf_name_col name \
   --sdf_mode per_row \
   --sdf_dir ${RESL_DIR}/confs_from_smiles_rdkit \
@@ -36,3 +43,16 @@ ${EXEC_PAT} -m ${RUN_MODE} \
   --model_name unimolv1 \
   --scale \
   --feature_workers 5 \
+
+RUN_MODE=predict
+
+${EXEC_PAT} -m ${RUN_MODE} \
+  --data ${BASE_DIR}/QMdata4ML/df_elec_x_with_name_fold.csv \
+  --checkpoint ${SAVE_DIR}/best_model.pt \
+  --atom_index_col elec_sites \
+  --sdf_name_col name \
+  --sdf_mode per_row \
+  --sdf_dir ${RESL_DIR}/confs_from_smiles_rdkit \
+  --sdf_ext .sdf \
+  --save_path ${SAVE_DIR} \
+  --output_csv ${SAVE_DIR}/predictions.csv

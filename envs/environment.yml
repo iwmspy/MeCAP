@@ -12,6 +12,7 @@ dependencies:
   - xtb=6.7.1
   - matplotlib
   - seaborn
+  - py3Dmol
   - pip:
       - unimol_tools==0.1.4.post1
       - rdkit==2025.09.1
