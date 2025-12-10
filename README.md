@@ -1,6 +1,10 @@
 # Uni-Mol-MeCAP
 Uni-Mol-backbone Methyl Cation/Anion Affinity Predictor
 
+<p align="left">
+  <img src="fig/toc.jpg"/>
+</p>
+
 ## Environment
 
 All requirements are written in `envs/environments.yml`.
