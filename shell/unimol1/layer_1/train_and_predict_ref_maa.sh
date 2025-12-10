@@ -12,8 +12,7 @@ WORK_ROT="$(
 
 cd ${WORK_ROT} || exit
 
-LAYER=1
-RUN_NAME=mecap_ref_mca_layer_${LAYER}
+RUN_NAME=mecap_ref_maa_layer_1
 SRCP_DIR=src
 
 BASE_DIR=${WORK_ROT}/data/references
@@ -31,9 +30,9 @@ cd ${SRCP_DIR} || exit
 RUN_MODE=train
 
 ${EXEC_PAT} -m ${RUN_MODE} \
-  --data ${BASE_DIR}/QMdata4ML/df_nuc_x_with_name_fold.csv \
-  --atom_index_col nuc_sites \
-  --target_cols MCA_values \
+  --data ${BASE_DIR}/QMdata4ML/df_elec_x_with_name_fold.csv \
+  --atom_index_col elec_sites \
+  --target_cols MAA_values \
   --split_col Set_fold1 \
   --sdf_name_col name \
   --sdf_mode per_row \
@@ -49,9 +48,9 @@ ${EXEC_PAT} -m ${RUN_MODE} \
 RUN_MODE=predict
 
 ${EXEC_PAT} -m ${RUN_MODE} \
-  --data ${BASE_DIR}/QMdata4ML/df_nuc_x_with_name_fold.csv \
+  --data ${BASE_DIR}/QMdata4ML/df_elec_x_with_name_fold.csv \
   --checkpoint ${SAVE_DIR}/best_model.pt \
-  --atom_index_col nuc_sites \
+  --atom_index_col elec_sites \
   --sdf_name_col name \
   --sdf_mode per_row \
   --sdf_dir ${RESL_DIR}/confs_from_smiles_rdkit \

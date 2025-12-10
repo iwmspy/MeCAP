@@ -7,14 +7,13 @@ SCRIPT_DIR="$(
 )"
 
 WORK_ROT="$(
-  cd -- "$SCRIPT_DIR/../.." >/dev/null 2>&1 && pwd
+  cd -- "$SCRIPT_DIR/../../.." >/dev/null 2>&1 && pwd
 )"
 
 cd ${WORK_ROT} || exit
 
-RUN_NAME=mecap_cpbased_maa_v2_layer_0
+RUN_NAME=mecap_ref_maa_layer_2
 SRCP_DIR=src
-RUN_MODE=predict
 
 BASE_DIR=${WORK_ROT}/data/references
 RESL_DIR=${WORK_ROT}/data/results
@@ -27,6 +26,26 @@ source ${CONDA_EV}/etc/profile.d/conda.sh || exit
 conda activate ${ENV_NAME}
 
 cd ${SRCP_DIR} || exit
+
+RUN_MODE=train
+
+${EXEC_PAT} -m ${RUN_MODE} \
+  --data ${BASE_DIR}/QMdata4ML/df_elec_x_with_name_fold.csv \
+  --atom_index_col elec_sites \
+  --target_cols MAA_values \
+  --split_col Set_fold1 \
+  --sdf_name_col name \
+  --sdf_mode per_row \
+  --sdf_dir ${RESL_DIR}/confs_from_smiles_rdkit \
+  --sdf_ext .sdf \
+  --batch_size 50 --epochs 50 --lr 1e-4 \
+  --save_path ${SAVE_DIR} \
+  --model_name unimolv1 \
+  --atom_head_hidden_dim 512 512 \
+  --scale \
+  --feature_workers 5 \
+
+RUN_MODE=predict
 
 ${EXEC_PAT} -m ${RUN_MODE} \
   --data ${BASE_DIR}/QMdata4ML/df_elec_x_with_name_fold.csv \

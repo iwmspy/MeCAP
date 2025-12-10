@@ -12,8 +12,7 @@ WORK_ROT="$(
 
 cd ${WORK_ROT} || exit
 
-LAYER=1
-RUN_NAME=mecap_ref_maa_layer_${LAYER}
+RUN_NAME=mecap_cpbased_maa_layer_0
 SRCP_DIR=src
 
 BASE_DIR=${WORK_ROT}/data/references
@@ -34,7 +33,7 @@ ${EXEC_PAT} -m ${RUN_MODE} \
   --data ${BASE_DIR}/QMdata4ML/df_elec_x_with_name_fold.csv \
   --atom_index_col elec_sites \
   --target_cols MAA_values \
-  --split_col Set_fold1 \
+  --split_col Set_cpbased_fold1 \
   --sdf_name_col name \
   --sdf_mode per_row \
   --sdf_dir ${RESL_DIR}/confs_from_smiles_rdkit \
@@ -42,7 +41,6 @@ ${EXEC_PAT} -m ${RUN_MODE} \
   --batch_size 50 --epochs 50 --lr 1e-4 \
   --save_path ${SAVE_DIR} \
   --model_name unimolv1 \
-  --atom_head_hidden_dim 512 \
   --scale \
   --feature_workers 5 \
 

@@ -12,8 +12,7 @@ WORK_ROT="$(
 
 cd ${WORK_ROT} || exit
 
-LAYER=2
-RUN_NAME=mecap_ref_mca_layer_${LAYER}
+RUN_NAME=mecap_ref_mca_layer_0
 SRCP_DIR=src
 
 BASE_DIR=${WORK_ROT}/data/references
@@ -42,7 +41,6 @@ ${EXEC_PAT} -m ${RUN_MODE} \
   --batch_size 50 --epochs 50 --lr 1e-4 \
   --save_path ${SAVE_DIR} \
   --model_name unimolv1 \
-  --atom_head_hidden_dim 512 512 \
   --scale \
   --feature_workers 5 \
 
@@ -58,4 +56,3 @@ ${EXEC_PAT} -m ${RUN_MODE} \
   --sdf_ext .sdf \
   --save_path ${SAVE_DIR} \
   --output_csv ${SAVE_DIR}/predictions.csv
- 
