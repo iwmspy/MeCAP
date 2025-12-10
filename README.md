@@ -2,7 +2,7 @@
 Uni-Mol-backbone Methyl Cation/Anion Affinity Predictor
 
 <p align="left">
-  <img src="fig/toc.jpg" width="300"/>
+  <img src="fig/toc.jpg" width="500"/>
 </p>
 
 ## Environment
