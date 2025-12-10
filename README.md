@@ -2,7 +2,7 @@
 Uni-Mol-backbone Methyl Cation/Anion Affinity Predictor
 
 <p align="left">
-  <img src="fig/toc.jpg"/>
+  <img src="fig/toc.jpg" width="300"/>
 </p>
 
 ## Environment
@@ -70,3 +70,16 @@ If you are find our work is useful, kindly cite our paper in your work.
 ```
 (Under preparation)
 ```
+
+<!-- ```
+@article{YIxxxxUniMolMeCAP,
+  title = {Methyl Cation Affinity and Methyl Anion Affinity Prediction Using Uni-Mol-based Models},
+  ISSN = {},
+  url = {},
+  DOI = {},
+  journal = {},
+  publisher = {},
+  author = {Yuto, Iwasaki and Akinori, Sato and Tomoyuki, Miyao},
+  year = {2025}
+}
+``` -->
