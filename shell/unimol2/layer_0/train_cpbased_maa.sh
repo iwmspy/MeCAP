@@ -1,7 +1,14 @@
 #!/bin/bash
 
 CONDA_EV=~/miniconda3
-WORK_ROT=~/work/UniMea_dev
+
+SCRIPT_DIR="$(
+  cd -- "$(dirname -- "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd
+)"
+
+WORK_ROT="$(
+  cd -- "$SCRIPT_DIR/../../.." >/dev/null 2>&1 && pwd
+)"
 
 cd ${WORK_ROT} || exit
 

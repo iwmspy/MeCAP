@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CONDA_EV=~/miniconda3
-WORK_ROT=~/work/UniMea_dev
+WORK_ROT=~/work/MeCAP
 
 cd ${WORK_ROT} || exit
 
