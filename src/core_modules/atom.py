@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2024 Nicolai Ree
+# Copyright (c) 2025 Yuto Iwasaki
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -21,13 +21,15 @@
 # SOFTWARE.
 
 import os
-import numpy as np
 from rdkit import Chem
 
 s_params = Chem.SubstructMatchParameters()
 s_params.numThreads = min(8, os.cpu_count())
 s_params.uniquify = False
 substructure_match = lambda mol, submol, only_has: mol.HasSubstructMatch(submol,s_params) if only_has else mol.GetSubstructMatches(submol,s_params)
+
+# Rules were defined by Ree. et. al.
+# https://github.com/jensengroup/ESNUEL/blob/d7eead26d9646c98076d8f9962dc64e2b4a0b792/src/esnuel/locate_atom_sites.py
 
 n_smirks_dict = {'Ether': '[OX2:1]([#6;!$(C([OX2])[#7,#8,#15,#16,F,Cl,Br,I]);!$([#6]=[#8]):2])[#6;!$(C([OX2])[#7,#8,#15,#16]);!$([#6]=[#8]):3]>>[CH3][OX3+:1]([*:2])[*:3]',
                  'Ketone': '[OX1H0:1]=[#6X3:2]([#6;!$([CX3]=[CX3;!R]):3])[#6;!$([CX3]=[CX3;!R]):4]>>[CH3][OX2H0:1][#6X3+:2]([*:3])[*:4]',
