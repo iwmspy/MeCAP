@@ -8,7 +8,6 @@ cd ${WORK_ROT} || exit
 LAYER=0
 RUN_NAME=mecap_cpbased_mca_layer_${LAYER}
 SRCP_DIR=src
-RUN_MODE=train
 
 BASE_DIR=${WORK_ROT}/data/references
 RESL_DIR=${WORK_ROT}/data/results
@@ -21,6 +20,8 @@ source ${CONDA_EV}/etc/profile.d/conda.sh || exit
 conda activate ${ENV_NAME}
 
 cd ${SRCP_DIR} || exit
+
+RUN_MODE=train
 
 ${EXEC_PAT} -m ${RUN_MODE} \
   --data ${BASE_DIR}/QMdata4ML/df_nuc_x_with_name_fold.csv \
@@ -36,3 +37,16 @@ ${EXEC_PAT} -m ${RUN_MODE} \
   --model_name unimolv1 \
   --scale \
   --feature_workers 5 \
+
+RUN_MODE=predict
+
+${EXEC_PAT} -m ${RUN_MODE} \
+  --data ${BASE_DIR}/QMdata4ML/df_nuc_x_with_name_fold.csv \
+  --checkpoint ${SAVE_DIR}/best_model.pt \
+  --atom_index_col nuc_sites \
+  --sdf_name_col name \
+  --sdf_mode per_row \
+  --sdf_dir ${RESL_DIR}/confs_from_smiles_rdkit \
+  --sdf_ext .sdf \
+  --save_path ${SAVE_DIR} \
+  --output_csv ${SAVE_DIR}/predictions.csv

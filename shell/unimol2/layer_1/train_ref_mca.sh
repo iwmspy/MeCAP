@@ -43,3 +43,16 @@ ${EXEC_PAT} -m ${RUN_MODE} \
   --atom_head_hidden_dim 512 \
   --scale \
   --feature_workers 8 \
+
+RUN_MODE=predict
+
+${EXEC_PAT} -m ${RUN_MODE} \
+  --data ${BASE_DIR}/QMdata4ML/df_nuc_x_with_name_fold.csv \
+  --checkpoint ${SAVE_DIR}/best_model.pt \
+  --atom_index_col nuc_sites \
+  --sdf_name_col name \
+  --sdf_mode per_row \
+  --sdf_dir ${RESL_DIR}/confs_from_smiles_rdkit \
+  --sdf_ext .sdf \
+  --save_path ${SAVE_DIR} \
+  --output_csv ${SAVE_DIR}/predictions.csv
