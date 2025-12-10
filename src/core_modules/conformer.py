@@ -1,25 +1,4 @@
-# MIT License
-#
-# Copyright (c) 2025 Yuto Iwasaki
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
+# -*- coding: utf-8 -*-
 """
 End-to-end conformer generation and xTB optimization from SMILES.
 All comments are in English.
@@ -32,9 +11,10 @@ Key changes:
 """
 
 import os
+import tempfile
 import time
 import traceback
-from typing import List, Optional, Tuple, Dict, Any
+from typing import List, Optional, Tuple, Dict, Any, Sequence
 import shutil
 import subprocess
 import uuid
@@ -45,7 +25,23 @@ import numpy as np
 import pandas as pd
 from rdkit import Chem
 from rdkit.Chem import AllChem
+from rdkit.Chem import rdDetermineBonds
 
+# ----------------------------
+# Core API
+# ----------------------------
+
+def _resolve_xtb_exe() -> str:
+    """Resolve xtb executable path, preferring $XTBHOME/bin/xtb if available."""
+    xtbhome = os.environ.get("CONDA_PREFIX", "").strip()
+    if xtbhome:
+        candidate = Path(xtbhome) / "bin" / "xtb"
+        if candidate.exists():
+            return str(candidate)
+    return "xtb"  # fallback to PATH
+
+xtb_exe = _resolve_xtb_exe()
+print(f'[Info] xTB path: {xtb_exe}')
 
 def inner_smi2coords_unimol(smi, seed=42, mode='fast', remove_hs=True, return_mol=False):
     '''
@@ -158,7 +154,7 @@ def optimize_conf_from_smiles(
     mol = inner_smi2coords_unimol(smiles, seed, return_mol=True)
     return mol
 
-def write_sdf_from_smiles(
+def write_optimized_sdf_from_smiles(
     smiles: str,
     sdf_path: str,
     name: str = "molecule",
@@ -166,7 +162,7 @@ def write_sdf_from_smiles(
     uhf: int = 0,
     seed: int = 123,
     init_mode: Optional[str] = "esnuel",
-    final_mode: str = "xtb", 
+    final_mode: str = "xtb",            # NEW
     save_mode: str = "archive",
     archive_format: str = "tar.xz",
     xtb_threads: Optional[int] = None,
@@ -246,7 +242,7 @@ def _single_job(
 
     try:
         # Run optimization (only best MMFF conformer goes to xTB per your script)
-        mol = write_sdf_from_smiles(
+        mol = write_optimized_sdf_from_smiles(
             smiles=str(smiles),
             sdf_path=sdf_path,
             name=safe,
@@ -265,7 +261,7 @@ def _single_job(
             "status": "ok",
             "sdf_path": str(sdf_path),
             "name_used": safe,
-            "final_mode": final_mode, 
+            "final_mode": final_mode,       # NEW: record mode
             "mmff_min_conf_rdkit_index": mol.GetIntProp("mmff_min_conf_rdkit_index") if mol.HasProp("mmff_min_conf_rdkit_index") else None,
             "elapsed_sec": round(time.time() - t0, 3),
         }
@@ -371,6 +367,7 @@ def conformergen_batch(
                 idx, smi, nm, str(out_dir_path), init_mode, final_mode,   # pass final_mode
                 gfn_level, uhf, seed, save_mode, archive_format, xtb_threads, work_parent
             )
+            # ...
             fut2meta[fut] = (idx, nm)
             started += 1
             if started % 10 == 1 or started == total:
@@ -402,7 +399,7 @@ def conformergen_batch(
     df_out = df.copy()
     # Initialize columns
     add_cols = ["sdf_path", "status", "error", "elapsed_sec", "name_used", "final_mode", "mmff_min_conf_rdkit_index"]
-
+    # ...
     for c in add_cols:
         if c not in df_out.columns:
             df_out[c] = None
@@ -425,6 +422,49 @@ def conformergen_batch(
     t_total = round(time.time() - t_batch0, 3)
     print(f"[done] Wrote CSV: {out_csv_path.resolve()}  (elapsed {t_total}s)")
     return df_out
+
+def has_bonds(mol):
+    """Return True if molecule has at least one bond."""
+    return mol.GetNumBonds() > 0
+
+def convert_xyz_to_sdf(mol):
+    """
+    Original script comes from https://github.com/jensengroup/ESNUEL/blob/main/src/esnuel/molecule_formats.py#L33
+    """
+    mol_copy = Chem.Mol(mol)
+    charge = [a.GetFormalCharge() for a in mol.GetAtoms()]
+    total_charge = sum(charge)
+    rdDetermineBonds.DetermineBonds(mol_copy, useHueckel=True, charge=total_charge)
+    # rdDetermineBonds.DetermineBondOrders(rdkit_mol, charge=chrg)
+    # rdDetermineBonds.DetermineBonds(rdkit_mol, charge=chrg, covFactor=1.3, allowChargedFragments=True, useHueckel=False, embedChiral=False, useAtomMap=False)
+
+    if len(Chem.MolToSmiles(mol).split('.')) != 1:
+        # print('OBS! Trying to detemine bonds without Hueckel')
+        mol_copy = Chem.Mol(mol)
+        rdDetermineBonds.DetermineBonds(mol_copy, useHueckel=False, charge=total_charge)
+
+    if len(Chem.MolToSmiles(mol).split('.')) != 1:
+        # print('OBS! Trying to detemine bonds without Hueckel and covFactor=1.35')
+        mol_copy = Chem.Mol(mol)
+        rdDetermineBonds.DetermineBonds(mol_copy, useHueckel=False, covFactor=1.35, charge=total_charge)
+
+    return mol_copy
+
+def convert_xyz_to_smiles(mol, sanitize=True, removeHs=False):
+    try:
+        nmol = convert_xyz_to_sdf(mol)
+    except:
+        return None
+    if sanitize:
+        Chem.SanitizeMol(nmol)
+    if removeHs:
+        return Chem.MolToSmiles(Chem.RemoveAllHs(nmol))
+    return Chem.MolToSmiles(nmol)
+
+def convert_xyz_to_smiles_from_file(infile, sanitize=True, removeHs=False):
+    suppl = Chem.SDMolSupplier(infile, removeHs=False, sanitize=False)
+    mols: List[Chem.Mol] = [m for m in suppl if m is not None]
+    return [convert_xyz_to_smiles(m,sanitize,removeHs) for m in mols] if len(mols) > 1 else convert_xyz_to_smiles(mols[0],sanitize,removeHs)
 
 def generate_far_conformer(
     mol: Chem.Mol,
@@ -464,21 +504,30 @@ def generate_far_conformer(
         raise ValueError("Input mol is None.")
     if mol.GetNumConformers() < 1:
         raise ValueError("Input mol must contain at least one conformer as reference.")
-    if mol.GetDoubleProp('mmff_min_energy_kcalmol')==float('inf'):
+    if mol.HasProp('mmff_min_energy_kcalmol') and mol.GetDoubleProp('mmff_min_energy_kcalmol')==float('inf'):
         raise NotImplementedError("Conformer generation was skipped because this mol has a mmff-errored conformation.")
+    
+    if not has_bonds(mol):
+        mol = convert_xyz_to_sdf(mol)
+        mol.SetProp('BondDetermine','RDKit_DetermineBonds')
+    else:
+        mol.SetProp('BondDetermine','Original')
 
-    work = Chem.Mol(mol)
+    work = Chem.Mol(mol, confId=0)
     ref_conf_id = 0
 
     params = AllChem.ETKDGv3()
     params.pruneRmsThresh = max((min_rmsd, 0.1))
+    params.clearConfs = False
+    params.useRandomCoords = True
     params.useSmallRingTorsions = True
     params.useMacrocycleTorsions = True
     params.enforceChirality = True
-    params.randomSeed = int(random_seed)
 
+    params.randomSeed = int(random_seed)
     new_ids = AllChem.EmbedMultipleConfs(work, numConfs=num_confs, params=params)
 
+    assert work.GetNumConformers()==len(new_ids)+1
     if not new_ids:
         raise RuntimeError("Failed to generate any valid conformer.")
     
@@ -530,6 +579,7 @@ def diverse_conf_from_sdf_file(
         return (False, None)
 
     writer = Chem.SDWriter(outfile)
+    # writer.SetKekulize(False)
 
     any_success = False
     max_rmsd: Optional[float] = None
@@ -573,16 +623,7 @@ def diverse_conf_from_sdf_file(
 
     return (True, max_rmsd, error_log)
 
-### xTB conformation search
-
-def _resolve_xtb_exe() -> str:
-    """Resolve xtb executable path, preferring $XTBHOME/bin/xtb if available."""
-    xtbhome = os.environ.get("XTBHOME", "").strip()
-    if xtbhome:
-        candidate = Path(xtbhome) / "bin" / "xtb"
-        if candidate.exists():
-            return str(candidate)
-    return "xtb"  # fallback to PATH
+### xTB conformation search (Uni-Mol -> xTB)
 
 def _mol_has_3d(mol: Chem.Mol) -> bool:
     """Check if a molecule has a 3D conformer."""
@@ -906,8 +947,6 @@ def xtb_optimize_sdf_dir(
         print(f"[info] Files to process: {len(sdf_files)}")
         print(f"[info] Concurrency: {max_workers} files; xTB threads per file: {xtb_threads}")
 
-    xtb_exe = _resolve_xtb_exe()
-
     # Parallel over files
     rows: List[Dict[str, Any]] = []
     with ProcessPoolExecutor(max_workers=max_workers) as ex:
@@ -961,3 +1000,4 @@ def xtb_optimize_sdf_dir(
     if verbose:
         print(f"[done] Processed {len(sdf_files)} files in {total_t}s")
     return df
+
