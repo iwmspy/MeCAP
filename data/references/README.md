@@ -1,13 +1,5 @@
-# Uni-Mea data/references
+# Uni-Mol-MeCAP data/references
 
-Please put reference data (from paper) in this directory.
+The dataset can be downloaded and preprocessed using `data_preparation.ipynb`.
 
-Directory should be...
-
-```
-{parent}
- | - data
- |   | - references
- |   |   | - QMdata4ML
- ...
-```
+Please run all cells from top to bottom.
