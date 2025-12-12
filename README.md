@@ -7,65 +7,116 @@ Uni-Mol-backbone Methyl Cation/Anion Affinity Predictor
 
 ## Environment
 
-All requirements are written in `envs/environments.yml`.
+All requirements are listed in`./envs/environments.yml`.
 
-Please execute the following command to create conda environment.
-
+Create the conda environment with:
 ```bash
 conda env create -f ./envs/environment.yml -n mecap
 ```
 
 ## Training
 ### Data preparation
-Dataset can be downloaded and preprocessed by `data/references/data_preparation.ipynb`.
+The dataset can be downloaded and preprocessed using `./data/references/data_preparation.ipynb`.
 
-Please execute whole cells from top to bottom in order.
+Please run all cells from top to bottom.
 
 ### Generate conformers
-Please execute `shell/generate_conformer.sh`.
+Run:
+```bash
+cd ./shell
+bash generate_conformer.sh
+```
 
-This script executes `src/optimize_conf.py`.
-
-### Build models and predict MCA/MAA by built models with reference-split
+### Train models and predict MCA/MAA (reference split)
 #### v1 models
-Please execute `shell/unimol1/layer_0/train_and_predict_ref_mca.sh` (the MCA prediction model) or `shell/unimol1/layer_0/train_and_predict_ref_maa.sh` (the MAA prediction model).
+Run: 
+```bash
+cd ./shell/unimol1/layer_0
+bash train_and_predict_ref_mca.sh    # MCA prediction model
+bash train_and_predict_ref_maa.sh    # MAA prediction model
+```
 
 #### v2 models
-Please execute `shell/unimol2/layer_0/train_and_predict_ref_mca.sh` (the MCA prediction model) or `shell/unimol2/layer_0/train_and_predict_ref_maa.sh` (the MAA prediction model).
-
-These scripts execute `src/train.py` and `src/predict.py`.
+Run: 
+```bash
+cd ./shell/unimol2/layer_0
+bash train_and_predict_ref_mca.sh    # MCA prediction model
+bash train_and_predict_ref_maa.sh    # MAA prediction model
+```
 
 ## Additional models
 ### Compound-based split
 #### v1 models
-Please execute `shell/unimol1/layer_0/train_and_predict_cpbased_mca.sh` (the MCA prediction model) or `shell/unimol1/layer_0/train_and_predict_cpbased_maa.sh` (the MAA prediction model). 
+Run: 
+```bash
+cd ./shell/unimol1/layer_0
+bash train_and_predict_cpbased_mca.sh    # MCA prediction model
+bash train_and_predict_cpbased_maa.sh    # MAA prediction model
+``` 
 
 #### v2 models
-Please execute `shell/unimol2/layer_0/train_and_predict_cpbased_mca.sh` (the MCA prediction model) or `shell/unimol2/layer_0/train_and_predict_cpbased_maa.sh` (the MAA prediction model).
+Run:
+```bash
+cd ./shell/unimol2/layer_0
+bash train_and_predict_cpbased_mca.sh    # MCA prediction model
+bash train_and_predict_cpbased_maa.sh    # MAA prediction model
+```
 
-### Train with different conformer types (only v1 model)
+### Training with different conformer types (only v1 model)
 #### Generate (prepare) conformers
-Please execute `shell/diverse_conformer.sh`.
+Run:
+```bash
+cd ./shell
+bash diverse_conformer.sh
+```
 
-#### Build models and predict MCA/MAA by built models
- - xTB-optimized: Please execute `shell/different_conformation/train_and_predict_ref_mca_gth.sh` (the MCA prediction model) or `shell/different_conformation/train_and_predict_ref_maa_gth.sh` (the MAA prediction model).
- - Force-field-optimized: Please execute `shell/different_conformation/train_and_predict_ref_mca_mmff.sh` (the MCA prediction model) or `shell/different_conformation/train_and_predict_ref_maa_mmff.sh` (the MAA prediction model).
- - RMSD-max: Please execute `shell/different_conformation/train_and_predict_ref_mca_rmsd.sh` (the MCA prediction model) or `shell/different_conformation/train_and_predict_ref_maa_rmsd.sh` (the MAA prediction model).
+#### Train and predict
+Run:
+```bash
+cd ./shell/different_conformation
 
-### Train with different number of hidden layers in FFN
-We evaluated the effect of the number of hidden layers in the FFN over the range $n \in \{0,1,2\}$.
+# xTB-optimized
+bash train_and_predict_ref_mca_gth.sh    # MCA prediction model
+bash train_and_predict_ref_maa_gth.sh    # MAA prediction model
+
+# Force-field-optimized
+bash train_and_predict_ref_mca_mmff.sh   # MCA prediction model
+bash train_and_predict_ref_maa_mmff.sh   # MAA prediction model
+
+# RMSD-max
+bash train_and_predict_ref_mca_rmsd.sh   # MCA prediction model
+bash train_and_predict_ref_maa_rmsd.sh   # MAA prediction model
+
+# Predict MAA with xTB-optimized models using RMSD-max conformers as input
+bash predict_ref_maa_gth_from_rmsd_conf.sh
+```
+
+### Training with different numbers of FFN hidden layers
+We evaluated the effect of FFN depth over $n \in \{0,1,2\}$.
 
 #### v1 models
-Please execute `shell/unimol1/layer_{n}/train_and_predict_ref_mca.sh` (the MCA prediction model) or `shell/unimol1/layer_{n}/train_and_predict_ref_maa.sh` (the MAA prediction model).
+Run:
+```bash
+# Please replace `{n}` with the desired number of hidden layers...
+cd ./shell/unimol1/layer_{n}
+bash train_and_predict_ref_mca.sh    # MCA prediction model
+bash train_and_predict_ref_maa.sh    # MAA prediction model
+```
 
 #### v2 models
-Please execute `shell/unimol2/layer_{n}/train_and_predict_ref_mca.sh` (the MCA prediction model) or `shell/unimol2/layer_{n}/train_and_predict_ref_maa.sh` (the MAA prediction model).
+Run:
+```bash
+# Please replace `{n}` with the desired number of hidden layers...
+cd ./shell/unimol2/layer_{n}
+bash train_and_predict_ref_mca.sh    # MCA prediction model
+bash train_and_predict_ref_maa.sh    # MAA prediction model
+```
 
 ## Analysis
-All analyses (including reprecation of results in published paper) can be executed using `data/results_analysis.ipynb`.
+All analyses (including reproduction of results in the published paper) can be run using `./data/results_analysis.ipynb`.
 
 ## Paper information
-If you are find our work is useful, kindly cite our paper in your work.
+If you find our work useful, please cite our paper:
 
 ```
 (Under preparation)
