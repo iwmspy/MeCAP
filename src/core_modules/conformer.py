@@ -236,7 +236,7 @@ def _single_job(
     Returns (row_index, result_dict).
     """
     t0 = time.time()
-    label = name if (name and str(name).strip()) else f"mol_{idx}"
+    label = name if (name is not None and str(name).strip()) else f"mol_{idx}"
     safe = _slugify_name(str(label))
     sdf_path = Path(out_dir) / f"{safe}.sdf"
 
