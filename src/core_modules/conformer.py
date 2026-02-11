@@ -43,7 +43,7 @@ def _resolve_xtb_exe() -> str:
 xtb_exe = _resolve_xtb_exe()
 print(f'[Info] xTB path: {xtb_exe}')
 
-def inner_smi2coords_unimol(smi, seed=42, mode='fast', remove_hs=True, return_mol=False):
+def inner_smi2coords_unimol(smi, seed=42, mode='fast', remove_hs=True, return_mol=False, only_2D=False):
     '''
     This function is responsible for converting a SMILES (Simplified Molecular Input Line Entry System) string into 3D coordinates for each atom in the molecule. It also allows for the generation of 2D coordinates if 3D conformation generation fails, and optionally removes hydrogen atoms and their coordinates from the resulting data.
 
@@ -64,7 +64,7 @@ def inner_smi2coords_unimol(smi, seed=42, mode='fast', remove_hs=True, return_mo
     assert len(atoms) > 0, 'No atoms in molecule: {}'.format(smi)
     try:
         # will random generate conformer with seed equal to -1. else fixed random seed.
-        res = AllChem.EmbedMolecule(mol, randomSeed=seed)
+        res = AllChem.EmbedMolecule(mol, randomSeed=seed) if not only_2D else 1
         if res == 0:
             try:
                 '''Add'''
@@ -141,6 +141,7 @@ def optimize_conf_from_smiles(
     seed: int = 123,
     init_mode: Optional[str] = "unimol",
     final_mode: str = "rdkit",           # NEW
+    only_2D: Optional[bool] = False,
     save_mode: str = "archive",
     archive_format: str = "tar.xz",
     xtb_threads: Optional[int] = None,
@@ -151,7 +152,7 @@ def optimize_conf_from_smiles(
     if final_mode != "rdkit":
         UserWarning(f'Selected final_mode "{final_mode}" is not supported. Force changed to "rdkit" mode.')
     # RDKit-only finalization
-    mol = inner_smi2coords_unimol(smiles, seed, return_mol=True)
+    mol = inner_smi2coords_unimol(smiles, seed, return_mol=True, only_2D=only_2D)
     return mol
 
 def write_optimized_sdf_from_smiles(
@@ -163,6 +164,7 @@ def write_optimized_sdf_from_smiles(
     seed: int = 123,
     init_mode: Optional[str] = "esnuel",
     final_mode: str = "xtb",            # NEW
+    only_2D: Optional[bool] = False,
     save_mode: str = "archive",
     archive_format: str = "tar.xz",
     xtb_threads: Optional[int] = None,
@@ -181,6 +183,7 @@ def write_optimized_sdf_from_smiles(
         seed=seed,
         init_mode=init_mode,
         final_mode=final_mode,       # pass through
+        only_2D=only_2D,
         save_mode=save_mode,
         archive_format=archive_format,
         xtb_threads=xtb_threads,
@@ -223,6 +226,7 @@ def _single_job(
     out_dir: str,
     init_mode: Optional[str],
     final_mode: str,
+    only_2D: Optional[bool],
     gfn_level: int,
     uhf: int,
     seed: int,
@@ -251,6 +255,7 @@ def _single_job(
             seed=seed,
             init_mode=init_mode,
             final_mode=final_mode,          # pass through
+            only_2D=only_2D,          # pass through
             save_mode=save_mode,
             archive_format=archive_format,
             xtb_threads=xtb_threads,
@@ -291,6 +296,7 @@ def conformergen_batch(
     name_col: Optional[str] = "name",
     init_mode: Optional[str] = "esnuel",
     final_mode: str = "xtb",
+    only_2D: Optional[bool] = False,
     max_workers: int = 2,
     xtb_threads: int = 2,
     gfn_level: int = 1,
@@ -364,7 +370,7 @@ def conformergen_batch(
         for (idx, smi, nm) in jobs:
             fut = ex.submit(
                 _single_job,
-                idx, smi, nm, str(out_dir_path), init_mode, final_mode,   # pass final_mode
+                idx, smi, nm, str(out_dir_path), init_mode, final_mode, only_2D,  # pass final_mode
                 gfn_level, uhf, seed, save_mode, archive_format, xtb_threads, work_parent
             )
             # ...
