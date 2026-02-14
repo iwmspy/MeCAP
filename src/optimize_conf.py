@@ -30,7 +30,7 @@ def _build_cli() -> argparse.ArgumentParser:
     p.add_argument("--xtb-threads", type=int, default=2, help="Number of threads per molecule for xTB.")
     p.add_argument("--gfn-level", type=int, default=1, help="GFN-xTB level (default 1).")
     p.add_argument("--uhf", type=int, default=0, help="Number of unpaired electrons for UHF (default 0).")
-    p.add_argument("--only-2d", type=bool, default=False, help="If True, return 2D-flatten conformations.")
+    p.add_argument("--only-2d", action="store_true", help="If True, return 2D-flatten conformations.")
     p.add_argument("--seed", type=int, default=123, help="Base random seed for embeddings.")
     p.add_argument("--save-mode", choices=["archive","keep","none","zip"], default="archive", help="Intermediate files handling.")
     p.add_argument("--archive-format", choices=["tar.xz","tar.gz","zip"], default="tar.xz", help="Archive format when save-mode=archive.")

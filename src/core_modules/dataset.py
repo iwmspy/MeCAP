@@ -48,7 +48,7 @@ def _worker_path_to_feature_v1(args) -> Optional[TDict[str, Any]]:
     Worker for V1: re-open SDF and run coords2unimol.
     Uses a process-global dictionary loaded by _v1_worker_init.
     """
-    path, max_atoms, remove_hs = args
+    path, max_atoms, remove_hs, replace_atom_to_carbon = args
     try:
         mol = _load_first_mol_from_sdf(path, remove_hs=False)
         if mol is None or mol.GetNumConformers() == 0:
@@ -58,7 +58,10 @@ def _worker_path_to_feature_v1(args) -> Optional[TDict[str, Any]]:
             [list(conf.GetAtomPosition(i)) for i in range(mol.GetNumAtoms())],
             dtype=np.float32,
         )
-        atoms = [a.GetSymbol() for a in mol.GetAtoms()]
+        if replace_atom_to_carbon:
+            atoms = ['C' if a.GetSymbol() != 'H' else a.GetSymbol() for a in mol.GetAtoms()]
+        else:
+            atoms = [a.GetSymbol() for a in mol.GetAtoms()]
         # dictionary is provided by initializer
         feat = coords2unimol(
             atoms, coords, dictionary=_GLOBAL_V1_DICT,
@@ -448,7 +451,7 @@ class SingleAtomDataHubV1(_BaseSingleAtomDataHub):
                     uniq_feats[uid] = feat
             else:
                 # Parallel path (like V2): initialize Dictionary in each worker once
-                args = [(p, max_atoms, remove_hs) for p in build_paths]
+                args = [(p, max_atoms, remove_hs, self.replace_atom_to_carbon) for p in build_paths]
                 with Pool(
                     processes=self.feature_workers,
                     initializer=_v1_worker_init,

@@ -41,7 +41,6 @@ ${EXEC_PAT} -m ${RUN_MODE} \
   --batch_size 50 --epochs 50 --lr 1e-4 \
   --save_path ${SAVE_DIR} \
   --model_name unimolv1 \
-  --atom_head_hidden_dim 512 \
   --scale \
   --feature_workers 5 \
 

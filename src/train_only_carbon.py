@@ -339,7 +339,7 @@ def main():
         remove_hs=args.remove_hs,
         max_atoms=args.max_atoms,
         model_name=args.model_name,
-        model_size=args.model_size,
+        model_size=None,
         batch_size=args.batch_size,
         lr=args.lr,
         epochs=args.epochs,
