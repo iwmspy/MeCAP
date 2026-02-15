@@ -232,7 +232,13 @@ def write_optimized_sdf_from_smiles(
 
     writer = Chem.SDWriter(sdf_path)
     try:
-        writer.write(mol, confId=conf_id)
+        if permute_atom_tokens:
+            writer.SetKekulize(False)
+            writer.write(mol, confId=conf_id)
+        else:
+            writer.write(mol, confId=conf_id)
+    except Exception as e:
+        print(f'[Writing Error!!] {e}')
     finally:
         writer.close()
     if return_mol:

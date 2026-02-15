@@ -27,7 +27,7 @@ conda activate ${ENV_NAME}
 
 cd ${SRCP_DIR} || exit
 
-RUN_MODE=train_only_carbon
+RUN_MODE=train
 
 ${EXEC_PAT} -m ${RUN_MODE} \
   --data ${BASE_DIR}/QMdata4ML/df_elec_x_with_name_fold.csv \
@@ -44,7 +44,7 @@ ${EXEC_PAT} -m ${RUN_MODE} \
   --scale \
   --feature_workers 5 \
 
-RUN_MODE=predict_only_carbon
+RUN_MODE=predict
 
 ${EXEC_PAT} -m ${RUN_MODE} \
   --data ${BASE_DIR}/QMdata4ML/df_elec_x_with_name_fold.csv \
