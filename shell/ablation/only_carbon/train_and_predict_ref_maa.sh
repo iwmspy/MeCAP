@@ -12,7 +12,7 @@ WORK_ROT="$(
 
 cd ${WORK_ROT} || exit
 
-RUN_NAME=mecap_ref_maa_layer_only_carbon
+RUN_NAME=mecap_ref_maa_only_carbon
 SRCP_DIR=src
 
 BASE_DIR=${WORK_ROT}/data/references
