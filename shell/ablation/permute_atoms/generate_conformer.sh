@@ -1,0 +1,39 @@
+#!/bin/bash
+
+CONDA_EV=~/miniconda3
+
+SCRIPT_DIR="$(
+  cd -- "$(dirname -- "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd
+)"
+
+WORK_ROT="$(
+  cd -- "$SCRIPT_DIR/../../.." >/dev/null 2>&1 && pwd
+)"
+
+cd ${WORK_ROT} || exit
+
+RUN_NAME=optimizing
+SRCP_DIR=src
+RUN_MODE=optimize_conf
+
+BASE_DIR=${WORK_ROT}/data/references
+RESL_DIR=${WORK_ROT}/data/results
+
+ENV_NAME=mecap
+EXEC_PAT=${CONDA_EV}/envs/${ENV_NAME}/bin/python
+
+source ${CONDA_EV}/etc/profile.d/conda.sh || exit
+conda activate ${ENV_NAME}
+
+cd ${SRCP_DIR} || exit
+
+${EXEC_PAT} -m ${RUN_MODE} \
+  --input-csv ${BASE_DIR}/QMdata4ML/df_ChEMBL50K.csv.gz \
+  --name-col name \
+  --smiles-col smiles \
+  --init-mode unimol \
+  --final-mode rdkit \
+  --permute-atom-tokens \
+  --max-workers 12 \
+  --out-dir ${RESL_DIR}/confs_from_smiles_atom_permuted \
+  --out-csv ${RESL_DIR}/${RUN_NAME}/df_ChEMBL50K_rdkit_permuted.csv \
