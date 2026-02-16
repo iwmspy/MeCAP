@@ -222,6 +222,7 @@ data/**
 !data/references/data_preparation.ipynb
 !data/references/README.md
 !data/references/split.csv
-!data/references/100_rxn_mechanisms*.csv
+!data/references/100_rxn_mechanisms/
+!data/references/100_rxn_mechanisms/**
 !data/references/esnuelML_elec_predicted_values.csv
 !data/references/esnuelML_nuc_predicted_values.csv
