@@ -1,3 +1,9 @@
+import os
+import numpy as np
+import pandas as pd
+from scipy.spatial.distance import mahalanobis
+from concurrent.futures import ProcessPoolExecutor
+from tqdm import tqdm
 from typing import Tuple, List, Dict, Optional
 from rdkit import Chem
 
@@ -176,4 +182,82 @@ def site_feature_vector(smiles: str, atom_idx: int) -> Tuple[int, ...]:
     if mol is None:
         raise ValueError(f"Invalid SMILES: {smiles}")
     return site_feature_vector_from_mol(mol, atom_idx)
-    
+
+
+# Globals for worker processes
+_G_MU = None
+_G_VI = None
+
+def _init_worker(mu, VI):
+    """Initialize globals in each worker process."""
+    global _G_MU, _G_VI
+    _G_MU = mu
+    _G_VI = VI
+
+def _md_one(x):
+    """Compute Mahalanobis distance for a single vector."""
+    return float(mahalanobis(x, _G_MU, _G_VI))
+
+def add_md_parallel_tqdm(
+    df: pd.DataFrame,
+    desc_col: str,
+    split_col: str,
+    train_label="train",
+    ridge: float = 1e-6,
+    n_workers: int | None = None,
+    chunksize: int = 2000,
+) -> pd.DataFrame:
+    """
+    Compute Mahalanobis distance to the train mean using scipy.spatial.distance.mahalanobis,
+    parallelized with ProcessPoolExecutor and progress visualized by tqdm.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Input dataframe.
+    desc_col : str
+        Column name containing descriptor tuples (fixed length, e.g., 40-dim).
+    split_col : str
+        Column name indicating split membership.
+    train_label : Any
+        Value in split_col that indicates training rows.
+    out_col : str
+        Output column name to store distances.
+    ridge : float
+        Diagonal regularization added to covariance for numerical stability.
+    n_workers : int | None
+        Number of processes. If None, uses os.cpu_count().
+    chunksize : int
+        Chunk size passed to executor.map for better throughput.
+    """
+    if n_workers is None:
+        n_workers = max(1, (os.cpu_count() or 1) - 1)
+
+    # Stack tuple vectors into a matrix (N, D)
+    X = np.vstack(df[desc_col].to_numpy()).astype(np.float64, copy=False)
+
+    # Train subset
+    train_mask = (df[split_col].to_numpy() == train_label)
+    if train_mask.sum() < 2:
+        raise ValueError("Train split has fewer than 2 rows; cannot estimate covariance.")
+
+    X_tr = X[train_mask]
+
+    # Mean and covariance (train only)
+    mu = X_tr.mean(axis=0)
+    cov = np.cov(X_tr, rowvar=False)
+    cov = cov + ridge * np.eye(cov.shape[0], dtype=cov.dtype)
+
+    # Inverse covariance (40x40 is trivial to invert)
+    VI = np.linalg.inv(cov)
+
+    # Parallel compute with progress bar
+    # Note: we convert each row to a 1D numpy array view; it will be pickled to workers.
+    # For maximum speed, consider a vectorized version, but this favors readability.
+    results = []
+    with ProcessPoolExecutor(max_workers=n_workers, initializer=_init_worker, initargs=(mu, VI)) as ex:
+        it = ex.map(_md_one, X, chunksize=chunksize)
+        for v in tqdm(it, total=X.shape[0], desc="Mahalanobis", unit="row"):
+            results.append(v)
+
+    return np.array(results, dtype=np.float64)
