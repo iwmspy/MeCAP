@@ -222,6 +222,7 @@ data/**
 !data/references/data_preparation.ipynb
 !data/references/README.md
 !data/references/split.csv
+!data/references/scaffold_map.csv
 !data/references/df_*sample*.csv.gz
 !data/references/structure_file*
 !data/references/100_rxn_mechanisms/
