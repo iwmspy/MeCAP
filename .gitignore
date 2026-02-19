@@ -218,8 +218,8 @@ data/**
 !data/results_analysis.ipynb
 !data/mod_for_analysis.py
 !data/references/
-!data/references/data_analysis.ipynb
-!data/references/data_preparation.ipynb
+!data/references/*.ipynb
+!data/references/*.py
 !data/references/README.md
 !data/references/split.csv
 !data/references/scaffold_map.csv
