@@ -38,12 +38,16 @@ from concurrent.futures import ProcessPoolExecutor
 from rdkit import Chem, DataStructs
 from rdkit.Chem.Scaffolds import MurckoScaffold
 from rdkit.Chem import rdMolDescriptors
+from rdkit import RDLogger
+
+# RDKit warning suppression
+RDLogger.DisableLog("rdApp.warning")
 
 
 # ----------------------------
 # Configuration defaults
 # ----------------------------
-DEFAULT_SEED = 42
+DEFAULT_SEED = 0
 DEFAULT_TEST_FRAC = 0.15
 DEFAULT_VAL_FRAC_IN_TRAINVAL = 0.20
 
@@ -80,17 +84,13 @@ def scaffold_smiles_from_smiles(smi: str, include_chirality: bool = False) -> st
 # ----------------------------
 # Weighted scaffold splitting (by molecule count)
 # ----------------------------
-def _stable_group_order(scaffold_to_smis: Dict[str, List[str]], seed: int) -> List[Tuple[str, List[str], int]]:
-    """
-    Sort scaffold groups by decreasing size with a deterministic random tie-break.
-    Returns a list of (scaffold, smis, size).
-    """
-    rng = np.random.default_rng(seed)
+def _stable_group_order(scaffold_to_smis: dict, seed):
     items = []
     for scaff, smis in scaffold_to_smis.items():
-        items.append((scaff, smis, len(smis), rng.random()))
-    items.sort(key=lambda x: (-x[2], x[3]))
-    return [(scaff, smis, size) for scaff, smis, size, _ in items]
+        items.append((scaff, smis, len(smis)))
+    # Deterministic tie-break by scaffold string
+    items.sort(key=lambda x: (-x[2], x[0]))
+    return [(scaff, smis, size) for scaff, smis, size in items]
 
 
 def _two_way_scaffold_split(scaffold_to_smis: Dict[str, List[str]], frac_b: float, seed: int) -> Tuple[List[str], List[str]]:
