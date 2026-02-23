@@ -47,7 +47,6 @@ RDLogger.DisableLog("rdApp.warning")
 # ----------------------------
 # Configuration defaults
 # ----------------------------
-DEFAULT_SEED = 0
 DEFAULT_TEST_FRAC = 0.15
 DEFAULT_VAL_FRAC_IN_TRAINVAL = 0.20
 
@@ -84,7 +83,7 @@ def scaffold_smiles_from_smiles(smi: str, include_chirality: bool = False) -> st
 # ----------------------------
 # Weighted scaffold splitting (by molecule count)
 # ----------------------------
-def _stable_group_order(scaffold_to_smis: dict, seed):
+def _stable_group_order(scaffold_to_smis: dict):
     items = []
     for scaff, smis in scaffold_to_smis.items():
         items.append((scaff, smis, len(smis)))
@@ -93,13 +92,13 @@ def _stable_group_order(scaffold_to_smis: dict, seed):
     return [(scaff, smis, size) for scaff, smis, size in items]
 
 
-def _two_way_scaffold_split(scaffold_to_smis: Dict[str, List[str]], frac_b: float, seed: int) -> Tuple[List[str], List[str]]:
+def _two_way_scaffold_split(scaffold_to_smis: Dict[str, List[str]], frac_b: float) -> Tuple[List[str], List[str]]:
     """
     Split scaffold groups into A and B with approximate molecule-count ratio:
     B gets frac_b of total molecules, A gets the rest.
     Returns (smis_A, smis_B).
     """
-    groups = _stable_group_order(scaffold_to_smis, seed=seed)
+    groups = _stable_group_order(scaffold_to_smis)
     total = sum(size for _, _, size in groups)
     target_b = int(round(total * frac_b))
     target_a = total - target_b
@@ -155,7 +154,7 @@ def assign_scaffold_fold(df: pd.DataFrame, scaff_col: str, fold_col: str) -> pd.
 
 
 # ----------------------------
-# Parallel max-sim computation (BulkTanimotoSimilarity has no thread parameter)
+# Parallel max-sim computation
 # ----------------------------
 _G_TRAIN_FPS = None
 _G_FP_RADIUS = None
@@ -232,7 +231,6 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_csv", type=str, required=True, help="Input CSV(.gz) containing a SMILES column.")
     parser.add_argument("--smiles_col", type=str, default="smiles", help="SMILES column name.")
-    parser.add_argument("--seed", type=int, default=DEFAULT_SEED)
     parser.add_argument("--test_frac", type=float, default=DEFAULT_TEST_FRAC)
     parser.add_argument("--val_frac_in_trainval", type=float, default=DEFAULT_VAL_FRAC_IN_TRAINVAL)
 
@@ -303,7 +301,6 @@ def main() -> None:
     trainval_smis, test_smis = _two_way_scaffold_split(
         scaffold_to_smis=scaffold_to_smis,
         frac_b=float(args.test_frac),
-        seed=int(args.seed),
     )
 
     trainval_set = set(trainval_smis)
@@ -316,7 +313,6 @@ def main() -> None:
     train_smis, val_smis = _two_way_scaffold_split(
         scaffold_to_smis=trainval_scaffold_to_smis,
         frac_b=float(args.val_frac_in_trainval),
-        seed=int(args.seed) + 1,
     )
 
     # Sanity: no overlap
