@@ -17,6 +17,7 @@ from matplotlib import cm
 from matplotlib.colors import LinearSegmentedColormap
 from PIL import Image
 import io
+from rdkit.Chem import rdDetermineBonds
 
 
 PWD = os.path.realpath(os.path.dirname(__file__))
@@ -28,7 +29,7 @@ def load_sdf(
     ):
     dict_key = _resolve_model_dict_key(model_name="unimolv1", remove_hs=True)
     dict_path = os.path.join(WEIGHT_DIR, MODEL_CONFIG["dict"][dict_key])
-    supp = Chem.SDMolSupplier(sdf_path)
+    supp = Chem.SDMolSupplier(sdf_path, removeHs=False)
     mol = supp[0]
     if mol is not None and mol.GetNumConformers() > 0:
         conf = mol.GetConformer()
@@ -82,8 +83,8 @@ def integrated_gradients(
     elif baseline_method == 'mean':
         baseline = x_input.mean(dim=1, keepdim=True).expand_as(x_input)
     elif baseline_method == 'embed':
-        # baseline = model.embed_tokens.weight[1:].mean(dim=1, keepdim=True).unsqueeze(0).expand_as(x_input)
-        raise NotImplementedError(f"Currently {baseline_method} is under construction...")
+        baseline = model.embed_tokens.weight[1:].mean(dim=1, keepdim=True).unsqueeze(0).expand_as(x_input)
+        # raise NotImplementedError(f"Currently {baseline_method} is under construction...")
     else:
         raise ValueError(f"Unknown baseline_method: {baseline_method}")
 
@@ -258,8 +259,15 @@ def compute_and_visualize_attributions(
     src_edge_type = torch.tensor(feat['src_edge_type'], device=device).unsqueeze(0)
     
     # Load molecule for visualization
-    supp = Chem.SDMolSupplier(sdf_path)
+    supp = Chem.SDMolSupplier(sdf_path, removeHs=False)
     mol = supp[0]
+    # Add bonds if molecule has no bonds
+    if mol is not None and mol.GetNumBonds() == 0:
+        mol_copy = Chem.Mol(mol)
+        charge = [a.GetFormalCharge() for a in mol.GetAtoms()]
+        total_charge = sum(charge)
+        rdDetermineBonds.DetermineBonds(mol_copy, useHueckel=True, charge=total_charge)
+        mol = mol_copy
     
     # Compute integrated gradients
     attributions, atom_attributions = integrated_gradients(
