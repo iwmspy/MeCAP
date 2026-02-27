@@ -482,13 +482,14 @@ def has_bonds(mol):
     """Return True if molecule has at least one bond."""
     return mol.GetNumBonds() > 0
 
-def convert_xyz_to_sdf(mol):
+def convert_xyz_to_sdf(mol, total_charge=None):
     """
     Original script comes from https://github.com/jensengroup/ESNUEL/blob/main/src/esnuel/molecule_formats.py#L33
     """
     mol_copy = Chem.Mol(mol)
-    charge = [a.GetFormalCharge() for a in mol.GetAtoms()]
-    total_charge = sum(charge)
+    if total_charge is None:
+        charge = [a.GetFormalCharge() for a in mol.GetAtoms()]
+        total_charge = sum(charge)
     rdDetermineBonds.DetermineBonds(mol_copy, useHueckel=True, charge=total_charge)
     # rdDetermineBonds.DetermineBondOrders(rdkit_mol, charge=chrg)
     # rdDetermineBonds.DetermineBonds(rdkit_mol, charge=chrg, covFactor=1.3, allowChargedFragments=True, useHueckel=False, embedChiral=False, useAtomMap=False)
@@ -505,21 +506,21 @@ def convert_xyz_to_sdf(mol):
 
     return mol_copy
 
-def convert_xyz_to_smiles(mol, sanitize=True, removeHs=False):
+def convert_xyz_to_smiles(mol, sanitize=True, removeHs=False, total_charge=None):
     try:
-        nmol = convert_xyz_to_sdf(mol)
-    except:
-        return None
-    if sanitize:
-        Chem.SanitizeMol(nmol)
-    if removeHs:
-        return Chem.MolToSmiles(Chem.RemoveAllHs(nmol))
-    return Chem.MolToSmiles(nmol)
+        nmol = convert_xyz_to_sdf(mol, total_charge)
+        if sanitize:
+            Chem.SanitizeMol(nmol)
+        if removeHs:
+            return (Chem.MolToSmiles(Chem.RemoveAllHs(nmol)), None,)
+        return (Chem.MolToSmiles(nmol), None,)
+    except Exception as e:
+        return (None, e,)
 
-def convert_xyz_to_smiles_from_file(infile, sanitize=True, removeHs=False):
+def convert_xyz_to_smiles_from_file(infile, sanitize=True, removeHs=False, total_charge=None):
     suppl = Chem.SDMolSupplier(infile, removeHs=False, sanitize=False)
     mols: List[Chem.Mol] = [m for m in suppl if m is not None]
-    return [convert_xyz_to_smiles(m,sanitize,removeHs) for m in mols] if len(mols) > 1 else convert_xyz_to_smiles(mols[0],sanitize,removeHs)
+    return np.array([list(convert_xyz_to_smiles(m,sanitize,removeHs,total_charge)) for m in mols]).T.tolist() if len(mols) > 1 else convert_xyz_to_smiles(mols[0],sanitize,removeHs,total_charge)
 
 def generate_far_conformer(
     mol: Chem.Mol,

@@ -40,17 +40,19 @@ from tqdm import tqdm
 tqdm.pandas()
 
 from core_modules.conformer import convert_xyz_to_smiles_from_file
+from core_modules.molecule_formats import convert_xyz_to_sdf, compare_sdf_structure
 
 # ---------- CLI ----------
 
 def _build_cli() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(description="Sanity check of SMILES from pd.DataFrame and Orca.")
     p.add_argument("--input-csv", required=True, help="Input CSV with at least a 'smiles' column and 'name' column.")
-    p.add_argument("--input-dirs", required=True, nargs='*', help="Input directory storing Orca-optimized sdf (Need bond determination).")
-    p.add_argument("--input-dirs-no-determine", nargs='*', help="Input directory storing Orca-optimized sdf (No need bond determination).")
+    p.add_argument("--input-dirs", required=True, nargs='*', default=[], help="Input directory storing Orca-optimized sdf (Need bond determination).")
+    p.add_argument("--input-dirs-no-determine", nargs='*', default=[], help="Input directory storing Orca-optimized sdf (No need bond determination).")
     p.add_argument("--out-csv", required=True, help="Path to write result CSV.")
     p.add_argument("--smiles-col", default="smiles", help="Column name for SMILES in input CSV.")
     p.add_argument("--name-col", default="name", help="Column name for molecule names.")
+    p.add_argument("--level", default='molecule', choices=['molecule','connectivity'], help="Sanity check level.")
     return p
 
 def sanitize_smiles(smi):
@@ -71,32 +73,42 @@ def main() -> None:
 
     df = pd.read_csv(args.input_csv)[[args.name_col, args.smiles_col]]
     name   = df[args.name_col]
+    charge = [sum([a.GetFormalCharge() for a in Chem.MolFromSmiles(smi).GetAtoms()]) for smi in df[args.smiles_col]]
     df['smiles_from_dataframe'] = df[args.smiles_col].progress_apply(sanitize_smiles)
+    df['total_charge'] = charge
 
     to_sanity_check = []
     
-    for direc in args.input_dirs:
-        if direc.endswith('/'):
-            direc = direc[:-1]
-        df[f'smiles_from_{os.path.basename(direc)}'] = [
-            convert_xyz_to_smiles_from_file(os.path.join(direc, f'{n}.sdf')) 
-            if os.path.exists(os.path.join(direc, f'{n}.sdf')) else None
-            for n in tqdm(name)
+    for direc in list(args.input_dirs) + list(args.input_dirs_no_determine):
+        if args.level == 'molecule':
+            CONVERGE_FN = convert_xyz_to_smiles_from_file if direc in args.input_dirs else lambda fpath, total_charge: sdf_to_smiles(fpath)
+            if direc.endswith('/'):
+                direc = direc[:-1]
+            ret = [
+                CONVERGE_FN(os.path.join(direc, f'{n}.sdf'), total_charge=c) 
+                if os.path.exists(os.path.join(direc, f'{n}.sdf')) 
+                else [None,'File not exist']
+                for n,c in tqdm(zip(name, charge),total=len(name))
+                ]
+            df[f'smiles_from_{os.path.basename(direc)}'] = [r[0] for r in ret]
+            df[f'error_{os.path.basename(direc)}'] = [r[-1] for r in ret]
+            df[f'match_with_{os.path.basename(direc)}'] = [a == b for a, b in tqdm(zip(df['smiles_from_dataframe'],df[f'smiles_from_{os.path.basename(direc)}']))]
+        else:
+            mols_from_smiles = [Chem.AddHs(Chem.MolFromSmiles(smi)) for smi in df[args.smiles_col]]
+            mols_from_sdf = [
+                convert_xyz_to_sdf(os.path.join(direc, f'{n}.sdf'))
+                if os.path.exists(os.path.join(direc, f'{n}.sdf')) 
+                else None
+                for n in tqdm(name)
             ]
-        df[f'match_with_{os.path.basename(direc)}'] = [a == b for a, b in tqdm(zip(df['smiles_from_dataframe'],df[f'smiles_from_{os.path.basename(direc)}']))]
-        to_sanity_check.append(f'match_with_{os.path.basename(direc)}')
-    
-    for direc in args.input_dirs_no_determine:
-        if direc.endswith('/'):
-            direc = direc[:-1]
-        df[f'smiles_from_{os.path.basename(direc)}'] = [
-            sdf_to_smiles(os.path.join(direc, f'{n}.sdf')) 
-            if os.path.exists(os.path.join(direc, f'{n}.sdf')) else None
-            for n in tqdm(name)
+            sdf_matches = [
+                compare_sdf_structure(Chem.MolToMolBlock(m_smi), Chem.MolToMolBlock(m_sdf), True, True)
+                if not None in (m_smi, m_sdf,) else False
+                for m_smi, m_sdf in tqdm(zip(mols_from_smiles,mols_from_sdf),total=len(mols_from_smiles))
             ]
-        df[f'match_with_{os.path.basename(direc)}'] = [a == b for a, b in tqdm(zip(df['smiles_from_dataframe'],df[f'smiles_from_{os.path.basename(direc)}']))]
+            df[f'match_with_{os.path.basename(direc)}'] = sdf_matches
         to_sanity_check.append(f'match_with_{os.path.basename(direc)}')
-    
+
     df['sanity'] = df.apply(lambda row: all(row[to_sanity_check]), axis=1)
     df.to_csv(args.out_csv,index=False)
     df[df['sanity']][args.name_col].to_csv(args.out_csv.replace('.csv','.index'),index=False,header=False)
