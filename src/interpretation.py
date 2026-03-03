@@ -80,11 +80,9 @@ def integrated_gradients(
     # Create baseline
     if baseline_method == 'zero':
         baseline = torch.zeros_like(x_input)
-    elif baseline_method == 'mean':
-        baseline = x_input.mean(dim=1, keepdim=True).expand_as(x_input)
-    elif baseline_method == 'embed':
-        baseline = model.embed_tokens.weight[1:].mean(dim=1, keepdim=True).unsqueeze(0).expand_as(x_input)
-        # raise NotImplementedError(f"Currently {baseline_method} is under construction...")
+    elif baseline_method == 'mask':
+        with torch.no_grad():
+            baseline = model.embed_tokens(torch.tensor([model.mask_idx] * src_tokens.shape[1], device=device).unsqueeze(0))
     else:
         raise ValueError(f"Unknown baseline_method: {baseline_method}")
 
@@ -304,7 +302,8 @@ if __name__ == '__main__':
     pred_df    = pd.read_csv(f'{ROOT_DIR}/data/results/mecap_ref_mca_layer_0/predictions.csv', index_col=0)
     checkpoint = f'{ROOT_DIR}/data/results/mecap_ref_maa_layer_0/best_model.pt'
     # baseline_method = 'embed'
-    baseline_method = 'zero'
+    # baseline_method = 'zero'
+    baseline_method = 'mask'
     device     = 'cuda:0'
 
     targets_smiles = ['CN(C)C(=O)CCNC(=O)NCc1ccc(Br)cc1Cl', 'NOCc1cccc(I)c1']
