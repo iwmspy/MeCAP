@@ -7,7 +7,6 @@ import torch
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
 from matplotlib import cm
-from matplotlib.colors import LinearSegmentedColormap
 from PIL import Image, ImageDraw
 import io
 
@@ -25,6 +24,8 @@ from core_modules.dataset import _resolve_model_dict_key
 
 PWD = os.path.realpath(os.path.dirname(__file__))
 ROOT_DIR = os.path.realpath(os.path.join(PWD, '..'))
+# Colorblind-friendly sequential map with better perceptual contrast.
+ATTN_CMAP = cm.get_cmap("cividis")
 
 
 def load_sdf(
@@ -54,8 +55,9 @@ def extract_attention_weights(
     src_distance: torch.Tensor,
     src_coord: torch.Tensor,
     src_edge_type: torch.Tensor,
+    final_layer_only: bool = True,
 ) -> Dict[str, torch.Tensor]:
-    """Extract post-softmax attention probabilities from all encoder layers.
+    """Extract post-softmax attention probabilities.
 
     Args:
         model: Trained UniMolV1Model.
@@ -65,8 +67,9 @@ def extract_attention_weights(
         src_edge_type: (B, L, L) edge types.
 
     Returns:
-        Dict mapping ``"encoder_layer_{i}"`` to attention probability tensors
+        Dict mapping layer name to attention probability tensors
         of shape ``(H, N, N)`` (CLS/EOS stripped, post-softmax).
+        If ``final_layer_only=True`` (default), only the final layer is returned.
         H = number of attention heads, N = number of atoms.
     """
     model.eval()
@@ -82,8 +85,9 @@ def extract_attention_weights(
 
         attn_mask = graph_attn_bias
 
-        # Iterate through layers, collecting attention from the target layer
+        # Iterate through layers and collect either all layers or only final one.
         attn_probs_dict = {}
+        n_layers = len(encoder.layers)
         for i, encoder_layer in enumerate(encoder.layers):
             x, attn_mask, attn_probs = encoder_layer(
                 x, padding_mask=None, attn_bias=attn_mask,
@@ -93,9 +97,24 @@ def extract_attention_weights(
             # Strip CLS (position 0) and EOS (position -1)
             attn_probs = attn_probs[:, 1:-1, 1:-1]
 
-            attn_probs_dict[f'encoder_layer_{i+1}'] = attn_probs.clone().detach().cpu()
+            if (not final_layer_only) or (i == n_layers - 1):
+                attn_probs_dict[f'encoder_layer_{i+1}'] = attn_probs.clone().detach().cpu()
+        pred = model.single_atom_head(x.squeeze(0)[1:-1,:]).detach().cpu().ravel()
 
-    return attn_probs_dict
+    return attn_probs_dict, pred
+
+
+def select_final_layer_attention(
+    attn_weights_dict: Dict[str, torch.Tensor]
+) -> Tuple[str, torch.Tensor]:
+    """Return the final encoder-layer attention tensor from extracted dict."""
+    if not attn_weights_dict:
+        raise ValueError("attn_weights_dict is empty.")
+    ordered = sorted(
+        attn_weights_dict.items(),
+        key=lambda kv: int(kv[0].split("_")[-1]),
+    )
+    return ordered[-1]
 
 
 def visualize_attention_heatmap(
@@ -105,7 +124,7 @@ def visualize_attention_heatmap(
     title: Optional[str] = None,
     output_path: Optional[str] = None,
     figsize: Tuple[int, int] = (10, 8),
-    cmap: str = "Blues",
+    cmap=ATTN_CMAP,
     vmin: Optional[float] = None,
     vmax: Optional[float] = None,
 ) -> plt.Figure:
@@ -164,7 +183,7 @@ def visualize_attention_heatmaps_grid(
     title: Optional[str] = None,
     output_path: Optional[str] = None,
     cols: int = 3,
-    cmap: str = "Blues",
+    cmap=ATTN_CMAP,
 ) -> plt.Figure:
     """Visualize layer-wise attention heatmaps in a single figure."""
     layer_items = list(attn_matrices.items())
@@ -244,7 +263,7 @@ def _make_mol_overlay_image(
     mol_2d = Chem.Mol(mol)
     AllChem.Compute2DCoords(mol_2d)
 
-    cmap = LinearSegmentedColormap.from_list("white_red", ["white", "red"], N=256)
+    cmap = ATTN_CMAP
     norm = plt.Normalize(vmin=vmin, vmax=vmax)
     n_atoms = mol.GetNumAtoms()
     atom_colors = {}
@@ -284,8 +303,8 @@ def _make_mol_overlay_image(
     draw = ImageDraw.Draw(img)
     tx, ty = float(target_xy.x), float(target_xy.y)
     r_outer, r_inner = 22, 18
-    # Use cyan-blue outline for high contrast against red attention map.
-    draw.ellipse((tx - r_outer, ty - r_outer, tx + r_outer, ty + r_outer), outline=(0, 114, 178), width=5)
+    # Use warm orange outline for contrast against cividis map.
+    draw.ellipse((tx - r_outer, ty - r_outer, tx + r_outer, ty + r_outer), outline=(230, 116, 34), width=5)
     draw.ellipse((tx - r_inner, ty - r_inner, tx + r_inner, ty + r_inner), outline=(255, 255, 255), width=3)
 
     return _trim_white_margins(img, pad=10)
@@ -343,8 +362,8 @@ def visualize_attention_on_structure(
     mol_2d = Chem.Mol(mol)
     AllChem.Compute2DCoords(mol_2d)
 
-    # --- Colormap (white -> red) ---
-    cmap = LinearSegmentedColormap.from_list("white_red", ["white", "red"], N=256)
+    # --- Colormap ---
+    cmap = ATTN_CMAP
     norm = plt.Normalize(vmin=vmin, vmax=vmax)
     n_atoms = mol.GetNumAtoms()
     atom_colors = {}
@@ -456,7 +475,7 @@ def visualize_attention_on_structure_grid(
         r, c = divmod(j, cols)
         axes[r, c].axis("off")
 
-    cmap = LinearSegmentedColormap.from_list("white_red", ["white", "red"], N=256)
+    cmap = ATTN_CMAP
     norm = plt.Normalize(vmin=vmin, vmax=vmax)
     sm = cm.ScalarMappable(cmap=cmap, norm=norm)
     sm.set_array([])
@@ -464,7 +483,7 @@ def visualize_attention_on_structure_grid(
     fig.colorbar(sm, cax=cax, label="Attention Weight")
 
     symbol = mol.GetAtomWithIdx(target_atom_idx).GetSymbol()
-    title_lines = f"Attention Map (All Layers) — Target Atom: {target_atom_idx} ({symbol})"
+    title_lines = f"Attention Map — Target Atom: {target_atom_idx} ({symbol})"
     if pred_val is not None and exp_val is not None:
         title_lines += f"\nExperimental: {exp_val:.3f} kcal/mol, Predicted: {pred_val:.3f} kcal/mol"
     fig.suptitle(title_lines, fontsize=15, fontweight="bold")
@@ -494,7 +513,7 @@ def compute_and_visualize_attention_maps(
     """Compatibility wrapper with interpretation.compute_and_visualize_attributions.
 
     This wrapper accepts nearly the same input interface and produces
-    an all-layer attention-on-structure figure for a target atom.
+    a final-layer attention-on-structure figure for a target atom.
     Note:
       - `baseline_method` and `n_steps` are accepted for API compatibility
         but are not used in attention-map extraction.
@@ -516,38 +535,28 @@ def compute_and_visualize_attention_maps(
     src_coord = torch.tensor(feat["src_coord"], device=device).unsqueeze(0)
     src_edge_type = torch.tensor(feat["src_edge_type"], device=device).unsqueeze(0)
 
-    attn_weights_dict = extract_attention_weights(
+    attn_weights_dict, pred_ = extract_attention_weights(
         model=model,
         src_tokens=src_tokens,
         src_distance=src_distance,
         src_coord=src_coord,
         src_edge_type=src_edge_type,
     )
-    attn_agg_by_layer = {
-        layer_name: attn_weights.mean(dim=0).cpu().numpy()
-        for layer_name, attn_weights in attn_weights_dict.items()
-    }
-    attn_agg_by_layer = dict(
-        sorted(attn_agg_by_layer.items(), key=lambda kv: int(kv[0].split("_")[-1]))
-    )
+    final_layer_name, final_layer_attn = select_final_layer_attention(attn_weights_dict)
+    attn_final = final_layer_attn.mean(dim=0).cpu().numpy()
+    attn_from_target = attn_final[atom_index, :].copy()
+    if normalize:
+        vmin, vmax = float(attn_from_target.min()), float(attn_from_target.max())
+        if vmax > vmin:
+            attn_from_target = (attn_from_target - vmin) / (vmax - vmin)
 
-    attn_from_target_by_layer = {}
-    for layer_name, attn_agg in attn_agg_by_layer.items():
-        vec = attn_agg[atom_index, :].copy()
-        if normalize:
-            vmin, vmax = float(vec.min()), float(vec.max())
-            if vmax > vmin:
-                vec = (vec - vmin) / (vmax - vmin)
-        attn_from_target_by_layer[layer_name] = vec
-
-    fig = visualize_attention_on_structure_grid(
+    fig = visualize_attention_on_structure(
         mol=mol,
-        attn_by_layer=attn_from_target_by_layer,
+        attn_from_target=attn_from_target,
         target_atom_idx=atom_index,
         pred_val=pred_val,
         exp_val=exp_val,
         output_path=output_path,
-        cols=cols,
         img_size=img_size,
     )
     return fig
@@ -580,43 +589,38 @@ if __name__ == "__main__":
         nuc_sites = list(exp_df.query("smiles == @target_smiles")["nuc_sites"])
 
         # --- Extract attention weights for this layer ---
-        attn_weights_dict = extract_attention_weights(
+        attn_weights_dict, pred_ = extract_attention_weights(
             model, src_tokens, src_distance, src_coord, src_edge_type
         )
 
-        attn_agg_by_layer = {
-            layer_name: attn_weights.mean(dim=0).cpu().numpy()
-            for layer_name, attn_weights in attn_weights_dict.items()
-        }
+        final_layer_name, final_layer_attn = select_final_layer_attention(attn_weights_dict)
+        attn_final = final_layer_attn.mean(dim=0).cpu().numpy()
 
         smiles_dir = Path(
             base_output_dir, "interpretation", target_smiles, "attention"
         )
         smiles_dir.mkdir(parents=True, exist_ok=True)
 
-        # --- Heatmap (all layers in one figure) ---
-        visualize_attention_heatmaps_grid(
-            attn_agg_by_layer,
+        # --- Heatmap (final layer only) ---
+        visualize_attention_heatmap(
+            attn_final,
             atoms,
-            title=f"Attention Heatmaps (All Layers) — {target_smiles}",
-            output_path=smiles_dir / "heatmaps_all_layers.png",
+            title=f"Attention Heatmap ({final_layer_name}) — {target_smiles}",
+            output_path=smiles_dir / "heatmap_final_layer.png",
         )
 
-        # --- Structure overlay (all layers in one figure per nucleophilic site) ---
+        # --- Structure overlay (final layer only; one per nucleophilic site) ---
         for nuc_site in nuc_sites:
             exp_val = pred_df.query("smiles == @target_smiles and nuc_sites == @nuc_site")["MCA_values"].values[0]
             pred_val = pred_df.query("smiles == @target_smiles and nuc_sites == @nuc_site")["pred"].values[0]
 
-            attn_from_target_by_layer = {
-                layer_name: attn_agg[nuc_site, :]
-                for layer_name, attn_agg in attn_agg_by_layer.items()
-            }
+            attn_from_target = attn_final[nuc_site, :]
 
-            visualize_attention_on_structure_grid(
+            visualize_attention_on_structure(
                 mol,
-                attn_from_target_by_layer,
+                attn_from_target,
                 target_atom_idx=nuc_site,
                 pred_val=pred_val,
                 exp_val=exp_val,
-                output_path=smiles_dir / f"site_{nuc_site}_all_layers.png",
+                output_path=smiles_dir / f"site_{nuc_site}_final_layer.png",
             )
