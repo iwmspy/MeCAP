@@ -30,8 +30,8 @@ cd ${SRCP_DIR} || exit
 # ${EXEC_PAT} -m identify_sites \
 #     --input ${BASE_DIR}/100_rxn_mechanisms/100_rxn_mechanisms_no_error_reactants.csv \
 #     --smiles-col reactant_smi --name-col reactant_id_no_underbar \
-#     --output-elec ${SAVE_DIR}/maa/100_rxn_mechanisms_no_error_reactants_elec.csv \
-#     --output-nuc ${SAVE_DIR}/mca/100_rxn_mechanisms_no_error_reactants_nuc.csv \
+#     --output-elec ${SAVE_DIR}/unique/100_rxn_mechanisms_no_error_reactants_elec.csv \
+#     --output-nuc ${SAVE_DIR}/unique/100_rxn_mechanisms_no_error_reactants_nuc.csv \
 #     --output-unique ${SAVE_DIR}/unique/100_rxn_mechanisms_no_error_reactants_unique.csv \
 
 
@@ -47,7 +47,7 @@ cd ${SRCP_DIR} || exit
 
 
 ${EXEC_PAT} -m predict \
-  --data ${SAVE_DIR}/maa/100_rxn_mechanisms_no_error_reactants_elec.csv \
+  --data ${SAVE_DIR}/unique/100_rxn_mechanisms_no_error_reactants_elec.csv \
   --checkpoint ${RESL_DIR}/mecap_ref_maa_v2_layer_0/best_model.pt \
   --atom_index_col elec_sites \
   --sdf_name_col name \
@@ -59,7 +59,7 @@ ${EXEC_PAT} -m predict \
 
 
 ${EXEC_PAT} -m predict \
-  --data ${SAVE_DIR}/mca/100_rxn_mechanisms_no_error_reactants_nuc.csv \
+  --data ${SAVE_DIR}/unique/100_rxn_mechanisms_no_error_reactants_nuc.csv \
   --checkpoint ${RESL_DIR}/mecap_ref_mca_v2_layer_0/best_model.pt \
   --atom_index_col nuc_sites \
   --sdf_name_col name \
