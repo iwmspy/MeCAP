@@ -26,6 +26,7 @@ import numpy as np
 import pandas as pd
 from scipy.stats import pearsonr
 from sklearn.metrics import r2_score
+from scipy.stats import kendalltau
 import matplotlib.pyplot as plt
 import seaborn as sns
 from rdkit import Chem
@@ -276,3 +277,239 @@ def extract_best_epoch(log_path: str) -> int:
         "Could not determine best epoch. "
         "Expected 'Test@best_epoch=...' or 'Saved best model at epoch ...' in the log."
     )
+
+def calculate_kendall_correlation_by_group(df, group_col, col1, col2):
+    """
+    Calculate Kendall's tau correlation for each group in the dataframe.
+    
+    Parameters:
+    -----------
+    df : pandas.DataFrame
+        Input dataframe
+    group_col : str
+        Column name to group by
+    col1 : str
+        First column for correlation calculation
+    col2 : str
+        Second column for correlation calculation
+    
+    Returns:
+    --------
+    pandas.DataFrame
+        DataFrame with group names, tau values, and p-values
+    """
+    results = []
+    
+    for group_name, group_df in df.groupby(group_col):
+        # Remove NaN values
+        valid_data = group_df[[col1, col2]].dropna()
+        
+        if len(valid_data) > 1:  # Need at least 2 points for correlation
+            tau, p_value = kendalltau(valid_data[col1], valid_data[col2])
+            max_index_match = pd.to_numeric(valid_data[col1], errors='coerce').idxmax() == pd.to_numeric(valid_data[col2], errors='coerce').idxmax()
+            results.append({
+            group_col: group_name,
+            'tau': tau,
+            'p_value': p_value,
+            'n': len(valid_data),
+            'max_index_match': max_index_match,
+            })
+        else:
+            results.append({
+            group_col: group_name,
+            'tau': None,
+            'p_value': None,
+            'n': len(valid_data),
+            'max_index_match': None,
+            })
+    res_df = pd.DataFrame(results)
+    return res_df.set_index(group_col,drop=True)
+
+
+# ---------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------
+def get_map_num(smiles: str, atom_idx: int) -> int:
+    """Return atom map number at the given atom index from a SMILES string."""
+    mol = Chem.MolFromSmiles(smiles)
+    return mol.GetAtomWithIdx(atom_idx).GetAtomMapNum()
+
+
+def parse_rxn_id(text: str) -> int:
+    """Extract reaction ID from strings like '123reac...'."""
+    return int(text.split("reac")[0])
+
+
+def build_score_map(gdf: pd.DataFrame, score_col: str) -> dict[int, float]:
+    """Build raw score map: {MapNum: score}."""
+    score_map = {}
+    for _, row in gdf.iterrows():
+        map_num = int(row["MapNum"])
+        if map_num != 0:
+            score_map[map_num] = float(row[score_col])
+    return score_map
+
+
+def compare_scores(score_a: float, score_b: float, tol: float = 1e-12) -> int:
+    """
+    Compare two scores.
+
+    Return:
+        1  if score_a > score_b
+        0  if abs(score_a - score_b) <= tol
+       -1  if score_a < score_b
+    """
+    diff = score_a - score_b
+    if abs(diff) <= tol:
+        return 0
+    return 1 if diff > 0 else -1
+
+
+def add_model_scores(
+    mapno_data: dict,
+    model_name: str,
+    df_by_key: dict[str, pd.DataFrame],
+    smiles_col: str,
+    site_col_by_key: dict[str, str],
+    id_col: str,
+    score_col_by_key: dict[str, str],
+    use_only_succeeded: bool = True,
+) -> None:
+    """
+    Populate:
+        mapno_data[rxn_id][model_name][source|sink] = {
+            "score_map": {MapNum: raw_score},
+            "n_sites": int
+        }
+    """
+    for key, df in df_by_key.items():
+        site_col = site_col_by_key[key]
+        score_col = score_col_by_key[key]
+
+        temp = df.copy()
+        temp["MapNum"] = temp.apply(
+            lambda row: get_map_num(row[smiles_col], row[site_col]),
+            axis=1,
+        )
+        temp["rxn_id"] = temp[id_col].apply(parse_rxn_id)
+
+        if use_only_succeeded and "succeeded" in temp.columns:
+            temp = temp[temp["succeeded"].fillna(False)].copy()
+
+        for rxn_id, gdf in temp.groupby("rxn_id"):
+            gdf_valid = gdf[gdf["MapNum"] != 0].copy()
+            if gdf_valid.empty:
+                continue
+
+            score_map = build_score_map(gdf_valid, score_col)
+
+            mapno_data.setdefault(rxn_id, {}).setdefault(model_name, {})[key] = {
+                "score_map": score_map,
+                "n_sites": len(score_map),
+            }
+
+
+def build_pairwise_df(
+    df_rxn: pd.DataFrame,
+    mapno_data: dict,
+    ref_model: str,
+    cmp_model: str,
+    keys: tuple[str, ...] = ("source", "sink"),
+    tol: float = 1e-12,
+) -> pd.DataFrame:
+    """
+    Build pairwise comparison table for:
+        target reactive site vs each competitor site
+
+    Pairwise relations are computed on the intersection of sites
+    available for both ref_model and cmp_model.
+    """
+    rows = []
+
+    for rxn_id, model_dict in mapno_data.items():
+        if rxn_id not in df_rxn.index:
+            continue
+
+        if ref_model not in model_dict or cmp_model not in model_dict:
+            continue
+
+        for key in keys:
+            if key not in model_dict[ref_model]:
+                continue
+            if key not in model_dict[cmp_model]:
+                continue
+
+            target_map_num = df_rxn.loc[rxn_id, key]
+            if pd.isna(target_map_num):
+                continue
+            target_map_num = int(target_map_num)
+
+            ref_score_map = model_dict[ref_model][key]["score_map"]
+            cmp_score_map = model_dict[cmp_model][key]["score_map"]
+
+            common_maps = set(ref_score_map.keys()) & set(cmp_score_map.keys())
+            if target_map_num not in common_maps:
+                continue
+
+            common_maps.discard(target_map_num)
+            if not common_maps:
+                continue
+
+            ref_target_score = ref_score_map[target_map_num]
+            cmp_target_score = cmp_score_map[target_map_num]
+
+            for competitor_map_num in sorted(common_maps):
+                ref_comp_score = ref_score_map[competitor_map_num]
+                cmp_comp_score = cmp_score_map[competitor_map_num]
+
+                ref_relation = compare_scores(ref_target_score, ref_comp_score, tol=tol)
+                cmp_relation = compare_scores(cmp_target_score, cmp_comp_score, tol=tol)
+
+                rows.append(
+                    {
+                        "rxn_id": rxn_id,
+                        "key": key,
+                        "model": cmp_model,
+                        "target_map_num": target_map_num,
+                        "competitor_map_num": competitor_map_num,
+                        "ref_target_score": ref_target_score,
+                        "ref_competitor_score": ref_comp_score,
+                        "ref_relation": ref_relation,
+                        "cmp_target_score": cmp_target_score,
+                        "cmp_competitor_score": cmp_comp_score,
+                        "cmp_relation": cmp_relation,
+                        "agreement": (
+                            (ref_relation != 0)
+                            and (cmp_relation != 0)
+                            and (ref_relation == cmp_relation)
+                        ),
+                        "ref_tie": ref_relation == 0,
+                        "cmp_tie": cmp_relation == 0,
+                    }
+                )
+
+    return pd.DataFrame(rows)
+
+
+def summarize_pairwise(pairwise_df: pd.DataFrame) -> pd.DataFrame:
+    """Summarize pairwise agreement. Tied comparisons are excluded."""
+    if pairwise_df.empty:
+        return pd.DataFrame()
+
+    temp = pairwise_df.copy()
+    temp["valid_pair"] = ~(temp["ref_tie"] | temp["cmp_tie"])
+    temp["agreement_int"] = temp["agreement"].astype(int)
+
+    summary = (
+        temp.groupby(["model", "key"])
+        .agg(
+            n_rxns=("rxn_id", "nunique"),
+            n_pairs_total=("valid_pair", "size"),
+            n_pairs_valid=("valid_pair", "sum"),
+            n_agree=("agreement_int", "sum"),
+        )
+        .reset_index()
+    )
+
+    summary["agreement_rate"] = summary["n_agree"] / summary["n_pairs_valid"]
+    return summary

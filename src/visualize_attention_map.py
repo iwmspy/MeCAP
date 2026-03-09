@@ -7,6 +7,7 @@ import torch
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
 from matplotlib import cm
+from matplotlib import colors as mcolors
 from PIL import Image, ImageDraw
 import io
 
@@ -108,6 +109,10 @@ def select_final_layer_attention(
     attn_weights_dict: Dict[str, torch.Tensor]
 ) -> Tuple[str, torch.Tensor]:
     """Return the final encoder-layer attention tensor from extracted dict."""
+    if isinstance(attn_weights_dict, tuple):
+        # Backward compatibility: extract_attention_weights may return
+        # (attn_weights_dict, pred_values).
+        attn_weights_dict = attn_weights_dict[0]
     if not attn_weights_dict:
         raise ValueError("attn_weights_dict is empty.")
     ordered = sorted(
@@ -258,12 +263,16 @@ def _make_mol_overlay_image(
     vmax: float,
     show_atom_indices: Optional[bool] = None,
     target_aspect: float = 1.1,
+    cmap=ATTN_CMAP,
+    atom_highlight_radius: float = 0.28,
+    target_circle_color: str = "red",
+    target_circle_width: int = 5,
 ) -> Image.Image:
     """Create an RDKit 2D drawing image with attention-based atom coloring."""
     mol_2d = Chem.Mol(mol)
     AllChem.Compute2DCoords(mol_2d)
 
-    cmap = ATTN_CMAP
+    cmap = cm.get_cmap(cmap) if isinstance(cmap, str) else cmap
     norm = plt.Normalize(vmin=vmin, vmax=vmax)
     n_atoms = mol.GetNumAtoms()
     atom_colors = {}
@@ -287,7 +296,7 @@ def _make_mol_overlay_image(
         draw_opts.baseFontSize = 0.50
     if hasattr(draw_opts, "bondLineWidth"):
         draw_opts.bondLineWidth = 1.6
-    highlight_radii = {i: 0.28 for i in range(n_atoms)}
+    highlight_radii = {i: atom_highlight_radius for i in range(n_atoms)}
     drawer.DrawMolecule(
         mol_2d,
         highlightAtoms=list(range(n_atoms)),
@@ -296,16 +305,38 @@ def _make_mol_overlay_image(
         highlightBonds=[],
     )
     target_xy = drawer.GetDrawCoords(target_atom_idx)
+    bond_lengths = []
+    target_atom = mol_2d.GetAtomWithIdx(target_atom_idx)
+    for bond in target_atom.GetBonds():
+        nbr_idx = bond.GetOtherAtomIdx(target_atom_idx)
+        nbr_xy = drawer.GetDrawCoords(nbr_idx)
+        bond_lengths.append(
+            float(np.hypot(float(target_xy.x - nbr_xy.x), float(target_xy.y - nbr_xy.y)))
+        )
+    if bond_lengths:
+        base_bond_len = float(np.median(bond_lengths))
+    else:
+        all_bond_lengths = []
+        for bond in mol_2d.GetBonds():
+            bxy = drawer.GetDrawCoords(bond.GetBeginAtomIdx())
+            exy = drawer.GetDrawCoords(bond.GetEndAtomIdx())
+            all_bond_lengths.append(
+                float(np.hypot(float(bxy.x - exy.x), float(bxy.y - exy.y)))
+            )
+        base_bond_len = float(np.median(all_bond_lengths)) if all_bond_lengths else 40.0
     drawer.FinishDrawing()
     img = Image.open(io.BytesIO(drawer.GetDrawingText()))
 
     # Emphasize the target atom by outline (not by additional color fill).
     draw = ImageDraw.Draw(img)
+    rgb = tuple(int(round(v * 255)) for v in mcolors.to_rgb(target_circle_color))
     tx, ty = float(target_xy.x), float(target_xy.y)
-    r_outer, r_inner = 22, 18
-    # Use warm orange outline for contrast against cividis map.
-    draw.ellipse((tx - r_outer, ty - r_outer, tx + r_outer, ty + r_outer), outline=(230, 116, 34), width=5)
-    draw.ellipse((tx - r_inner, ty - r_inner, tx + r_inner, ty + r_inner), outline=(255, 255, 255), width=3)
+    r_outer = max(6.0, base_bond_len * atom_highlight_radius)
+    draw.ellipse(
+        (tx - r_outer, ty - r_outer, tx + r_outer, ty + r_outer),
+        outline=rgb,
+        width=max(1, int(target_circle_width)),
+    )
 
     return _trim_white_margins(img, pad=10)
 
@@ -337,6 +368,11 @@ def visualize_attention_on_structure(
     figsize: Tuple[int, int] = (12, 6),
     vmin: float = 0.0,
     vmax: Optional[float] = 0.2,
+    cmap: str = "cividis",
+    show_atom_indices: bool = False,
+    atom_highlight_radius: float = 0.28,
+    target_circle_color: str = "red",
+    target_circle_width: int = 5,
 ) -> plt.Figure:
     """Visualize attention from a target atom to all others on 2D molecular structure.
 
@@ -358,31 +394,22 @@ def visualize_attention_on_structure(
     if vmax is None:
         vmax = float(attn_from_target.max())
 
-    # --- 2D coordinates ---
-    mol_2d = Chem.Mol(mol)
-    AllChem.Compute2DCoords(mol_2d)
-
     # --- Colormap ---
-    cmap = ATTN_CMAP
+    cmap = cm.get_cmap(cmap) if isinstance(cmap, str) else cmap
     norm = plt.Normalize(vmin=vmin, vmax=vmax)
-    n_atoms = mol.GetNumAtoms()
-    atom_colors = {}
-    for i in range(n_atoms):
-        val = attn_from_target[i] if i < len(attn_from_target) else 0.0
-        atom_colors[i] = cmap(norm(val))[:3]
-
-    # --- RDKit drawing ---
-    w, h = img_size
-    drawer = Draw.MolDraw2DCairo(w, h)
-    drawer.drawOptions().addAtomIndices = True
-    drawer.DrawMolecule(
-        mol_2d,
-        highlightAtoms=list(range(n_atoms)),
-        highlightAtomColors=atom_colors,
-        highlightBonds=[],
+    mol_img = _make_mol_overlay_image(
+        mol=mol,
+        attn_from_target=attn_from_target,
+        target_atom_idx=target_atom_idx,
+        img_size=img_size,
+        vmin=vmin,
+        vmax=vmax,
+        show_atom_indices=show_atom_indices,
+        cmap=cmap,
+        atom_highlight_radius=atom_highlight_radius,
+        target_circle_color=target_circle_color,
+        target_circle_width=target_circle_width,
     )
-    drawer.FinishDrawing()
-    mol_img = Image.open(io.BytesIO(drawer.GetDrawingText()))
 
     # --- Figure ---
     fig, (ax_mol, ax_cbar) = plt.subplots(
@@ -428,6 +455,10 @@ def visualize_attention_on_structure_grid(
     vmin: float = 0.0,
     vmax: Optional[float] = None,
     show_atom_indices: Optional[bool] = None,
+    cmap: str = "cividis",
+    atom_highlight_radius: float = 0.28,
+    target_circle_color: str = "red",
+    target_circle_width: int = 5,
 ) -> plt.Figure:
     """Visualize layer-wise structure overlays in a single figure."""
     layer_items = list(attn_by_layer.items())
@@ -454,6 +485,10 @@ def visualize_attention_on_structure_grid(
             vmin=vmin,
             vmax=vmax,
             show_atom_indices=show_atom_indices,
+            cmap=cmap,
+            atom_highlight_radius=atom_highlight_radius,
+            target_circle_color=target_circle_color,
+            target_circle_width=target_circle_width,
         )
         ax.imshow(mol_img)
         ax.axis("off")
@@ -475,7 +510,7 @@ def visualize_attention_on_structure_grid(
         r, c = divmod(j, cols)
         axes[r, c].axis("off")
 
-    cmap = ATTN_CMAP
+    cmap = cm.get_cmap(cmap) if isinstance(cmap, str) else cmap
     norm = plt.Normalize(vmin=vmin, vmax=vmax)
     sm = cm.ScalarMappable(cmap=cmap, norm=norm)
     sm.set_array([])
@@ -508,7 +543,11 @@ def compute_and_visualize_attention_maps(
     output_path: Optional[str] = None,
     img_size = (700, 700),
     device: str = "cuda:0",
-    cols: int = 3,
+    cmap: str = "cividis",
+    show_atom_indices: bool = False,
+    atom_highlight_radius: float = 0.28,
+    target_circle_color: str = "red",
+    target_circle_width: int = 5,
 ) -> plt.Figure:
     """Compatibility wrapper with interpretation.compute_and_visualize_attributions.
 
@@ -535,7 +574,7 @@ def compute_and_visualize_attention_maps(
     src_coord = torch.tensor(feat["src_coord"], device=device).unsqueeze(0)
     src_edge_type = torch.tensor(feat["src_edge_type"], device=device).unsqueeze(0)
 
-    attn_weights_dict, pred_ = extract_attention_weights(
+    attn_weights_dict, _ = extract_attention_weights(
         model=model,
         src_tokens=src_tokens,
         src_distance=src_distance,
@@ -557,7 +596,12 @@ def compute_and_visualize_attention_maps(
         pred_val=pred_val,
         exp_val=exp_val,
         output_path=output_path,
+        cmap=cmap,
+        show_atom_indices=show_atom_indices,
         img_size=img_size,
+        atom_highlight_radius=atom_highlight_radius,
+        target_circle_color=target_circle_color,
+        target_circle_width=target_circle_width,
     )
     return fig
 
@@ -589,7 +633,7 @@ if __name__ == "__main__":
         nuc_sites = list(exp_df.query("smiles == @target_smiles")["nuc_sites"])
 
         # --- Extract attention weights for this layer ---
-        attn_weights_dict, pred_ = extract_attention_weights(
+        attn_weights_dict, _ = extract_attention_weights(
             model, src_tokens, src_distance, src_coord, src_edge_type
         )
 
