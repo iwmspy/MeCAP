@@ -331,46 +331,33 @@ added_e_smirks_dict = {
 #                 }
 # ### END SMe ###
 
-def find_electrophilic_sites(rdkit_mol):
+
+def find_sites(rdkit_mol, smirks_dict=n_smirks_dict | e_smirks_dict):
     copy_rdkit_mol = Chem.Mol(rdkit_mol, True)
     copy_rdkit_mol = Chem.AddHs(copy_rdkit_mol)
     Chem.Kekulize(copy_rdkit_mol)
 
-    elec_sites = []
-    elec_names = []
-    elec_smirks = []
-    for name, smirks in e_smirks_dict.items():
+    sites_all = []
+    names_all = []
+    smirks_all = []
+    for name, smirks in smirks_dict.items():
         smarts = smirks.split('>>')[0]
         subs = substructure_match(copy_rdkit_mol, Chem.MolFromSmarts(smarts), False)
         if subs:
             sites = [x[0] for x in subs]
             for site in sites:
-                if site not in elec_sites:
-                    elec_sites.append(site)
-                    elec_names.append(name)
-                    elec_smirks.append(smirks)
-    
-    return elec_sites, elec_names, elec_smirks
+                if site not in sites_all:
+                    sites_all.append(site)
+                    names_all.append(name)
+                    smirks_all.append(smirks)
+
+    return sites_all, names_all, smirks_all
+
+
+def find_electrophilic_sites(rdkit_mol):
+    return find_sites(rdkit_mol, e_smirks_dict)
 
 
 def find_nucleophilic_sites(rdkit_mol):
-    copy_rdkit_mol = Chem.Mol(rdkit_mol, True)
-    copy_rdkit_mol = Chem.AddHs(copy_rdkit_mol)
-    Chem.Kekulize(copy_rdkit_mol)
+    return find_sites(rdkit_mol, n_smirks_dict)
 
-    nuc_sites = []
-    nuc_names = []
-    nuc_smirks = []
-    for name, smirks in n_smirks_dict.items():
-        smarts = smirks.split('>>')[0]
-        subs = substructure_match(copy_rdkit_mol, Chem.MolFromSmarts(smarts), False)
-        if subs:
-            sites = [x[0] for x in subs]
-            # sites = remove_identical_atoms(copy_rdkit_mol, sites)
-            for site in sites:
-                if site not in nuc_sites:
-                    nuc_sites.append(site)
-                    nuc_names.append(name)
-                    nuc_smirks.append(smirks)
-
-    return nuc_sites, nuc_names, nuc_smirks

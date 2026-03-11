@@ -20,6 +20,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+if '__file__' in globals():
+    import os, sys
+    sys.path.append(os.path.join(os.path.dirname(__file__),'..','src'))
+
 from typing import Iterable, Optional, Tuple, Union, Mapping, Any, Dict, Set, List
 import ast, io, math, os, re
 import numpy as np
@@ -34,6 +38,8 @@ from rdkit.Chem import rdDepictor
 from rdkit.Chem.Draw import rdMolDraw2D
 from rdkit.Geometry import Point3D
 from PIL import Image, ImageDraw, ImageFont
+
+from core_modules.atom import find_sites, extracted_n_smirks_dict, extracted_e_smirks_dict, added_n_smirks_dict, added_e_smirks_dict
 
 s_params = Chem.SubstructMatchParameters()
 s_params.numThreads = min(8, os.cpu_count())
@@ -324,4 +330,12 @@ def calculate_kendall_correlation_by_group(df, group_col, col1, col2):
             })
     res_df = pd.DataFrame(results)
     return res_df.set_index(group_col,drop=True)
+
+
+def find_additional_nuc_sites(rdkit_mol):
+    return find_sites(rdkit_mol, (extracted_n_smirks_dict | added_n_smirks_dict))
+
+
+def find_additional_elec_sites(rdkit_mol):
+    return find_sites(rdkit_mol, (extracted_e_smirks_dict | added_e_smirks_dict))
 
