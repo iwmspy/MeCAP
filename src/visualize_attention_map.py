@@ -100,6 +100,8 @@ def extract_attention_weights(
 
             if (not final_layer_only) or (i == n_layers - 1):
                 attn_probs_dict[f'encoder_layer_{i+1}'] = attn_probs.clone().detach().cpu()
+        if encoder.final_layer_norm is not None:
+            x = encoder.final_layer_norm(x)
         pred = model.single_atom_head(x.squeeze(0)[1:-1,:]).detach().cpu().ravel()
 
     return attn_probs_dict, pred
@@ -338,7 +340,8 @@ def _make_mol_overlay_image(
         width=max(1, int(target_circle_width)),
     )
 
-    return _trim_white_margins(img, pad=10)
+    trimmed = _trim_white_margins(img, pad=10)
+    return _fit_image_to_canvas(trimmed, canvas_size=img_size)
 
 
 def _trim_white_margins(img: Image.Image, pad: int = 8) -> Image.Image:
@@ -357,6 +360,29 @@ def _trim_white_margins(img: Image.Image, pad: int = 8) -> Image.Image:
     return img.crop((x0, y0, x1, y1))
 
 
+def _fit_image_to_canvas(
+    img: Image.Image,
+    canvas_size: Tuple[int, int],
+    margin_ratio: float = 0.08,
+) -> Image.Image:
+    """Place the trimmed molecule image on a fixed canvas for consistent sizing."""
+    canvas_w, canvas_h = canvas_size
+    inner_w = max(1, int(round(canvas_w * (1.0 - 2.0 * margin_ratio))))
+    inner_h = max(1, int(round(canvas_h * (1.0 - 2.0 * margin_ratio))))
+
+    src_w, src_h = img.size
+    scale = min(inner_w / max(src_w, 1), inner_h / max(src_h, 1))
+    resized_w = max(1, int(round(src_w * scale)))
+    resized_h = max(1, int(round(src_h * scale)))
+
+    resized = img.resize((resized_w, resized_h), Image.LANCZOS)
+    canvas = Image.new("RGBA", (canvas_w, canvas_h), (255, 255, 255, 255))
+    offset_x = (canvas_w - resized_w) // 2
+    offset_y = (canvas_h - resized_h) // 2
+    canvas.paste(resized, (offset_x, offset_y))
+    return canvas
+
+
 def visualize_attention_on_structure(
     mol: Chem.Mol,
     attn_from_target: np.ndarray,
@@ -373,6 +399,8 @@ def visualize_attention_on_structure(
     atom_highlight_radius: float = 0.28,
     target_circle_color: str = "red",
     target_circle_width: int = 5,
+    show_title: bool = True,
+    font_size: float = 14,
 ) -> plt.Figure:
     """Visualize attention from a target atom to all others on 2D molecular structure.
 
@@ -419,18 +447,21 @@ def visualize_attention_on_structure(
     ax_mol.imshow(mol_img)
     ax_mol.axis("off")
 
-    symbol = mol.GetAtomWithIdx(target_atom_idx).GetSymbol()
-    title_lines = f"Attention Map — Target Atom: {target_atom_idx} ({symbol})"
-    if pred_val is not None and exp_val is not None:
-        title_lines += (
-            f"\nExperimental: {exp_val:.3f} kcal/mol, Predicted: {pred_val:.3f} kcal/mol"
-        )
-    ax_mol.set_title(title_lines, fontsize=14, fontweight="bold")
+    if show_title:
+        symbol = mol.GetAtomWithIdx(target_atom_idx).GetSymbol()
+        title_lines = f"Attention Map — Target Atom: {target_atom_idx} ({symbol})"
+        if pred_val is not None and exp_val is not None:
+            title_lines += (
+                f"\nExperimental: {exp_val:.3f} kcal/mol, Predicted: {pred_val:.3f} kcal/mol"
+            )
+        ax_mol.set_title(title_lines, fontsize=font_size, fontweight="bold")
 
     # --- Colorbar ---
     sm = cm.ScalarMappable(cmap=cmap, norm=norm)
     sm.set_array([])
-    plt.colorbar(sm, cax=ax_cbar).set_label("Attention Weight", fontsize=11)
+    cbar = plt.colorbar(sm, cax=ax_cbar)
+    cbar.set_label("Attention Weight", fontsize=max(font_size - 3, 1))
+    cbar.ax.tick_params(labelsize=max(font_size - 4, 1))
 
     plt.tight_layout()
 
@@ -548,6 +579,8 @@ def compute_and_visualize_attention_maps(
     atom_highlight_radius: float = 0.28,
     target_circle_color: str = "red",
     target_circle_width: int = 5,
+    show_title: bool = True,
+    font_size: float = 14,
 ) -> plt.Figure:
     """Compatibility wrapper with interpretation.compute_and_visualize_attributions.
 
@@ -602,6 +635,8 @@ def compute_and_visualize_attention_maps(
         atom_highlight_radius=atom_highlight_radius,
         target_circle_color=target_circle_color,
         target_circle_width=target_circle_width,
+        show_title=show_title,
+        font_size=font_size,
     )
     return fig
 
@@ -611,7 +646,7 @@ if __name__ == "__main__":
     # --- Settings ---
     exp_df     = pd.read_csv(f"{ROOT_DIR}/data/references/QMdata4ML/df_nuc_x_sample.csv", index_col=0)
     pred_df    = pd.read_csv(f"{ROOT_DIR}/data/results/mecap_ref_mca_layer_0/predictions.csv", index_col=0)
-    checkpoint = f"{ROOT_DIR}/data/results/mecap_ref_maa_layer_0/best_model.pt"
+    checkpoint = f"{ROOT_DIR}/data/results/mecap_ref_mca_layer_0/best_model.pt"
     device     = "cuda:0"
 
     targets_smiles = ["CN(C)C(=O)CCNC(=O)NCc1ccc(Br)cc1Cl", "NOCc1cccc(I)c1"]
@@ -619,6 +654,10 @@ if __name__ == "__main__":
 
     # --- Load model ---
     meta_state, model, _ = build_model_from_checkpoint(checkpoint_path=checkpoint, device=device)
+    if meta_state.get('mean_',None) is not None and meta_state.get('std_',None) is not None:
+        restore_scale = lambda val: (val * meta_state['std_']) + meta_state['mean_']
+    else:
+        restore_scale = lambda val: val
 
     for target_smiles in targets_smiles:
         target_name = list(set(exp_df.query("smiles == @target_smiles")["name"]))[0]
