@@ -26,8 +26,12 @@ if '__file__' in globals():
 
 from typing import Iterable, Optional, Tuple, Union, Mapping, Any, Dict, Set, List
 import ast, io, math, os, re
+from collections import deque
+from itertools import combinations
+from pathlib import Path
 import numpy as np
 import pandas as pd
+from tqdm import tqdm
 from scipy.stats import pearsonr
 from sklearn.metrics import r2_score
 from scipy.stats import kendalltau
@@ -35,6 +39,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from rdkit import Chem
 from rdkit.Chem import rdDepictor
+from rdkit.Chem import rdDetermineBonds
 from rdkit.Chem.Draw import rdMolDraw2D
 from rdkit.Geometry import Point3D
 from PIL import Image, ImageDraw, ImageFont
@@ -338,4 +343,156 @@ def find_additional_nuc_sites(rdkit_mol):
 
 def find_additional_elec_sites(rdkit_mol):
     return find_sites(rdkit_mol, (extracted_e_smirks_dict | added_e_smirks_dict))
+
+
+def _load_first_mol_from_sdf(sdf_path: Path, removeHs: bool = False) -> Optional[Chem.Mol]:
+    """Load the first valid molecule from an SDF file. Return None on failure."""
+    try:
+        if not sdf_path.exists():
+            return None
+        supp = Chem.SDMolSupplier(str(sdf_path), removeHs=removeHs, sanitize=False)
+        if supp is None:
+            return None
+        mols = [m for m in supp if m is not None]
+        if not mols:
+            return None
+        mol = mols[0]
+        if mol.GetNumConformers() == 0:
+            return None
+        return mol
+    except Exception:
+        return None
+
+
+def _get_graph_radius_atom_indices(mol: Chem.Mol, center_idx: int, radius: int) -> list[int]:
+    """
+    Return atom indices within the given graph radius from center_idx.
+    The center atom itself is included.
+    """
+    n_atoms = mol.GetNumAtoms()
+    if center_idx < 0 or center_idx >= n_atoms:
+        raise IndexError(f"atom_index {center_idx} is out of range for molecule with {n_atoms} atoms")
+
+    if mol.GetNumBonds()==0:
+        rdDetermineBonds.DetermineBonds(mol)
+
+    visited = {center_idx}
+    q = deque([(center_idx, 0)])
+
+    while q:
+        atom_idx, dist = q.popleft()
+        if dist == radius:
+            continue
+
+        atom = mol.GetAtomWithIdx(atom_idx)
+        for nbr in atom.GetNeighbors():
+            nbr_idx = nbr.GetIdx()
+            if nbr_idx not in visited:
+                visited.add(nbr_idx)
+                q.append((nbr_idx, dist + 1))
+
+    return sorted(visited)
+
+
+def _pairwise_distance_change_for_local_region(
+    mol_a: Chem.Mol,
+    mol_b: Chem.Mol,
+    atom_indices: list[int],
+) -> Optional[float]:
+    """
+    Compute sqrt(mean((d_uv^A - d_uv^B)^2)) over all atom pairs
+    within the local atom set.
+    """
+    if mol_a.GetNumAtoms() != mol_b.GetNumAtoms():
+        return None    
+
+    conf_a = mol_a.GetConformer()
+    conf_b = mol_b.GetConformer()
+
+    # Return 0.0 when the local set contains fewer than two atoms.
+    if len(atom_indices) < 2:
+        return 0.0
+
+    sq_diffs = []
+    for u, v in combinations(atom_indices, 2):
+        pa_u = conf_a.GetAtomPosition(u)
+        pa_v = conf_a.GetAtomPosition(v)
+        pb_u = conf_b.GetAtomPosition(u)
+        pb_v = conf_b.GetAtomPosition(v)
+
+        d_a = ((pa_u.x - pa_v.x) ** 2 + (pa_u.y - pa_v.y) ** 2 + (pa_u.z - pa_v.z) ** 2) ** 0.5
+        d_b = ((pb_u.x - pb_v.x) ** 2 + (pb_u.y - pb_v.y) ** 2 + (pb_u.z - pb_v.z) ** 2) ** 0.5
+        sq_diffs.append((d_a - d_b) ** 2)
+
+    return float(np.sqrt(np.mean(sq_diffs)))
+
+
+def compute_local_pairwise_distance_change(
+    df: pd.DataFrame,
+    dir_a: str | Path,
+    dir_b: str | Path,
+    radius: int = 1,
+    name_col: str = "name",
+    atom_index_col: str = "atom_index",
+    result_col: str = "local_pairwise_distance_change",
+    removeHs: bool = False,
+) -> pd.DataFrame:
+    """
+    For each (name, atom_index) pair in the DataFrame, load {name}.sdf
+    from two directories and compute the local alignment-free
+    pairwise-distance change.
+
+    The metric is:
+        G_i = sqrt( (1 / |P_i|) * sum_{(u,v) in P_i} (d_uv^(A) - d_uv^(B))^2 )
+
+    where:
+        - N_i is the set of atoms within the specified graph radius from atom i
+        - P_i is the set of all unordered atom pairs in N_i
+        - d_uv^(A), d_uv^(B) are Euclidean distances in structures A and B
+
+    Returns a copy of df with an added result column.
+    If a file is missing or any error occurs for a row, the result is None.
+    """
+    if radius not in (1, 2):
+        raise ValueError("radius must be 1 or 2")
+
+    dir_a = Path(dir_a)
+    dir_b = Path(dir_b)
+
+    out_df = df.copy()
+
+    # Cache molecules to avoid reloading the same SDF multiple times.
+    mol_cache_a: dict[str, Optional[Chem.Mol]] = {}
+    mol_cache_b: dict[str, Optional[Chem.Mol]] = {}
+
+    results = []
+
+    for _, row in tqdm(out_df.iterrows(),total=out_df.shape[0]):
+        name = str(row[name_col])
+        atom_index = int(row[atom_index_col])
+
+        if name not in mol_cache_a:
+            mol_cache_a[name] = _load_first_mol_from_sdf(dir_a / f"{name}.sdf", removeHs)
+        if name not in mol_cache_b:
+            mol_cache_b[name] = _load_first_mol_from_sdf(dir_b / f"{name}.sdf", removeHs)
+
+        mol_a = mol_cache_a[name]
+        mol_b = mol_cache_b[name]
+
+        # Return None if either file is missing or cannot be parsed.
+        if mol_a is None or mol_b is None:
+            results.append(None)
+            continue
+
+        try:
+            local_atom_indices = _get_graph_radius_atom_indices(mol_a, atom_index, radius)
+
+            # This assumes the atom ordering is consistent between the two SDF files.
+            value = _pairwise_distance_change_for_local_region(mol_a, mol_b, local_atom_indices)
+            results.append(value)
+        except Exception:
+            results.append(None)
+
+    out_df[result_col] = results
+    return out_df
 
