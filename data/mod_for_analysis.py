@@ -496,3 +496,10 @@ def compute_local_pairwise_distance_change(
     out_df[result_col] = results
     return out_df
 
+
+def is_atom_in_pi_system(mol, atom_idx):
+    atom = mol.GetAtomWithIdx(atom_idx)
+    if atom.GetIsAromatic():
+        return True
+    return any(bond.GetIsConjugated() for bond in atom.GetBonds())
+
