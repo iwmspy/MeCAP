@@ -25,6 +25,7 @@ if '__file__' in globals():
     sys.path.append(os.path.join(os.path.dirname(__file__),'..','src'))
 
 from typing import Iterable, Optional, Tuple, Union, Mapping, Any, Dict, Set, List
+from numbers import Integral
 import ast, io, math, os, re
 from collections import deque
 from itertools import combinations
@@ -40,6 +41,7 @@ import seaborn as sns
 from rdkit import Chem
 from rdkit.Chem import rdDepictor
 from rdkit.Chem import rdDetermineBonds
+from rdkit.Chem import rdChemReactions
 from rdkit.Chem.Draw import rdMolDraw2D
 from rdkit.Geometry import Point3D
 from PIL import Image, ImageDraw, ImageFont
@@ -258,6 +260,445 @@ def visualize_smiles_highlight(
     if save_path:
         final_img.convert("RGB").save(save_path)
     return (final_img, ignored) if return_ignored else final_img
+
+
+def _normalize_atom_indices(
+    atom_indices: Optional[Iterable[int]],
+    n_atoms: int,
+) -> Tuple[List[int], List[int]]:
+    """Split atom indices into valid and ignored lists."""
+    if atom_indices is None:
+        return [], []
+    valid, ignored = [], []
+    for idx in atom_indices:
+        idx = int(idx)
+        if 0 <= idx < n_atoms:
+            valid.append(idx)
+        else:
+            ignored.append(idx)
+    return sorted(set(valid)), sorted(set(ignored))
+
+
+def _normalize_reactant_atom_indices(
+    atom_indices: Optional[Iterable[Any]],
+    reactant_templates: List[Chem.Mol],
+) -> Tuple[List[List[int]], List[List[int]]]:
+    """
+    Normalize atom indices for reactants.
+
+    Supports two formats:
+      1) flat iterable of global indices across all reactants
+      2) iterable of iterables, where each sub-iterable contains local indices
+         for the corresponding reactant template
+    """
+    n_reactants = len(reactant_templates)
+    valid_by_reactant = [[] for _ in range(n_reactants)]
+    ignored_by_reactant = [[] for _ in range(n_reactants)]
+    if atom_indices is None:
+        return valid_by_reactant, ignored_by_reactant
+
+    raw_items = list(atom_indices)
+    if not raw_items:
+        return valid_by_reactant, ignored_by_reactant
+
+    is_nested = any(not isinstance(item, Integral) for item in raw_items)
+    if is_nested:
+        if len(raw_items) > n_reactants:
+            raise ValueError(
+                f"Received indices for {len(raw_items)} reactants, but the reaction has "
+                f"{n_reactants} reactant templates."
+            )
+        for reactant_idx, local_indices in enumerate(raw_items):
+            valid, ignored = _normalize_atom_indices(
+                local_indices, reactant_templates[reactant_idx].GetNumAtoms()
+            )
+            valid_by_reactant[reactant_idx] = valid
+            ignored_by_reactant[reactant_idx] = ignored
+        return valid_by_reactant, ignored_by_reactant
+
+    atom_offset = 0
+    global_valid, global_ignored = _normalize_atom_indices(
+        [int(idx) for idx in raw_items],
+        sum(mol.GetNumAtoms() for mol in reactant_templates),
+    )
+    for reactant_idx, reactant_template in enumerate(reactant_templates):
+        next_offset = atom_offset + reactant_template.GetNumAtoms()
+        valid_by_reactant[reactant_idx] = sorted(
+            idx - atom_offset for idx in global_valid if atom_offset <= idx < next_offset
+        )
+        ignored_by_reactant[reactant_idx] = []
+        atom_offset = next_offset
+    if global_ignored:
+        ignored_by_reactant[0] = global_ignored
+    return valid_by_reactant, ignored_by_reactant
+
+
+def _copy_mol_with_atom_index_notes(mol: Chem.Mol) -> Chem.Mol:
+    """Show atom indices as atomNote labels and clear map-number display props."""
+    out = Chem.Mol(mol)
+    _set_atom_index_notes_inplace(out)
+    return out
+
+
+def _set_atom_index_notes_inplace(
+    mol: Chem.Mol,
+    annotated_atom_indices: Optional[Iterable[int]] = None,
+) -> None:
+    """Show selected atom indices as atomNote labels directly on the molecule."""
+    annotated_set = None if annotated_atom_indices is None else set(int(idx) for idx in annotated_atom_indices)
+    for atom in mol.GetAtoms():
+        if atom.HasProp("atomNote"):
+            atom.ClearProp("atomNote")
+        if annotated_set is None or atom.GetIdx() in annotated_set:
+            atom.SetProp("atomNote", str(atom.GetIdx()))
+        if atom.GetAtomMapNum():
+            atom.SetAtomMapNum(0)
+        if atom.HasProp("molAtomMapNumber"):
+            atom.ClearProp("molAtomMapNumber")
+
+
+def _prepare_mol_for_panel(
+    mol: Chem.Mol,
+    annotated_atom_indices: Optional[Iterable[int]] = None,
+    auto_rotate: bool = True,
+    rotate_deg: float = 0.0,
+) -> Chem.Mol:
+    """Copy molecule, add selected atom-index notes, and compute 2D coordinates."""
+    out = Chem.Mol(mol)
+    _set_atom_index_notes_inplace(out, annotated_atom_indices=annotated_atom_indices)
+    rdDepictor.SetPreferCoordGen(True)
+    rdDepictor.Compute2DCoords(out)
+    if auto_rotate and out.GetNumAtoms() >= 2 and out.GetNumConformers():
+        conf = out.GetConformer()
+        coords = [(conf.GetAtomPosition(i).x, conf.GetAtomPosition(i).y) for i in range(out.GetNumAtoms())]
+        angle_pca = _pca_angle_deg_xy(coords)
+        _rotate_mol2d_inplace(out, -angle_pca)
+    if abs(rotate_deg) > 1e-6:
+        _rotate_mol2d_inplace(out, rotate_deg)
+    return out
+
+
+def _estimate_panel_size(
+    mol: Chem.Mol,
+    fixed_bond_length: float,
+    min_size: Tuple[int, int] = (140, 130),
+    max_size: Tuple[int, int] = (420, 300),
+    margin_px: int = 70,
+) -> Tuple[int, int]:
+    """Estimate a natural panel size from the 2D coordinate span."""
+    if not mol.GetNumConformers():
+        return min_size
+    conf = mol.GetConformer()
+    xs = [conf.GetAtomPosition(i).x for i in range(mol.GetNumAtoms())]
+    ys = [conf.GetAtomPosition(i).y for i in range(mol.GetNumAtoms())]
+    x_span = max(xs) - min(xs) if xs else 0.0
+    y_span = max(ys) - min(ys) if ys else 0.0
+    width = int(max(min_size[0], min(max_size[0], x_span * fixed_bond_length + 2 * margin_px)))
+    height = int(max(min_size[1], min(max_size[1], y_span * fixed_bond_length + 2 * margin_px)))
+    return width, height
+
+
+def _draw_molecule_panel(
+    mol: Chem.Mol,
+    filled_atoms: Optional[Dict[int, Tuple[float, float, float]]] = None,
+    ring_atoms: Optional[Iterable[int]] = None,
+    annotated_atom_indices: Optional[Iterable[int]] = None,
+    image_size: Optional[Tuple[int, int]] = None,
+    fixed_bond_length: float = 32.0,
+    auto_rotate: bool = True,
+    rotate_deg: float = 0.0,
+    atom_note_font_scale: float = 0.72,
+    fill_radius: float = 0.42,
+    ring_radius_px: int = 18,
+    ring_line_width_px: int = 4,
+    ring_color: Tuple[int, int, int, int] = (220, 20, 60, 255),
+    padding: float = 0.08,
+):
+    """Draw a single molecule with filled highlights and red outline circles."""
+    mol = _prepare_mol_for_panel(
+        mol,
+        annotated_atom_indices=annotated_atom_indices,
+        auto_rotate=auto_rotate,
+        rotate_deg=rotate_deg,
+    )
+    if image_size is None:
+        w, h = _estimate_panel_size(mol, fixed_bond_length=fixed_bond_length)
+    else:
+        w, h = image_size
+    drawer = rdMolDraw2D.MolDraw2DCairo(w, h)
+    opts = drawer.drawOptions()
+    opts.padding = padding
+    opts.bondLineWidth = 2
+    opts.addStereoAnnotation = False
+    opts.atomHighlightsAreCircles = True
+    opts.fillHighlights = True
+    opts.annotationFontScale = atom_note_font_scale
+    opts.fixedBondLength = fixed_bond_length
+
+    filled_atoms = filled_atoms or {}
+    ring_atoms = sorted(set(int(idx) for idx in (ring_atoms or [])))
+    highlight_atoms = sorted(filled_atoms)
+    highlight_radii = {idx: fill_radius for idx in highlight_atoms}
+
+    rdMolDraw2D.PrepareAndDrawMolecule(
+        drawer,
+        mol,
+        highlightAtoms=highlight_atoms if highlight_atoms else None,
+        highlightAtomColors=filled_atoms if filled_atoms else None,
+        highlightAtomRadii=highlight_radii if highlight_atoms else None,
+    )
+    drawer.FinishDrawing()
+
+    image = Image.open(io.BytesIO(drawer.GetDrawingText())).convert("RGBA")
+    if not ring_atoms:
+        return image
+
+    overlay = Image.new("RGBA", image.size, (0, 0, 0, 0))
+    draw = ImageDraw.Draw(overlay)
+    for atom_idx in ring_atoms:
+        x, y = drawer.GetDrawCoords(atom_idx)
+        draw.ellipse(
+            [
+                x - ring_radius_px,
+                y - ring_radius_px,
+                x + ring_radius_px,
+                y + ring_radius_px,
+            ],
+            outline=ring_color,
+            width=ring_line_width_px,
+        )
+    return Image.alpha_composite(image, overlay)
+
+
+def _join_images_horizontally(
+    images: List[Image.Image],
+    separator: str = "+",
+    gap_px: int = 18,
+    font_size: int = 30,
+    margin_px: int = 10,
+) -> Image.Image:
+    """Join images with a text separator."""
+    if not images:
+        return Image.new("RGBA", (1, 1), (255, 255, 255, 0))
+
+    try:
+        font = ImageFont.truetype("DejaVuSans.ttf", font_size)
+    except Exception:
+        font = ImageFont.load_default()
+
+    probe = ImageDraw.Draw(Image.new("RGBA", (1, 1), (255, 255, 255, 0)))
+    bbox = probe.textbbox((0, 0), separator, font=font)
+    sep_w = bbox[2] - bbox[0]
+    sep_h = bbox[3] - bbox[1]
+
+    total_w = margin_px * 2 + sum(img.width for img in images)
+    total_w += gap_px * max(0, len(images) - 1)
+    total_w += sep_w * max(0, len(images) - 1)
+    total_h = margin_px * 2 + max(max(img.height for img in images), sep_h)
+
+    canvas = Image.new("RGBA", (total_w, total_h), (255, 255, 255, 255))
+    draw = ImageDraw.Draw(canvas)
+    x = margin_px
+    for i, img in enumerate(images):
+        y = (total_h - img.height) // 2
+        canvas.paste(img, (x, y), img)
+        x += img.width
+        if i < len(images) - 1:
+            x += gap_px
+            text_y = (total_h - sep_h) // 2
+            draw.text((x, text_y), separator, fill=(0, 0, 0), font=font)
+            x += sep_w + gap_px
+    return canvas
+
+
+def _resize_to_fixed_height(image: Image.Image, target_height: int) -> Image.Image:
+    """Resize an image to the target height while keeping aspect ratio."""
+    if image.height == target_height:
+        return image
+    scale = target_height / image.height
+    target_width = max(1, int(round(image.width * scale)))
+    return image.resize((target_width, target_height), Image.Resampling.LANCZOS)
+
+
+def visualize_reaction_smiles_highlight(
+    reaction_smiles: str,
+    reaction_center_atom_indices: Optional[Iterable[Any]] = None,
+    mca_atom_indices: Optional[Iterable[Any]] = None,
+    maa_atom_indices: Optional[Iterable[Any]] = None,
+    overlap_fill_color: Tuple[float, float, float] = (0.45, 0.80, 0.45),
+    output_size: Tuple[int, int] = (1000, 260),
+    fixed_bond_length: float = 32.0,
+    auto_rotate: bool = True,
+    rotate_deg: float = 0.0,
+    annotate_all_atoms: bool = False,
+    atom_note_font_scale: float = 0.72,
+    save_path: Optional[str] = None,
+    return_ignored: bool = False,
+):
+    """
+    Visualize a reaction SMILES with reactant-side atom highlights.
+
+    Atom indices can be given in either of these formats:
+      - per-reactant local indices, e.g. [[0, 2], [1], []]
+      - a flat iterable of global indices across the concatenated reactants
+        (backward-compatible behavior)
+
+    Highlight rules on reactants:
+      - `reaction_center_atom_indices`: red outline circles
+      - `mca_atom_indices`: orange filled circles
+      - `maa_atom_indices`: light-blue filled circles
+      - atoms in both `mca_atom_indices` and `maa_atom_indices`:
+        `overlap_fill_color`
+
+    The red outline is added independently when requested.
+    `output_size` fixes the final reaction image size, while each molecule panel
+    is sized adaptively before the whole layout is scaled into that canvas.
+    By default, atom indices are shown only for highlighted reactant atoms.
+    `atom_note_font_scale` controls atom-index label size.
+    Molecules can be auto-rotated by principal axis, with optional extra `rotate_deg`.
+    """
+    parts = reaction_smiles.split(">")
+    if len(parts) != 3:
+        raise ValueError("reaction_smiles must have the form 'reactants>agents>products'.")
+
+    rxn = rdChemReactions.ReactionFromSmarts(reaction_smiles, useSmiles=True)
+    if rxn is None:
+        raise ValueError("Failed to parse reaction_smiles as a reaction.")
+    reactant_templates = [
+        rxn.GetReactantTemplate(i) for i in range(rxn.GetNumReactantTemplates())
+    ]
+    if not reactant_templates:
+        raise ValueError("The reaction does not contain reactant templates.")
+
+    reaction_center_valid, reaction_center_ignored = _normalize_reactant_atom_indices(
+        reaction_center_atom_indices, reactant_templates
+    )
+    mca_valid, mca_ignored = _normalize_reactant_atom_indices(
+        mca_atom_indices, reactant_templates
+    )
+    maa_valid, maa_ignored = _normalize_reactant_atom_indices(
+        maa_atom_indices, reactant_templates
+    )
+
+    reactant_images = []
+    for reactant_idx, reactant_template in enumerate(reactant_templates):
+        reaction_center_set = set(reaction_center_valid[reactant_idx])
+        mca_set = set(mca_valid[reactant_idx])
+        maa_set = set(maa_valid[reactant_idx])
+        overlap_set = mca_set & maa_set
+        local_fill_colors = {
+            idx: (1.0, 0.65, 0.0) for idx in (mca_set - overlap_set)
+        }
+        local_fill_colors.update({
+            idx: (0.53, 0.86, 0.98) for idx in (maa_set - overlap_set)
+        })
+        local_fill_colors.update({idx: overlap_fill_color for idx in overlap_set})
+        local_ring_atoms = sorted(reaction_center_set)
+        annotated_atom_indices = None if annotate_all_atoms else sorted(
+            reaction_center_set | mca_set | maa_set
+        )
+
+        reactant_images.append(
+            _draw_molecule_panel(
+                reactant_template,
+                filled_atoms=local_fill_colors,
+                ring_atoms=local_ring_atoms,
+                annotated_atom_indices=annotated_atom_indices,
+                fixed_bond_length=fixed_bond_length,
+                auto_rotate=auto_rotate,
+                rotate_deg=rotate_deg,
+                atom_note_font_scale=atom_note_font_scale,
+            )
+        )
+
+    reactant_panel = _join_images_horizontally(reactant_images, separator="+")
+
+    product_images = [
+        _draw_molecule_panel(
+            rxn.GetProductTemplate(i),
+            annotated_atom_indices=None if annotate_all_atoms else [],
+            fixed_bond_length=fixed_bond_length,
+            auto_rotate=auto_rotate,
+            rotate_deg=rotate_deg,
+            atom_note_font_scale=atom_note_font_scale,
+        )
+        for i in range(rxn.GetNumProductTemplates())
+    ]
+    product_panel = _join_images_horizontally(product_images, separator="+")
+
+    agent_images = [
+        _draw_molecule_panel(
+            rxn.GetAgentTemplate(i),
+            annotated_atom_indices=None if annotate_all_atoms else [],
+            fixed_bond_length=fixed_bond_length,
+            auto_rotate=auto_rotate,
+            rotate_deg=rotate_deg,
+            atom_note_font_scale=atom_note_font_scale,
+        )
+        for i in range(rxn.GetNumAgentTemplates())
+    ]
+    agent_panel = _join_images_horizontally(agent_images, separator="+") if agent_images else None
+
+    target_w, target_h = output_size
+    arrow_w = max(90, int(target_w * 0.10))
+    top_pad = 10
+    agent_h = 0 if agent_panel is None else agent_panel.height + 12
+    content_h = max(reactant_panel.height, product_panel.height)
+    canvas_w = reactant_panel.width + arrow_w + product_panel.width + 40
+    canvas_h = content_h + agent_h + 20
+    final_img = Image.new("RGBA", (canvas_w, canvas_h), (255, 255, 255, 255))
+
+    react_y = agent_h + (content_h - reactant_panel.height) // 2 + top_pad
+    prod_y = agent_h + (content_h - product_panel.height) // 2 + top_pad
+    react_x = 10
+    prod_x = react_x + reactant_panel.width + arrow_w
+    final_img.paste(reactant_panel, (react_x, react_y), reactant_panel)
+    final_img.paste(product_panel, (prod_x, prod_y), product_panel)
+
+    draw = ImageDraw.Draw(final_img)
+    arrow_mid_x0 = react_x + reactant_panel.width + 20
+    arrow_mid_x1 = prod_x - 20
+    arrow_y = agent_h + content_h // 2 + top_pad
+    draw.line((arrow_mid_x0, arrow_y, arrow_mid_x1, arrow_y), fill=(0, 0, 0), width=4)
+    draw.polygon(
+        [
+            (arrow_mid_x1, arrow_y),
+            (arrow_mid_x1 - 16, arrow_y - 8),
+            (arrow_mid_x1 - 16, arrow_y + 8),
+        ],
+        fill=(0, 0, 0),
+    )
+
+    if agent_panel is not None:
+        agent_x = react_x + reactant_panel.width + (arrow_w - agent_panel.width) // 2
+        final_img.paste(agent_panel, (agent_x, 0), agent_panel)
+
+    if final_img.height != target_h:
+        final_img = _resize_to_fixed_height(final_img, target_h)
+    if final_img.width > target_w:
+        scale = target_w / final_img.width
+        resized_h = max(1, int(round(final_img.height * scale)))
+        final_img = final_img.resize((target_w, resized_h), Image.Resampling.LANCZOS)
+    if final_img.height > target_h:
+        final_img = _resize_to_fixed_height(final_img, target_h)
+
+    canvas = Image.new("RGBA", output_size, (255, 255, 255, 255))
+    paste_x = max(0, (target_w - final_img.width) // 2)
+    paste_y = max(0, (target_h - final_img.height) // 2)
+    canvas.paste(final_img, (paste_x, paste_y), final_img)
+    final_img = canvas
+
+    if save_path:
+        final_img.convert("RGB").save(save_path)
+
+    if return_ignored:
+        ignored = {
+            "reaction_center_atom_indices": reaction_center_ignored,
+            "mca_atom_indices": mca_ignored,
+            "maa_atom_indices": maa_ignored,
+        }
+        return final_img, ignored
+    return final_img
 
 def extract_best_epoch(log_path: str) -> int:
     """
@@ -502,4 +943,3 @@ def is_atom_in_pi_system(mol, atom_idx):
     if atom.GetIsAromatic():
         return True
     return any(bond.GetIsConjugated() for bond in atom.GetBonds())
-
