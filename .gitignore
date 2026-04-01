@@ -232,6 +232,7 @@ data/references/100_rxn_mechanisms/*.gz
 !data/references/reference_calculation/*.py
 !data/references/orca_optimized_confs/
 !data/references/orca_optimized_confs/*
+!data/references/gaussian_sp/
 !data/references/gaussian_sp/extracted_energies/
 !data/references/gaussian_sp/extracted_energies/*.csv
 !data/references/esnuelML_elec_predicted_values.csv
