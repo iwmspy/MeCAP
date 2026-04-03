@@ -240,3 +240,7 @@ data/references/100_rxn_mechanisms/*.gz
 !data/references/gaussian_sp/extracted_energies/*.csv
 !data/references/esnuelML_elec_predicted_values.csv
 !data/references/esnuelML_nuc_predicted_values.csv
+
+!data/results/
+!data/results/confs_from_smiles_rdkit/
+!data/results/confs_from_smiles_rdkit/*.sdf
