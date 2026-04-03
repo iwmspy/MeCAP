@@ -224,6 +224,7 @@ data/**
 !data/references/split.csv
 !data/references/scaffold_map.csv
 !data/references/df_*sample*.csv
+!data/references/files_to_analyze.txt
 !data/references/structure_file*
 !data/references/100_rxn_mechanisms/
 !data/references/100_rxn_mechanisms/**
