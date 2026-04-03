@@ -1,4 +1,4 @@
-name,success,total_energy_kjmol,heat_of_formation_kcalmol,charge,method,solvent_model,dielectric_constant,source_out,n_atoms,sdf_path,elec_sites,MAA Values [kJ/mol]
+name,success,total_energy_kjmol,heat_of_formation_kcalmol,charge,method,solvent_model,dielectric_constant,source_out,n_atoms,sdf_path,elec_sites,MAA_values
 000c3894233c26a3b015883c14603312,True,-191.71089,-45.82,-1.0,PM7,COSMO,46.826,./mopac_optimized/mopac_opt/mopac_input/000c3894233c26a3b015883c14603312_elec_16.out,31,./mopac_optimized/mopac_opt/parsed_sdf/000c3894233c26a3b015883c14603312_elec_16.sdf,16,142.80343000000002
 000e06ec69579daf09db08af311e51f7,True,-700.24508,-167.36259,-1.0,PM7,COSMO,46.826,./mopac_optimized/mopac_opt/mopac_input/000e06ec69579daf09db08af311e51f7_elec_9.out,43,./mopac_optimized/mopac_opt/parsed_sdf/000e06ec69579daf09db08af311e51f7_elec_9.sdf,9,144.02545999999995
 001928ff712c3ea43419cf7e149cf37f,True,-530.49223,-126.79069,-1.0,PM7,COSMO,46.826,./mopac_optimized/mopac_opt/mopac_input/001928ff712c3ea43419cf7e149cf37f_elec_3.out,47,./mopac_optimized/mopac_opt/parsed_sdf/001928ff712c3ea43419cf7e149cf37f_elec_3.sdf,3,117.73391999999996

@@ -1,4 +1,4 @@
-name,success,total_energy_kjmol,heat_of_formation_kcalmol,charge,method,solvent_model,dielectric_constant,source_out,n_atoms,sdf_path,nuc_sites,MCA Values [kJ/mol]
+name,success,total_energy_kjmol,heat_of_formation_kcalmol,charge,method,solvent_model,dielectric_constant,source_out,n_atoms,sdf_path,nuc_sites,MCA_values
 000c3894233c26a3b015883c14603312,True,757.77116,181.11165,1.0,PM7,COSMO,46.826,./mopac_optimized/mopac_opt/mopac_input/000c3894233c26a3b015883c14603312_nuc_9.out,31,./mopac_optimized/mopac_opt/parsed_sdf/000c3894233c26a3b015883c14603312_nuc_9.sdf,9,111.45800000000008
 000e06ec69579daf09db08af311e51f7,True,180.35236,43.10525,1.0,PM7,COSMO,46.826,./mopac_optimized/mopac_opt/mopac_input/000e06ec69579daf09db08af311e51f7_nuc_25.out,43,./mopac_optimized/mopac_opt/parsed_sdf/000e06ec69579daf09db08af311e51f7_nuc_25.sdf,25,181.56464000000003
 001928ff712c3ea43419cf7e149cf37f,True,291.57887,69.68902,1.0,PM7,COSMO,46.826,./mopac_optimized/mopac_opt/mopac_input/001928ff712c3ea43419cf7e149cf37f_nuc_13.out,47,./mopac_optimized/mopac_opt/parsed_sdf/001928ff712c3ea43419cf7e149cf37f_nuc_13.sdf,13,213.79944000000006

@@ -1,4 +1,4 @@
-name,success,total_energy_kjmol,basis_set,functional,solvent_model,solvent_name,multiplicity,charge,nuc_sites,MCA Values [kJ/mol]
+name,success,total_energy_kjmol,basis_set,functional,solvent_model,solvent_name,multiplicity,charge,nuc_sites,MCA_values
 9cbfdcc77dc4550e6ad46ef227315c95,True,-2919008.7463418306,def2TZVP,wB97XD,SMD-IEFPCM,dimethylsulfoxide,1,1,20,227.73553831037134
 a0cb7d04c1666af411d199e816713b07,True,-2725411.036895013,def2TZVP,wB97XD,SMD-IEFPCM,dimethylsulfoxide,1,1,15,320.4177875444293
 acd90dcaf6a6d3688e9ec1bf7dad8917,True,-2785612.749044122,def2TZVP,wB97XD,SMD-IEFPCM,dimethylsulfoxide,1,1,15,193.13310869177803
