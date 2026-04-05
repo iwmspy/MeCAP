@@ -39,7 +39,7 @@ ${EXEC_PAT} -m ${RUN_MODE} \
   --sdf_mode per_row \
   --sdf_dir ${RESL_DIR}/confs_from_smiles_rdkit \
   --sdf_ext .sdf \
-  --batch_size 50 --epochs 1000 --lr 1e-4 \
+  --batch_size 50 --epochs 300 --lr 1e-4 \
   --save_path ${SAVE_DIR} \
   --model_name unimolv1 \
   --scale \
