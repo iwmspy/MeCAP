@@ -230,6 +230,8 @@ data/**
 !data/references/100_rxn_mechanisms/**
 data/references/100_rxn_mechanisms/*.gz
 !data/references/reference_calculation/
+!data/references/reference_calculation/*.ipynb
+!data/references/reference_calculation/*.sh
 !data/references/reference_calculation/*.py
 !data/references/orca_optimized_confs/
 !data/references/orca_optimized_confs/*
