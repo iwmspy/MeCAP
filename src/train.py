@@ -70,6 +70,8 @@ def train_with_splitcol(
     atom_head_hidden_dim: Optional[int],
     device: Optional[str],
     save_path: Optional[str],
+    resume_checkpoint: Optional[str] = None,
+    fresh_optimizer: bool = True,
     feature_workers: int = 0,
     seed: int = 42,
     scale: bool = False,
@@ -181,11 +183,12 @@ def train_with_splitcol(
     # Optimizer
     optimizer = torch.optim.AdamW(model.parameters(), lr=lr)
 
-    # Train loop with best snapshot
+    # Train loop with optional resume
     history = {"train_loss": [], "val_loss": []}
     best_val = float("inf")
     best_state = None
     best_epoch = -1
+    start_epoch = 0
     checkpoint = {
         'model_name': model_name,
         'model_size': model_size if model_name == 'unimolv2' else None,
@@ -193,10 +196,60 @@ def train_with_splitcol(
         'atom_head_hidden_dim': atom_head_hidden_dim,
         'mean_': hub.mean_,
         'std_' : hub.std_,
+        'epoch': None,
+        'optimizer_state_dict': None,
+        'history': None,
+        'best_val': None,
+        'best_epoch': None,
         'state_dict': None,
         }
 
-    for ep in range(1, epochs + 1):
+    if resume_checkpoint:
+        log.info(f"Loading resume checkpoint from: {resume_checkpoint}")
+        resume_state = torch.load(resume_checkpoint, map_location="cpu", weights_only=False)
+        if "model" in resume_state:
+            resume_model_state = resume_state["model"]
+        elif "state_dict" in resume_state:
+            resume_model_state = resume_state["state_dict"]
+        else:
+            raise KeyError("Resume checkpoint does not contain 'model' or 'state_dict'.")
+
+        model.load_state_dict(resume_model_state, strict=True)
+
+        optimizer_state = resume_state.get("optimizer_state_dict")
+        if fresh_optimizer:
+            log.info("Resuming with a fresh optimizer state.")
+        elif optimizer_state is not None:
+            optimizer.load_state_dict(optimizer_state)
+            log.info("Resumed optimizer state from checkpoint.")
+        else:
+            log.warning("Resume checkpoint does not contain optimizer state; continuing with a fresh optimizer.")
+
+        history_ = resume_state.get("history")
+        if isinstance(history_, dict):
+            history = {
+                "train_loss": list(history_.get("train_loss", [])),
+                "val_loss": list(history_.get("val_loss", [])),
+            }
+
+        best_val = resume_state.get("best_val", best_val)
+        best_epoch = resume_state.get("best_epoch", best_epoch)
+        if best_val is None:
+            best_val = float("inf")
+        if best_epoch is None:
+            best_epoch = -1
+        if best_epoch >= 0:
+            best_state = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
+
+        start_epoch = int(resume_state.get("epoch", 0))
+        log.info(f"Resuming training from epoch {start_epoch + 1} / {epochs}")
+
+        if start_epoch >= epochs:
+            log.warning(
+                f"Checkpoint epoch ({start_epoch}) is already >= requested epochs ({epochs}); no additional training epochs will run."
+            )
+
+    for ep in range(start_epoch + 1, epochs + 1):
         model.train()
         tr_loss, tr_loss_raw = _evaluate_loss(model, train_loader, device_, optimizer)
         history["train_loss"].append(tr_loss)
@@ -217,6 +270,11 @@ def train_with_splitcol(
             best_state = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
             best_epoch = ep
             if save_path:
+                checkpoint['epoch'] = ep
+                checkpoint['optimizer_state_dict'] = optimizer.state_dict()
+                checkpoint['history'] = history
+                checkpoint['best_val'] = best_val
+                checkpoint['best_epoch'] = best_epoch
                 checkpoint['state_dict'] = best_state
                 torch.save(checkpoint, os.path.join(save_path, "best_model.pt"))
                 log.info(f"Saved best model at epoch {ep} (val_loss={val_loss:.6f} (raw_scale RMSE: {float(np.sqrt(val_loss_raw)):.6f}))")
@@ -224,6 +282,11 @@ def train_with_splitcol(
     # Save last
     if save_path:
         last_state = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
+        checkpoint['epoch'] = max(start_epoch, epochs)
+        checkpoint['optimizer_state_dict'] = optimizer.state_dict()
+        checkpoint['history'] = history
+        checkpoint['best_val'] = best_val if np.isfinite(best_val) else None
+        checkpoint['best_epoch'] = best_epoch if best_epoch >= 0 else None
         checkpoint['state_dict'] = last_state
         torch.save(checkpoint, os.path.join(save_path, "last_model.pt"))
         log.info(f"Saved last model at epoch {epochs}")
@@ -322,6 +385,18 @@ def parse_args():
     # Device / IO
     p.add_argument("--device", type=str, default=None)
     p.add_argument("--save_path", type=str, default=None)
+    p.add_argument(
+        "--resume_checkpoint",
+        type=str,
+        default=None,
+        help="Path to a training checkpoint to resume from.",
+    )
+    p.add_argument(
+        "--fresh_optimizer",
+        type=lambda x: str(x).lower() in {"1", "true", "yes", "y"},
+        default=True,
+        help="Whether to start with a fresh optimizer when resuming from checkpoint (default: True).",
+    )
     p.add_argument("--seed", type=int, default=42)
     p.add_argument(
         "--scale",
@@ -369,6 +444,8 @@ def main():
         atom_head_hidden_dim=(args.atom_head_hidden_dim if len(args.atom_head_hidden_dim) else None),
         device=args.device,
         save_path=args.save_path,
+        resume_checkpoint=args.resume_checkpoint,
+        fresh_optimizer=args.fresh_optimizer,
         feature_workers=args.feature_workers,
         seed=args.seed,
         scale=args.scale,
