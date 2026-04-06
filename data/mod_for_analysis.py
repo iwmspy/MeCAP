@@ -60,6 +60,23 @@ element_dict        = {'thiourea': 1,
 substructure_match = lambda mol, submol: mol.GetSubstructMatches(submol,s_params)
 
 
+def determine_font_size(base_font_size=14, title_scale=1.3, label_scale=1.1, subtitle_scale=1.05):
+    ticks_font_size = int(base_font_size)
+    title_font_size = int(base_font_size * title_scale)
+    label_font_size = int(base_font_size * label_scale)
+    subtitle_font_size = int(base_font_size * subtitle_scale)
+    return base_font_size, ticks_font_size, title_font_size, label_font_size, subtitle_font_size
+
+# 2D-binning setting
+N_BINS_SIM = 10
+N_BINS_MDIST = 10
+MIN_CELL_N = 200
+HEATMAP_CMAP = "viridis"
+MASK_COLOR = "lightgray"
+
+
+
+
 def load_csv(path):
     return pd.read_csv(path, index_col=0)
 
@@ -937,6 +954,211 @@ def compute_local_pairwise_distance_change(
     out_df[result_col] = results
     return out_df
 
+def _prepare_abs_error(df):
+    true_val = 'MCA_values' if 'MCA_values' in df.columns else 'MAA_values'
+    df = df.copy()
+    df['abs_error_mmff'] = (df['mmff'] - df[true_val]).abs() - (df['esnuel_orca'] - df[true_val]).abs()
+    df['abs_error_rmsd'] = (df['rmsd'] - df[true_val]).abs() - (df['esnuel_orca'] - df[true_val]).abs()
+    return df
+
+def _interval_label(interval):
+    return f'{abs(interval.left):.3f}-{abs(interval.right):.3f}'
+
+def _summarize_heatmap(df, name_col, x_col, y_col, top_names, n_bins=5, percentile=0.50):
+    d = df[df[name_col].isin(top_names)][[name_col, x_col, y_col]].dropna().copy()
+    if d.empty:
+        empty = pd.DataFrame(index=top_names)
+        return empty, empty
+    d['bin'] = pd.qcut(d[x_col], q=n_bins, duplicates='drop')
+    summary = (
+        d.groupby([name_col, 'bin'], observed=True)
+        .agg(p=(y_col, lambda s: s.quantile(percentile)), count=(y_col, 'size'))
+        .reset_index()
+    )
+    heatmap = summary.pivot(index=name_col, columns='bin', values='p').reindex(top_names)
+    counts = summary.pivot(index=name_col, columns='bin', values='count').reindex(top_names)
+    labels = [_interval_label(iv) for iv in heatmap.columns]
+    heatmap.columns = labels
+    counts.columns = labels
+    return heatmap, counts
+
+def _plot_heatmap(ax, heatmap, counts, title, row_label='', show_xticks=False, show_yticks=False, ytick_pad=2, vmin=None, vmax=None):
+    base_font_size, ticks_font_size, title_font_size, label_font_size, subtitle_font_size = \
+        determine_font_size(16, title_scale=1.4)
+    cmap = plt.get_cmap('viridis').copy()
+    cmap.set_bad('lightgray')
+    annot = counts.applymap(lambda v: '' if pd.isna(v) else f'{int(v)}')
+    sns.heatmap(
+        heatmap,
+        ax=ax,
+        annot=annot,
+        fmt='',
+        annot_kws={'fontsize': max(1, ticks_font_size)},
+        cmap=cmap,
+        vmin=vmin,
+        vmax=vmax,
+        cbar=False,
+        linewidths=0.4,
+        linecolor='white',
+        mask=heatmap.isna(),
+    )
+    ax.set_title(title, fontsize=title_font_size)
+    ax.set_xlabel('' )
+    ax.set_ylabel(row_label if show_yticks else '', fontsize=label_font_size, fontweight='bold', rotation=90, labelpad=18)
+    ax.tick_params(axis='both', labelsize=ticks_font_size, length=0)
+    if show_xticks:
+        ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right', rotation_mode='anchor')
+        ax.tick_params(axis='x', labeltop=False, labelbottom=True, pad=2)
+        ax.xaxis.set_ticks_position('bottom')
+    else:
+        ax.set_xticklabels([])
+    if show_yticks:
+        ax.set_yticklabels(ax.get_yticklabels(), rotation=0, va='center')
+        ax.yaxis.tick_left()
+        ax.tick_params(axis='y', labelleft=True, labelright=False, pad=ytick_pad)
+    else:
+        ax.set_yticklabels([])
+
+def _trimmed_mean(x, trim=0.1):
+    if len(x) == 0:
+        return np.nan
+    lo, hi = x.quantile(trim), x.quantile(1 - trim)
+    return x[(x >= lo) & (x <= hi)].mean()
+
+
+def _format_interval_labels(interval_index, fmt="{:.3f}"):
+    """
+    Convert pandas IntervalIndex/Categorical interval categories to readable strings.
+    Example: (0.123, 0.456] -> "0.123–0.456"
+    """
+    labels = []
+    for iv in interval_index:
+        if pd.isna(iv):
+            labels.append("")
+            continue
+        # iv is a pandas Interval
+        labels.append(f"{fmt.format(iv.left)}–{fmt.format(iv.right)}")
+    return labels
+
+
+def summarize_2d_error(
+    df,
+    true_col,
+    pred_col="pred",
+    sim_col="ScafMaxSim",
+    mdist_col="MDist",
+    n_bins_sim=N_BINS_SIM,
+    n_bins_mdist=N_BINS_MDIST,
+    min_cell_n=MIN_CELL_N,
+    use_trimmed_mean=False,
+    trim=0.1,
+):
+    d = df[[true_col, pred_col, sim_col, mdist_col]].dropna().copy()
+    d["abs_error"] = (d[pred_col] - d[true_col]).abs()
+
+    # qcut returns categorical intervals
+    d["sim_bin"] = pd.qcut(d[sim_col], q=n_bins_sim, duplicates="drop")
+    d["mdist_bin"] = pd.qcut(d[mdist_col], q=n_bins_mdist, duplicates="drop")
+
+    agg_fn = (lambda s: _trimmed_mean(s, trim=trim)) if use_trimmed_mean else "median"
+
+    g = (
+        d.groupby(["sim_bin", "mdist_bin"], observed=True)
+        .agg(
+            error=("abs_error", agg_fn),
+            n=("abs_error", "size"),
+        )
+        .reset_index()
+    )
+
+    heat_error = g.pivot(index="mdist_bin", columns="sim_bin", values="error")
+    heat_n = g.pivot(index="mdist_bin", columns="sim_bin", values="n").fillna(0)
+
+    # mask sparse cells
+    heat_error = heat_error.mask(heat_n < min_cell_n)
+    return g, heat_error, heat_n
+
+
+def plot_2d_error_heatmap(
+    ax,
+    heat_error,
+    heat_n,
+    title,
+    cmap=HEATMAP_CMAP,
+    vmin=None,
+    vmax=None,
+    tick_fmt="{:.3f}",
+    cell_fontsize=None,
+):
+    base_font_size, ticks_font_size, title_font_size, label_font_size, subtitle_font_size = \
+        determine_font_size()
+    m = np.ma.masked_invalid(heat_error.values)
+    cmap_obj = plt.get_cmap(cmap).copy()
+    cmap_obj.set_bad(MASK_COLOR)
+
+    im = ax.imshow(m, aspect="auto", origin="lower", cmap=cmap_obj, vmin=vmin, vmax=vmax)
+
+    # Use interval ranges as tick labels
+    x_intervals = list(heat_error.columns)
+    y_intervals = list(heat_error.index)
+    x_labels = _format_interval_labels(x_intervals, fmt=tick_fmt)
+    y_labels = _format_interval_labels(y_intervals, fmt=tick_fmt)
+
+    ax.set_xticks(np.arange(heat_error.shape[1]))
+    ax.set_yticks(np.arange(heat_error.shape[0]))
+    ax.set_xticklabels(x_labels, rotation=45, ha="right")
+    ax.set_yticklabels(y_labels)
+
+    ax.tick_params(axis="both", labelsize=ticks_font_size)
+    ax.yaxis.tick_left()
+    ax.tick_params(axis="y", left=True, labelleft=True, right=False, labelright=False, pad=4)
+    ax.set_xlabel("")
+    ax.set_ylabel("Range of Mahalanobis distance", fontsize=label_font_size)
+    ax.set_title(title, fontsize=title_font_size)
+
+    # Cell count annotation (no 'n='), bigger font, color adapted to background
+    if cell_fontsize is None:
+        cell_fontsize = ticks_font_size  # bigger than before
+
+    # For text color decision, normalize by vmin/vmax if available
+    if vmin is None or vmax is None or not np.isfinite(vmin) or not np.isfinite(vmax) or vmin == vmax:
+        # Fallback: always white text
+        def _text_color(_val):
+            return "white"
+    else:
+        def _text_color(val):
+            # Use white on darker colors, black on brighter colors
+            # Threshold at mid-point in normalized space
+            t = (val - vmin) / (vmax - vmin)
+            return "white" if t < 0.55 else "black"
+
+    for i in range(heat_n.shape[0]):
+        for j in range(heat_n.shape[1]):
+            n_ij = int(heat_n.iloc[i, j]) if not np.isnan(heat_n.iloc[i, j]) else 0
+            val = heat_error.iloc[i, j]
+            if np.isnan(val):
+                # Masked cell: use dark text on gray background
+                color = "black"
+            else:
+                color = _text_color(float(val))
+            ax.text(j, i, f"{n_ij}", ha="center", va="center", fontsize=cell_fontsize, color=color)
+
+    return im
+
+def _build_wide_df(which: str) -> pd.DataFrame:
+    """Load base prediction + additional predictions and merge into a wide table."""
+    base = load_csv(f'./results/mecap_ref_{which}_layer_0/predictions.csv').copy()
+    base = base.rename(columns={"pred": "mmff"})
+
+    xtb = load_csv(f'./results/mecap_ref_{which}_esnuel_orca_layer_0/predictions.csv')[["pred"]].rename(
+        columns={"pred": "esnuel_orca"}
+    )
+    rmsd = load_csv(f'./results/mecap_ref_{which}_rmsd_layer_0/predictions.csv')[["pred"]].rename(
+        columns={"pred": "rmsd"}
+    )
+
+    wide = pd.concat([base, xtb, rmsd], axis=1)
+    return wide
 
 def is_atom_in_pi_system(mol, atom_idx):
     atom = mol.GetAtomWithIdx(atom_idx)
