@@ -1,0 +1,68 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+     "configurations": [
+        {
+            "name": "Debug Train (MAA, layer=0)",
+            "type": "debugpy",
+            "request": "launch",
+            "python": "/home/iwasaki/miniconda3/envs/mecap/bin/python",
+            "module": "train",
+            "cwd": "/home/iwasaki/work/MeCAP/src",
+            "args": [
+                "--data", "../data/references/df_elec_sample_10000_orca_split.csv",
+                "--atom_index_col", "elec_sites",
+                "--target_cols", "MAA Values [kJ/mol]",
+                "--split_col", "split",
+                "--sdf_name_col", "name",
+                "--sdf_mode", "per_row",
+                "--sdf_dir", "../data/references/orca_optimized_confs",
+                "--sdf_ext", ".sdf",
+                "--batch_size", "50",
+                "--epochs", "50",
+                "--lr", "1e-4",
+                "--save_path", "../data/results/different_metrics/mecap_maa_orca_layer_0",
+                "--model_name", "unimolv1",
+                "--scale",
+                "--feature_workers", "5"
+            ],
+            "env": {
+                "CONDA_DEFAULT_ENV": "mecap"
+            },
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        // {
+        //     "name": "Debug Train UniMea (MCA, V2, layer=0)",
+        //     "type": "debugpy",
+        //     "request": "launch",
+        //     "python": "/home/iwasaki/miniconda3/envs/unimea_ft/bin/python",
+        //     "module": "train",
+        //     "cwd": "/home/iwasaki/work/UniMea_dev/src",
+        //     "args": [
+        //         "--data", "../data/references/QMdata4ML/df_nuc_x_with_name_fold.csv",
+        //         "--atom_index_col", "nuc_sites",
+        //         "--target_cols", "MCA_values",
+        //         "--split_col", "Set_fold1",
+        //         "--sdf_name_col", "name",
+        //         "--sdf_mode", "per_row",
+        //         "--sdf_dir", "../data/results/confs_from_smiles_rdkit",
+        //         "--sdf_ext", ".sdf",
+        //         "--batch_size", "50",
+        //         "--epochs", "50",
+        //         "--lr", "1e-4",
+        //         "--save_path", "../data/results/unimea_ft_ref_mca_v2_layer_0",
+        //         "--model_name", "unimolv2",
+        //         "--scale",
+        //         "--feature_workers", "8"
+        //     ],
+        //     "env": {
+        //         "CONDA_DEFAULT_ENV": "unimea_ft"
+        //     },
+        //     "console": "integratedTerminal",
+        //     "justMyCode": true
+        // }
+    ]
+}

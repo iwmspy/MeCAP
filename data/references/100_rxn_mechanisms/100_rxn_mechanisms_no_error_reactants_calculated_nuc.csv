@@ -1,0 +1,1392 @@
+,reactant_smi,rxn_id,mapped_atoms,reactant_id_no_underbar,nuc_sites,MCA Value [kJ/mol],Type,reactant_error,product_error
+0,CC1=CC=C(C=C1)[OH:10],0,{10: 7},0reac0,3,349.77658005361445,Double bond,None,None
+1,CC1=CC=C(C=C1)[OH:10],0,{10: 7},0reac0,5,349.77658005361445,Double bond,None,None
+2,CC1=CC=C(C=C1)[OH:10],0,{10: 7},0reac0,1,349.0033286776161,Double bond,None,None
+3,CC1=CC=C(C=C1)[OH:10],0,{10: 7},0reac0,6,318.70982857467607,Double bond,None,None
+4,CC1=CC=C(C=C1)[OH:10],0,{10: 7},0reac0,2,318.70982857467607,Double bond,None,None
+5,CC1=CC=C(C=C1)[OH:10],0,{10: 7},0reac0,4,270.77877186704427,Double bond,None,None
+6,CC1=CC=C(C=C1)[OH:10],0,{10: 7},0reac0,7,267.3986216193298,Phenol,None,None
+7,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,0,{20: 6},0reac1,5,258.05696041858755,Double bond,None,None
+8,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,0,{20: 6},0reac1,1,258.05696041858755,Double bond,None,None
+9,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,0,{20: 6},0reac1,17,258.05696041858755,Double bond,None,None
+10,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,0,{20: 6},0reac1,15,258.05696041858755,Double bond,None,None
+11,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,0,{20: 6},0reac1,9,258.05696041858755,Double bond,None,None
+12,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,0,{20: 6},0reac1,11,258.05696041858755,Double bond,None,None
+13,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,0,{20: 6},0reac1,18,250.13060468970798,Double bond,None,None
+14,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,0,{20: 6},0reac1,8,250.13060468970798,Double bond,None,None
+15,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,0,{20: 6},0reac1,2,250.13060468970798,Double bond,None,None
+16,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,0,{20: 6},0reac1,4,250.13060468970798,Double bond,None,None
+17,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,0,{20: 6},0reac1,12,250.13060468970798,Double bond,None,None
+18,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,0,{20: 6},0reac1,14,250.13060468970798,Double bond,None,None
+19,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,0,{20: 6},0reac1,10,243.68387918174267,Double bond,None,None
+20,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,0,{20: 6},0reac1,0,243.68387918174267,Double bond,None,None
+21,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,0,{20: 6},0reac1,16,243.68387918174267,Double bond,None,None
+22,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,0,{20: 6},0reac1,3,174.12930040550418,Double bond,None,None
+23,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,0,{20: 6},0reac1,7,174.12930040550418,Double bond,None,None
+24,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,0,{20: 6},0reac1,13,174.12930040550418,Double bond,None,None
+25,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],1,"{20: 1, 10: 14}",1reac0,11,296.09805232752115,Double bond,Connectivity,None
+26,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],1,"{20: 1, 10: 14}",1reac0,9,285.26506908610463,Double bond,Connectivity,None
+27,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],1,"{20: 1, 10: 14}",1reac0,7,266.2061460549012,Double bond,Connectivity,None
+28,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],1,"{20: 1, 10: 14}",1reac0,10,265.7834891071543,Double bond,Connectivity,None
+29,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],1,"{20: 1, 10: 14}",1reac0,12,248.0027763498947,Double bond,Connectivity,Connectivity
+30,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],1,"{20: 1, 10: 14}",1reac0,14,213.84679946303368,Phenol,Connectivity,None
+31,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],1,"{20: 1, 10: 14}",1reac0,13,203.52371606230736,Atom with lone pair,Connectivity,Connectivity
+32,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],1,"{20: 1, 10: 14}",1reac0,8,201.16158956568688,Double bond,Connectivity,None
+33,N#N,2,{},2reac0,0,206.68189662357327,Atom with lone pair,None,None
+34,N#N,2,{},2reac0,1,206.68189662357327,Atom with lone pair,None,None
+35,CC(C)=[O:10],2,{10: 3},2reac1,3,346.4248559329426,Ketone,None,None
+36,CC(C)=[O:10],2,{10: 3},2reac1,1,240.84142082405742,Double bond,None,Connectivity
+37,[CH2+:20]C1=CC=CC=C1,2,{20: 0},2reac2,5,202.0555986505933,Double bond,None,None
+38,[CH2+:20]C1=CC=CC=C1,2,{20: 0},2reac2,3,202.0555986505933,Double bond,None,None
+39,[CH2+:20]C1=CC=CC=C1,2,{20: 0},2reac2,6,183.43457052949816,Double bond,None,None
+40,[CH2+:20]C1=CC=CC=C1,2,{20: 0},2reac2,2,183.43457052949816,Double bond,None,None
+41,[CH2+:20]C1=CC=CC=C1,2,{20: 0},2reac2,1,166.1737995541189,Double bond,None,Connectivity
+42,[CH2+:20]C1=CC=CC=C1,2,{20: 0},2reac2,4,140.07226348377299,Double bond,None,None
+43,C1C[O:10]C1,3,{10: 2},3reac0,2,359.9536007272545,Ether,None,None
+44,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,3,{20: 6},3reac1,8,243.11054634745233,Double bond,None,None
+45,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,3,{20: 6},3reac1,12,243.11054634745233,Double bond,None,None
+46,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,3,{20: 6},3reac1,2,243.11054634745233,Double bond,None,None
+47,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,3,{20: 6},3reac1,4,243.11054634745233,Double bond,None,None
+48,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,3,{20: 6},3reac1,9,242.97136068018153,Double bond,None,None
+49,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,3,{20: 6},3reac1,11,242.97136068018153,Double bond,None,None
+50,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,3,{20: 6},3reac1,1,242.97136068018153,Double bond,None,None
+51,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,3,{20: 6},3reac1,5,242.97136068018153,Double bond,None,None
+52,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,3,{20: 6},3reac1,0,229.27007203479297,Double bond,None,None
+53,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,3,{20: 6},3reac1,10,229.27007203479297,Double bond,None,None
+54,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,3,{20: 6},3reac1,3,200.70351033494808,Double bond,None,None
+55,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,3,{20: 6},3reac1,7,200.70351033494808,Double bond,None,None
+56,CC1=CCC(CC1)[C+:20](C)C,4,{20: 7},4reac0,2,365.0386885232292,Double bond,None,None
+57,CC1=CCC(CC1)[C+:20](C)C,4,{20: 7},4reac0,1,356.44354633428156,Double bond,None,Connectivity
+58,CC1(C2CC1C3(C(C2)[O:10]3)C)C,4,{10: 8},4reac1,8,342.7870675979648,Ether,None,None
+59,C1CC2CC[C+:20](CCC1[O:10]2)C3=CC=CC=C3,5,"{20: 5, 10: 9}",5reac0,13,294.0156299180817,Double bond,Connectivity,Connectivity
+60,C1CC2CC[C+:20](CCC1[O:10]2)C3=CC=CC=C3,5,"{20: 5, 10: 9}",5reac0,12,285.6017157686874,Double bond,Connectivity,Connectivity
+61,C1CC2CC[C+:20](CCC1[O:10]2)C3=CC=CC=C3,5,"{20: 5, 10: 9}",5reac0,14,285.6017157686874,Double bond,Connectivity,Connectivity
+62,C1CC2CC[C+:20](CCC1[O:10]2)C3=CC=CC=C3,5,"{20: 5, 10: 9}",5reac0,9,261.3398185505066,Ether,Connectivity,None
+63,C1CC2CC[C+:20](CCC1[O:10]2)C3=CC=CC=C3,5,"{20: 5, 10: 9}",5reac0,10,257.95675655524246,Double bond,Connectivity,Connectivity
+64,C1CC2CC[C+:20](CCC1[O:10]2)C3=CC=CC=C3,5,"{20: 5, 10: 9}",5reac0,11,244.63133323914371,Double bond,Connectivity,Connectivity
+65,C1CC2CC[C+:20](CCC1[O:10]2)C3=CC=CC=C3,5,"{20: 5, 10: 9}",5reac0,15,244.63133323914371,Double bond,Connectivity,Connectivity
+66,CC(OC(C)(C)C1=CC=CC=C1)=[O:10],6,{10: 12},6reac0,12,333.01845395285636,Ester,None,None
+67,CC(OC(C)(C)C1=CC=CC=C1)=[O:10],6,{10: 12},6reac0,9,320.8217831621878,Double bond,None,None
+68,CC(OC(C)(C)C1=CC=CC=C1)=[O:10],6,{10: 12},6reac0,8,302.0947397281416,Double bond,None,None
+69,CC(OC(C)(C)C1=CC=CC=C1)=[O:10],6,{10: 12},6reac0,10,302.0947397281416,Double bond,None,None
+70,CC(OC(C)(C)C1=CC=CC=C1)=[O:10],6,{10: 12},6reac0,11,294.15374691272154,Double bond,None,None
+71,CC(OC(C)(C)C1=CC=CC=C1)=[O:10],6,{10: 12},6reac0,7,294.15374691272154,Double bond,None,None
+72,CC(OC(C)(C)C1=CC=CC=C1)=[O:10],6,{10: 12},6reac0,6,271.5414191491436,Double bond,None,None
+73,CC(OC(C)(C)C1=CC=CC=C1)=[O:10],6,{10: 12},6reac0,2,256.2261109391693,Atom with lone pair,None,None
+74,CC(OC(C)(C)C1=CC=CC=C1)=[O:10],6,{10: 12},6reac0,1,-0.006927774753421545,Double bond,None,None
+75,[CH2+:20]C2=CC=CC=C2,6,{20: 0},6reac1,5,202.0555986505933,Double bond,None,None
+76,[CH2+:20]C2=CC=CC=C2,6,{20: 0},6reac1,3,202.0555986505933,Double bond,None,None
+77,[CH2+:20]C2=CC=CC=C2,6,{20: 0},6reac1,6,183.43457052949816,Double bond,None,None
+78,[CH2+:20]C2=CC=CC=C2,6,{20: 0},6reac1,2,183.43457052949816,Double bond,None,None
+79,[CH2+:20]C2=CC=CC=C2,6,{20: 0},6reac1,1,166.1737995541189,Double bond,None,Connectivity
+80,[CH2+:20]C2=CC=CC=C2,6,{20: 0},6reac1,4,140.07226348377299,Double bond,None,None
+81,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,7,"{10: 6, 20: 17}",7reac0,24,397.32420357409865,Double bond,None,Connectivity
+82,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,7,"{10: 6, 20: 17}",7reac0,6,355.3097785632126,Amide,None,None
+83,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,7,"{10: 6, 20: 17}",7reac0,23,353.7630325271748,Double bond,None,Connectivity
+84,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,7,"{10: 6, 20: 17}",7reac0,21,321.27093203226104,Double bond,None,Connectivity
+85,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,7,"{10: 6, 20: 17}",7reac0,2,317.39154493948445,Atom with lone pair,None,None
+86,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,7,"{10: 6, 20: 17}",7reac0,16,299.36438161926344,Double bond,None,None
+87,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,7,"{10: 6, 20: 17}",7reac0,13,292.33647065097466,Double bond,None,None
+88,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,7,"{10: 6, 20: 17}",7reac0,10,289.7343958648853,Double bond,None,None
+89,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,7,"{10: 6, 20: 17}",7reac0,9,287.12541767116636,Double bond,None,None
+90,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,7,"{10: 6, 20: 17}",7reac0,14,284.8636725372635,Double bond,None,None
+91,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,7,"{10: 6, 20: 17}",7reac0,8,275.7433913531713,Double bond,None,Connectivity
+92,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,7,"{10: 6, 20: 17}",7reac0,15,273.548958088737,Double bond,None,None
+93,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,7,"{10: 6, 20: 17}",7reac0,7,271.41306897066534,Double bond,None,None
+94,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,7,"{10: 6, 20: 17}",7reac0,22,238.59798245644197,Double bond,None,None
+95,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,7,"{10: 6, 20: 17}",7reac0,20,222.9765608953312,Double bond,None,None
+96,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,7,"{10: 6, 20: 17}",7reac0,12,216.13603450357914,Double bond,None,None
+97,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,7,"{10: 6, 20: 17}",7reac0,11,205.12326286081225,Double bond,None,None
+98,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,7,"{10: 6, 20: 17}",7reac0,25,200.9933792259544,Double bond,None,None
+99,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,7,"{10: 6, 20: 17}",7reac0,5,150.73924526944757,Double bond,None,Connectivity
+100,CC1=CC=C(C=C1)[OH:10],8,{10: 7},8reac0,3,349.77658005361445,Double bond,None,None
+101,CC1=CC=C(C=C1)[OH:10],8,{10: 7},8reac0,5,349.77658005361445,Double bond,None,None
+102,CC1=CC=C(C=C1)[OH:10],8,{10: 7},8reac0,1,349.0033286776161,Double bond,None,None
+103,CC1=CC=C(C=C1)[OH:10],8,{10: 7},8reac0,6,318.70982857467607,Double bond,None,None
+104,CC1=CC=C(C=C1)[OH:10],8,{10: 7},8reac0,2,318.70982857467607,Double bond,None,None
+105,CC1=CC=C(C=C1)[OH:10],8,{10: 7},8reac0,4,270.77877186704427,Double bond,None,None
+106,CC1=CC=C(C=C1)[OH:10],8,{10: 7},8reac0,7,267.3986216193298,Phenol,None,None
+107,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,8,{20: 6},8reac1,5,258.05696041858755,Double bond,None,None
+108,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,8,{20: 6},8reac1,1,258.05696041858755,Double bond,None,None
+109,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,8,{20: 6},8reac1,17,258.05696041858755,Double bond,None,None
+110,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,8,{20: 6},8reac1,15,258.05696041858755,Double bond,None,None
+111,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,8,{20: 6},8reac1,9,258.05696041858755,Double bond,None,None
+112,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,8,{20: 6},8reac1,11,258.05696041858755,Double bond,None,None
+113,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,8,{20: 6},8reac1,18,250.13060468970798,Double bond,None,None
+114,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,8,{20: 6},8reac1,8,250.13060468970798,Double bond,None,None
+115,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,8,{20: 6},8reac1,2,250.13060468970798,Double bond,None,None
+116,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,8,{20: 6},8reac1,4,250.13060468970798,Double bond,None,None
+117,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,8,{20: 6},8reac1,12,250.13060468970798,Double bond,None,None
+118,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,8,{20: 6},8reac1,14,250.13060468970798,Double bond,None,None
+119,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,8,{20: 6},8reac1,10,243.68387918174267,Double bond,None,None
+120,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,8,{20: 6},8reac1,0,243.68387918174267,Double bond,None,None
+121,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,8,{20: 6},8reac1,16,243.68387918174267,Double bond,None,None
+122,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,8,{20: 6},8reac1,3,174.12930040550418,Double bond,None,None
+123,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,8,{20: 6},8reac1,7,174.12930040550418,Double bond,None,None
+124,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,8,{20: 6},8reac1,13,174.12930040550418,Double bond,None,None
+125,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],9,"{20: 1, 10: 14}",9reac0,11,296.09805232752115,Double bond,Connectivity,None
+126,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],9,"{20: 1, 10: 14}",9reac0,9,285.26506908610463,Double bond,Connectivity,None
+127,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],9,"{20: 1, 10: 14}",9reac0,7,266.2061460549012,Double bond,Connectivity,None
+128,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],9,"{20: 1, 10: 14}",9reac0,10,265.7834891071543,Double bond,Connectivity,None
+129,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],9,"{20: 1, 10: 14}",9reac0,12,248.0027763498947,Double bond,Connectivity,Connectivity
+130,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],9,"{20: 1, 10: 14}",9reac0,14,213.84679946303368,Phenol,Connectivity,None
+131,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],9,"{20: 1, 10: 14}",9reac0,13,203.52371606230736,Atom with lone pair,Connectivity,Connectivity
+132,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],9,"{20: 1, 10: 14}",9reac0,8,201.16158956568688,Double bond,Connectivity,None
+133,N#N,10,{},10reac0,0,206.68189662357327,Atom with lone pair,None,None
+134,N#N,10,{},10reac0,1,206.68189662357327,Atom with lone pair,None,None
+135,CC(C)=[O:10],10,{10: 3},10reac1,3,346.4248559329426,Ketone,None,None
+136,CC(C)=[O:10],10,{10: 3},10reac1,1,240.84142082405742,Double bond,None,Connectivity
+137,[CH2+:20]C1=CC=CC=C1,10,{20: 0},10reac2,5,202.0555986505933,Double bond,None,None
+138,[CH2+:20]C1=CC=CC=C1,10,{20: 0},10reac2,3,202.0555986505933,Double bond,None,None
+139,[CH2+:20]C1=CC=CC=C1,10,{20: 0},10reac2,6,183.43457052949816,Double bond,None,None
+140,[CH2+:20]C1=CC=CC=C1,10,{20: 0},10reac2,2,183.43457052949816,Double bond,None,None
+141,[CH2+:20]C1=CC=CC=C1,10,{20: 0},10reac2,1,166.1737995541189,Double bond,None,Connectivity
+142,[CH2+:20]C1=CC=CC=C1,10,{20: 0},10reac2,4,140.07226348377299,Double bond,None,None
+143,C1C[O:10]C1,11,{10: 2},11reac0,2,359.9536007272545,Ether,None,None
+144,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,11,{20: 6},11reac1,8,243.11054634745233,Double bond,None,None
+145,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,11,{20: 6},11reac1,12,243.11054634745233,Double bond,None,None
+146,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,11,{20: 6},11reac1,2,243.11054634745233,Double bond,None,None
+147,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,11,{20: 6},11reac1,4,243.11054634745233,Double bond,None,None
+148,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,11,{20: 6},11reac1,9,242.97136068018153,Double bond,None,None
+149,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,11,{20: 6},11reac1,11,242.97136068018153,Double bond,None,None
+150,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,11,{20: 6},11reac1,1,242.97136068018153,Double bond,None,None
+151,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,11,{20: 6},11reac1,5,242.97136068018153,Double bond,None,None
+152,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,11,{20: 6},11reac1,0,229.27007203479297,Double bond,None,None
+153,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,11,{20: 6},11reac1,10,229.27007203479297,Double bond,None,None
+154,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,11,{20: 6},11reac1,3,200.70351033494808,Double bond,None,None
+155,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,11,{20: 6},11reac1,7,200.70351033494808,Double bond,None,None
+156,CC1=CCC(CC1)[C+:20](C)C,12,{20: 7},12reac0,2,365.0386885232292,Double bond,None,None
+157,CC1=CCC(CC1)[C+:20](C)C,12,{20: 7},12reac0,1,356.44354633428156,Double bond,None,Connectivity
+158,CC1(C2CC1C3(C(C2)[O:10]3)C)C,12,{10: 8},12reac1,8,342.7870675979648,Ether,None,None
+159,C1CC2CC[C+:20](CCC1[O:10]2)C3=CC=CC=C3,13,"{20: 5, 10: 9}",13reac0,13,294.0156299180817,Double bond,Connectivity,Connectivity
+160,C1CC2CC[C+:20](CCC1[O:10]2)C3=CC=CC=C3,13,"{20: 5, 10: 9}",13reac0,12,285.6017157686874,Double bond,Connectivity,Connectivity
+161,C1CC2CC[C+:20](CCC1[O:10]2)C3=CC=CC=C3,13,"{20: 5, 10: 9}",13reac0,14,285.6017157686874,Double bond,Connectivity,Connectivity
+162,C1CC2CC[C+:20](CCC1[O:10]2)C3=CC=CC=C3,13,"{20: 5, 10: 9}",13reac0,9,261.3398185505066,Ether,Connectivity,None
+163,C1CC2CC[C+:20](CCC1[O:10]2)C3=CC=CC=C3,13,"{20: 5, 10: 9}",13reac0,10,257.95675655524246,Double bond,Connectivity,Connectivity
+164,C1CC2CC[C+:20](CCC1[O:10]2)C3=CC=CC=C3,13,"{20: 5, 10: 9}",13reac0,11,244.63133323914371,Double bond,Connectivity,Connectivity
+165,C1CC2CC[C+:20](CCC1[O:10]2)C3=CC=CC=C3,13,"{20: 5, 10: 9}",13reac0,15,244.63133323914371,Double bond,Connectivity,Connectivity
+166,CC(OC(C)(C)C1=CC=CC=C1)=[O:10],14,{10: 12},14reac0,12,333.01845395285636,Ester,None,None
+167,CC(OC(C)(C)C1=CC=CC=C1)=[O:10],14,{10: 12},14reac0,9,320.8217831621878,Double bond,None,None
+168,CC(OC(C)(C)C1=CC=CC=C1)=[O:10],14,{10: 12},14reac0,8,302.0947397281416,Double bond,None,None
+169,CC(OC(C)(C)C1=CC=CC=C1)=[O:10],14,{10: 12},14reac0,10,302.0947397281416,Double bond,None,None
+170,CC(OC(C)(C)C1=CC=CC=C1)=[O:10],14,{10: 12},14reac0,11,294.15374691272154,Double bond,None,None
+171,CC(OC(C)(C)C1=CC=CC=C1)=[O:10],14,{10: 12},14reac0,7,294.15374691272154,Double bond,None,None
+172,CC(OC(C)(C)C1=CC=CC=C1)=[O:10],14,{10: 12},14reac0,6,271.5414191491436,Double bond,None,None
+173,CC(OC(C)(C)C1=CC=CC=C1)=[O:10],14,{10: 12},14reac0,2,256.2261109391693,Atom with lone pair,None,None
+174,CC(OC(C)(C)C1=CC=CC=C1)=[O:10],14,{10: 12},14reac0,1,-0.006927774753421545,Double bond,None,None
+175,[CH2+:20]C2=CC=CC=C2,14,{20: 0},14reac1,5,202.0555986505933,Double bond,None,None
+176,[CH2+:20]C2=CC=CC=C2,14,{20: 0},14reac1,3,202.0555986505933,Double bond,None,None
+177,[CH2+:20]C2=CC=CC=C2,14,{20: 0},14reac1,6,183.43457052949816,Double bond,None,None
+178,[CH2+:20]C2=CC=CC=C2,14,{20: 0},14reac1,2,183.43457052949816,Double bond,None,None
+179,[CH2+:20]C2=CC=CC=C2,14,{20: 0},14reac1,1,166.1737995541189,Double bond,None,Connectivity
+180,[CH2+:20]C2=CC=CC=C2,14,{20: 0},14reac1,4,140.07226348377299,Double bond,None,None
+181,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,15,"{10: 6, 20: 17}",15reac0,24,397.32420357409865,Double bond,None,Connectivity
+182,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,15,"{10: 6, 20: 17}",15reac0,6,355.3097785632126,Amide,None,None
+183,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,15,"{10: 6, 20: 17}",15reac0,23,353.7630325271748,Double bond,None,Connectivity
+184,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,15,"{10: 6, 20: 17}",15reac0,21,321.27093203226104,Double bond,None,Connectivity
+185,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,15,"{10: 6, 20: 17}",15reac0,2,317.39154493948445,Atom with lone pair,None,None
+186,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,15,"{10: 6, 20: 17}",15reac0,16,299.36438161926344,Double bond,None,None
+187,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,15,"{10: 6, 20: 17}",15reac0,13,292.33647065097466,Double bond,None,None
+188,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,15,"{10: 6, 20: 17}",15reac0,10,289.7343958648853,Double bond,None,None
+189,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,15,"{10: 6, 20: 17}",15reac0,9,287.12541767116636,Double bond,None,None
+190,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,15,"{10: 6, 20: 17}",15reac0,14,284.8636725372635,Double bond,None,None
+191,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,15,"{10: 6, 20: 17}",15reac0,8,275.7433913531713,Double bond,None,Connectivity
+192,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,15,"{10: 6, 20: 17}",15reac0,15,273.548958088737,Double bond,None,None
+193,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,15,"{10: 6, 20: 17}",15reac0,7,271.41306897066534,Double bond,None,None
+194,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,15,"{10: 6, 20: 17}",15reac0,22,238.59798245644197,Double bond,None,None
+195,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,15,"{10: 6, 20: 17}",15reac0,20,222.9765608953312,Double bond,None,None
+196,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,15,"{10: 6, 20: 17}",15reac0,12,216.13603450357914,Double bond,None,None
+197,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,15,"{10: 6, 20: 17}",15reac0,11,205.12326286081225,Double bond,None,None
+198,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,15,"{10: 6, 20: 17}",15reac0,25,200.9933792259544,Double bond,None,None
+199,CCN(CC)C(=[O:10])C1=C(C=CC2=C1C=CC=C2)[C+:20]3CCC4=CC=CC=C43,15,"{10: 6, 20: 17}",15reac0,5,150.73924526944757,Double bond,None,Connectivity
+200,CC1=CC=C(C=C1)[OH:10],16,{10: 7},16reac0,3,349.77658005361445,Double bond,None,None
+201,CC1=CC=C(C=C1)[OH:10],16,{10: 7},16reac0,5,349.77658005361445,Double bond,None,None
+202,CC1=CC=C(C=C1)[OH:10],16,{10: 7},16reac0,1,349.0033286776161,Double bond,None,None
+203,CC1=CC=C(C=C1)[OH:10],16,{10: 7},16reac0,6,318.70982857467607,Double bond,None,None
+204,CC1=CC=C(C=C1)[OH:10],16,{10: 7},16reac0,2,318.70982857467607,Double bond,None,None
+205,CC1=CC=C(C=C1)[OH:10],16,{10: 7},16reac0,4,270.77877186704427,Double bond,None,None
+206,CC1=CC=C(C=C1)[OH:10],16,{10: 7},16reac0,7,267.3986216193298,Phenol,None,None
+207,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,16,{20: 6},16reac1,5,258.05696041858755,Double bond,None,None
+208,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,16,{20: 6},16reac1,1,258.05696041858755,Double bond,None,None
+209,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,16,{20: 6},16reac1,17,258.05696041858755,Double bond,None,None
+210,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,16,{20: 6},16reac1,15,258.05696041858755,Double bond,None,None
+211,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,16,{20: 6},16reac1,9,258.05696041858755,Double bond,None,None
+212,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,16,{20: 6},16reac1,11,258.05696041858755,Double bond,None,None
+213,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,16,{20: 6},16reac1,18,250.13060468970798,Double bond,None,None
+214,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,16,{20: 6},16reac1,8,250.13060468970798,Double bond,None,None
+215,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,16,{20: 6},16reac1,2,250.13060468970798,Double bond,None,None
+216,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,16,{20: 6},16reac1,4,250.13060468970798,Double bond,None,None
+217,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,16,{20: 6},16reac1,12,250.13060468970798,Double bond,None,None
+218,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,16,{20: 6},16reac1,14,250.13060468970798,Double bond,None,None
+219,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,16,{20: 6},16reac1,10,243.68387918174267,Double bond,None,None
+220,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,16,{20: 6},16reac1,0,243.68387918174267,Double bond,None,None
+221,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,16,{20: 6},16reac1,16,243.68387918174267,Double bond,None,None
+222,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,16,{20: 6},16reac1,3,174.12930040550418,Double bond,None,None
+223,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,16,{20: 6},16reac1,7,174.12930040550418,Double bond,None,None
+224,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,16,{20: 6},16reac1,13,174.12930040550418,Double bond,None,None
+225,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],17,"{20: 1, 10: 14}",17reac0,11,296.09805232752115,Double bond,Connectivity,None
+226,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],17,"{20: 1, 10: 14}",17reac0,9,285.26506908610463,Double bond,Connectivity,None
+227,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],17,"{20: 1, 10: 14}",17reac0,7,266.2061460549012,Double bond,Connectivity,None
+228,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],17,"{20: 1, 10: 14}",17reac0,10,265.7834891071543,Double bond,Connectivity,None
+229,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],17,"{20: 1, 10: 14}",17reac0,12,248.0027763498947,Double bond,Connectivity,Connectivity
+230,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],17,"{20: 1, 10: 14}",17reac0,14,213.84679946303368,Phenol,Connectivity,None
+231,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],17,"{20: 1, 10: 14}",17reac0,13,203.52371606230736,Atom with lone pair,Connectivity,Connectivity
+232,C[C+:20](C)CC(C)(C)C1=C(C=CC(=C1)Br)[OH:10],17,"{20: 1, 10: 14}",17reac0,8,201.16158956568688,Double bond,Connectivity,None
+233,N#N,18,{},18reac0,0,206.68189662357327,Atom with lone pair,None,None
+234,N#N,18,{},18reac0,1,206.68189662357327,Atom with lone pair,None,None
+235,CC(C)=[O:10],18,{10: 3},18reac1,3,346.4248559329426,Ketone,None,None
+236,CC(C)=[O:10],18,{10: 3},18reac1,1,240.84142082405742,Double bond,None,Connectivity
+237,[CH2+:20]C1=CC=CC=C1,18,{20: 0},18reac2,5,202.0555986505933,Double bond,None,None
+238,[CH2+:20]C1=CC=CC=C1,18,{20: 0},18reac2,3,202.0555986505933,Double bond,None,None
+239,[CH2+:20]C1=CC=CC=C1,18,{20: 0},18reac2,6,183.43457052949816,Double bond,None,None
+240,[CH2+:20]C1=CC=CC=C1,18,{20: 0},18reac2,2,183.43457052949816,Double bond,None,None
+241,[CH2+:20]C1=CC=CC=C1,18,{20: 0},18reac2,1,166.1737995541189,Double bond,None,Connectivity
+242,[CH2+:20]C1=CC=CC=C1,18,{20: 0},18reac2,4,140.07226348377299,Double bond,None,None
+243,C1C[O:10]C1,19,{10: 2},19reac0,2,359.9536007272545,Ether,None,None
+244,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,19,{20: 6},19reac1,8,243.11054634745233,Double bond,None,None
+245,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,19,{20: 6},19reac1,12,243.11054634745233,Double bond,None,None
+246,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,19,{20: 6},19reac1,2,243.11054634745233,Double bond,None,None
+247,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,19,{20: 6},19reac1,4,243.11054634745233,Double bond,None,None
+248,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,19,{20: 6},19reac1,9,242.97136068018153,Double bond,None,None
+249,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,19,{20: 6},19reac1,11,242.97136068018153,Double bond,None,None
+250,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,19,{20: 6},19reac1,1,242.97136068018153,Double bond,None,None
+251,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,19,{20: 6},19reac1,5,242.97136068018153,Double bond,None,None
+252,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,19,{20: 6},19reac1,0,229.27007203479297,Double bond,None,None
+253,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,19,{20: 6},19reac1,10,229.27007203479297,Double bond,None,None
+254,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,19,{20: 6},19reac1,3,200.70351033494808,Double bond,None,None
+255,C1=CC=C(C=C1)[CH+:20]C2=CC=CC=C2,19,{20: 6},19reac1,7,200.70351033494808,Double bond,None,None
+256,CC1=CCC(CC1)[C+:20](C)C,20,{20: 7},20reac0,2,365.0386885232292,Double bond,None,None
+257,CC1=CCC(CC1)[C+:20](C)C,20,{20: 7},20reac0,1,356.44354633428156,Double bond,None,Connectivity
+258,CC1(C2CC1C3(C(C2)[O:10]3)C)C,20,{10: 8},20reac1,8,342.7870675979648,Ether,None,None
+259,C[C+:20]1CCCCCC1C2=C(C=CC(=C2)OC)[NH:10]C,21,"{20: 1, 10: 16}",21reac0,11,431.25772686162964,Double bond,Connectivity,Connectivity
+260,C[C+:20]1CCCCCC1C2=C(C=CC(=C2)OC)[NH:10]C,21,"{20: 1, 10: 16}",21reac0,13,418.9058414839674,Double bond,Connectivity,Connectivity
+261,C[C+:20]1CCCCCC1C2=C(C=CC(=C2)OC)[NH:10]C,21,"{20: 1, 10: 16}",21reac0,9,394.219185590744,Double bond,Connectivity,Connectivity
+262,C[C+:20]1CCCCCC1C2=C(C=CC(=C2)OC)[NH:10]C,21,"{20: 1, 10: 16}",21reac0,14,367.6149278553203,Ether,Connectivity,Connectivity
+263,C[C+:20]1CCCCCC1C2=C(C=CC(=C2)OC)[NH:10]C,21,"{20: 1, 10: 16}",21reac0,16,356.21617208165117,Amine,Connectivity,None
+264,C[C+:20]1CCCCCC1C2=C(C=CC(=C2)OC)[NH:10]C,21,"{20: 1, 10: 16}",21reac0,8,302.8881799336523,Double bond,Connectivity,None
+265,C[C+:20]1CCCCCC1C2=C(C=CC(=C2)OC)[NH:10]C,21,"{20: 1, 10: 16}",21reac0,10,299.47526226122864,Double bond,Connectivity,None
+266,C[C+:20]1CCCCCC1C2=C(C=CC(=C2)OC)[NH:10]C,21,"{20: 1, 10: 16}",21reac0,12,294.50368764298037,Double bond,Connectivity,None
+267,C1=CC(=CC=C1[NH2:10])Cl,22,{10: 6},22reac1,6,427.99999128538184,Amine,None,None
+268,C1=CC(=CC=C1[NH2:10])Cl,22,{10: 6},22reac1,2,392.9837060451973,Double bond,None,None
+269,C1=CC(=CC=C1[NH2:10])Cl,22,{10: 6},22reac1,4,383.6958694094792,Double bond,None,None
+270,C1=CC(=CC=C1[NH2:10])Cl,22,{10: 6},22reac1,0,383.6958694094792,Double bond,None,None
+271,C1=CC(=CC=C1[NH2:10])Cl,22,{10: 6},22reac1,1,298.0152384156827,Double bond,None,None
+272,C1=CC(=CC=C1[NH2:10])Cl,22,{10: 6},22reac1,3,298.0152384156827,Double bond,None,None
+273,C1=CC(=CC=C1[NH2:10])Cl,22,{10: 6},22reac1,5,237.94495239434764,Double bond,None,None
+274,C1=CC(=CC=C1[NH2:10])Cl,22,{10: 6},22reac1,7,226.78426563041285,Atom with lone pair,None,None
+275,COC1=CC=C(C=C1)/[CH:20]=[NH+:21]/C2CCCCC2,23,"{20: 8, 21: 9}",23reac0,7,303.16886347788386,Double bond,None,None
+276,COC1=CC=C(C=C1)/[CH:20]=[NH+:21]/C2CCCCC2,23,"{20: 8, 21: 9}",23reac0,3,303.16886347788386,Double bond,None,None
+277,COC1=CC=C(C=C1)/[CH:20]=[NH+:21]/C2CCCCC2,23,"{20: 8, 21: 9}",23reac0,5,274.59134290064685,Double bond,None,None
+278,COC1=CC=C(C=C1)/[CH:20]=[NH+:21]/C2CCCCC2,23,"{20: 8, 21: 9}",23reac0,1,254.77567425812595,Ether,None,None
+279,COC1=CC=C(C=C1)/[CH:20]=[NH+:21]/C2CCCCC2,23,"{20: 8, 21: 9}",23reac0,6,235.67221353482455,Double bond,None,None
+280,COC1=CC=C(C=C1)/[CH:20]=[NH+:21]/C2CCCCC2,23,"{20: 8, 21: 9}",23reac0,4,235.67221353482455,Double bond,None,None
+281,COC1=CC=C(C=C1)/[CH:20]=[NH+:21]/C2CCCCC2,23,"{20: 8, 21: 9}",23reac0,2,168.11637035850435,Double bond,None,None
+282,COC1=CC=C(C=C1)/[CH:20]=[NH+:21]/C2CCCCC2,23,"{20: 8, 21: 9}",23reac0,8,114.91219175048172,Double bond neighbouratom with charge plus1,None,None
+283,C1=CC=C(C=C1)[NH2:10],23,{10: 6},23reac1,6,434.8311335159233,Amine,None,None
+284,C1=CC=C(C=C1)[NH2:10],23,{10: 6},23reac1,0,411.36881836294197,Double bond,None,None
+285,C1=CC=C(C=C1)[NH2:10],23,{10: 6},23reac1,2,397.84726451302413,Double bond,None,None
+286,C1=CC=C(C=C1)[NH2:10],23,{10: 6},23reac1,4,397.84726451302413,Double bond,None,None
+287,C1=CC=C(C=C1)[NH2:10],23,{10: 6},23reac1,1,306.20242842601147,Double bond,None,None
+288,C1=CC=C(C=C1)[NH2:10],23,{10: 6},23reac1,5,306.20242842601147,Double bond,None,None
+289,C1=CC=C(C=C1)[NH2:10],23,{10: 6},23reac1,3,241.39198272663634,Double bond,None,None
+290,CCC/[N:10]=C/C1=CC=CC=C1,24,{10: 3},24reac0,4,519.1732726192567,Double bond,None,Connectivity
+291,CCC/[N:10]=C/C1=CC=CC=C1,24,{10: 3},24reac0,3,473.2396332034841,Imine,None,None
+292,CCC/[N:10]=C/C1=CC=CC=C1,24,{10: 3},24reac0,8,307.97331930487417,Double bond,None,None
+293,CCC/[N:10]=C/C1=CC=CC=C1,24,{10: 3},24reac0,6,305.5922424243763,Double bond,None,None
+294,CCC/[N:10]=C/C1=CC=CC=C1,24,{10: 3},24reac0,10,305.5922424243763,Double bond,None,None
+295,CCC/[N:10]=C/C1=CC=CC=C1,24,{10: 3},24reac0,7,293.5927517237142,Double bond,None,None
+296,CCC/[N:10]=C/C1=CC=CC=C1,24,{10: 3},24reac0,9,293.5927517237142,Double bond,None,None
+297,CCC/[N:10]=C/C1=CC=CC=C1,24,{10: 3},24reac0,5,252.392696053721,Double bond,None,Connectivity
+298,C1C2=C(C=CC=C2)[C:20](=[O:21])OC1=O,24,"{20: 7, 21: 8}",24reac1,8,307.0940770858433,Atom with lone pair,None,None
+299,C1C2=C(C=CC=C2)[C:20](=[O:21])OC1=O,24,"{20: 7, 21: 8}",24reac1,11,303.8876247906592,Atom with lone pair,None,None
+300,C1C2=C(C=CC=C2)[C:20](=[O:21])OC1=O,24,"{20: 7, 21: 8}",24reac1,4,279.26028266036883,Double bond,None,None
+301,C1C2=C(C=CC=C2)[C:20](=[O:21])OC1=O,24,"{20: 7, 21: 8}",24reac1,6,274.9507073101122,Double bond,None,None
+302,C1C2=C(C=CC=C2)[C:20](=[O:21])OC1=O,24,"{20: 7, 21: 8}",24reac1,7,263.89680379698984,Double bond,None,Connectivity
+303,C1C2=C(C=CC=C2)[C:20](=[O:21])OC1=O,24,"{20: 7, 21: 8}",24reac1,3,258.8794589799363,Double bond,None,None
+304,C1C2=C(C=CC=C2)[C:20](=[O:21])OC1=O,24,"{20: 7, 21: 8}",24reac1,5,253.02399101224728,Double bond,None,None
+305,C1C2=C(C=CC=C2)[C:20](=[O:21])OC1=O,24,"{20: 7, 21: 8}",24reac1,2,243.72116648871452,Double bond,None,None
+306,C1C2=C(C=CC=C2)[C:20](=[O:21])OC1=O,24,"{20: 7, 21: 8}",24reac1,9,237.3669598621782,Atom with lone pair,None,None
+307,C1C2=C(C=CC=C2)[C:20](=[O:21])OC1=O,24,"{20: 7, 21: 8}",24reac1,1,236.43822007835843,Double bond,None,None
+308,C1C2=C(C=CC=C2)[C:20](=[O:21])OC1=O,24,"{20: 7, 21: 8}",24reac1,10,198.1448328862898,Double bond,None,Connectivity
+309,CC(=O)OCC1C(C[CH:20]=[O+:21]1)OC(=O)C,25,"{20: 8, 21: 9}",25reac0,8,367.82562864618376,Double bond neighbouratom with charge plus1,None,Connectivity
+310,CC(=O)OCC1C(C[CH:20]=[O+:21]1)OC(=O)C,25,"{20: 8, 21: 9}",25reac0,1,333.5380163162481,Double bond,None,Connectivity
+311,CC(=O)OCC1C(C[CH:20]=[O+:21]1)OC(=O)C,25,"{20: 8, 21: 9}",25reac0,2,298.04313931427896,Ester,None,None
+312,CC(=O)OCC1C(C[CH:20]=[O+:21]1)OC(=O)C,25,"{20: 8, 21: 9}",25reac0,12,292.1210780874826,Ester,None,None
+313,CC(=O)OCC1C(C[CH:20]=[O+:21]1)OC(=O)C,25,"{20: 8, 21: 9}",25reac0,3,231.47106781462207,Atom with lone pair,None,None
+314,CC(=O)OCC1C(C[CH:20]=[O+:21]1)OC(=O)C,25,"{20: 8, 21: 9}",25reac0,10,208.47587619093247,Atom with lone pair,None,None
+315,CC(=O)OCC1C(C[CH:20]=[O+:21]1)OC(=O)C,25,"{20: 8, 21: 9}",25reac0,11,102.63329356350005,Double bond,None,Connectivity
+316,C1=CC(=[N:10]C=C1)O,25,{10: 3},25reac1,3,442.1813597987639,Pyridine like nitrogen,None,None
+317,C1=CC(=[N:10]C=C1)O,25,{10: 3},25reac1,5,325.58773131889757,Double bond,None,None
+318,C1=CC(=[N:10]C=C1)O,25,{10: 3},25reac1,1,319.04493389534764,Double bond,None,None
+319,C1=CC(=[N:10]C=C1)O,25,{10: 3},25reac1,4,252.77842201315798,Double bond,None,None
+320,C1=CC(=[N:10]C=C1)O,25,{10: 3},25reac1,6,244.37261461140588,Atom with lone pair,None,None
+321,C1=CC(=[N:10]C=C1)O,25,{10: 3},25reac1,0,227.90118926693685,Double bond,None,None
+322,C1=CC(=[N:10]C=C1)O,25,{10: 3},25reac1,2,175.44519570993725,Double bond,None,None
+323,CCC(CC)O,26,{},26reac0,5,328.8981492121238,Atom with lone pair,None,None
+324,CCC(C(C)[C:20](=[O:21])Cl)O[Si](C)(C)C(C)(C)C,26,"{20: 5, 21: 6}",26reac1,5,454.39422014029697,Double bond,None,Connectivity
+325,CCC(C(C)[C:20](=[O:21])Cl)O[Si](C)(C)C(C)(C)C,26,"{20: 5, 21: 6}",26reac1,6,268.4834690489806,Atom with lone pair,None,None
+326,CCC(C(C)[C:20](=[O:21])Cl)O[Si](C)(C)C(C)(C)C,26,"{20: 5, 21: 6}",26reac1,8,254.47250257665291,Silyl ether,None,Connectivity
+327,CCC(C(C)[C:20](=[O:21])Cl)O[Si](C)(C)C(C)(C)C,26,"{20: 5, 21: 6}",26reac1,7,223.78393738158047,Atom with lone pair,None,None
+328,CN(C)C1=CC=[N:10]C=C1,26,{10: 6},26reac2,6,498.23423211602494,Imine,None,None
+329,CN(C)C1=CC=[N:10]C=C1,26,{10: 6},26reac2,1,421.50945936259814,Amine,None,None
+330,CN(C)C1=CC=[N:10]C=C1,26,{10: 6},26reac2,4,390.0544229154475,Double bond,None,None
+331,CN(C)C1=CC=[N:10]C=C1,26,{10: 6},26reac2,8,390.0544229154475,Double bond,None,None
+332,CN(C)C1=CC=[N:10]C=C1,26,{10: 6},26reac2,3,285.8832177363802,Double bond,None,Connectivity
+333,CN(C)C1=CC=[N:10]C=C1,26,{10: 6},26reac2,5,267.35726737976074,Double bond,None,None
+334,CN(C)C1=CC=[N:10]C=C1,26,{10: 6},26reac2,7,267.35726737976074,Double bond,None,None
+335,CC[C:20](=[O:21])OC1=CC=C(C=C1)[N+](=O)[O-],27,"{20: 2, 21: 3}",27reac0,2,317.4020159363281,Double bond,None,Connectivity
+336,CC[C:20](=[O:21])OC1=CC=C(C=C1)[N+](=O)[O-],27,"{20: 2, 21: 3}",27reac0,13,308.8947214006912,Anion with charge minus1,None,None
+337,CC[C:20](=[O:21])OC1=CC=C(C=C1)[N+](=O)[O-],27,"{20: 2, 21: 3}",27reac0,12,307.17969845747575,Atom with lone pair,None,None
+338,CC[C:20](=[O:21])OC1=CC=C(C=C1)[N+](=O)[O-],27,"{20: 2, 21: 3}",27reac0,3,299.6537769655697,Ester,None,None
+339,CC[C:20](=[O:21])OC1=CC=C(C=C1)[N+](=O)[O-],27,"{20: 2, 21: 3}",27reac0,6,277.7219913424924,Double bond,None,None
+340,CC[C:20](=[O:21])OC1=CC=C(C=C1)[N+](=O)[O-],27,"{20: 2, 21: 3}",27reac0,10,277.7219913424924,Double bond,None,None
+341,CC[C:20](=[O:21])OC1=CC=C(C=C1)[N+](=O)[O-],27,"{20: 2, 21: 3}",27reac0,5,273.3871814252343,Double bond,None,Connectivity
+342,CC[C:20](=[O:21])OC1=CC=C(C=C1)[N+](=O)[O-],27,"{20: 2, 21: 3}",27reac0,8,260.2055422309786,Double bond,None,None
+343,CC[C:20](=[O:21])OC1=CC=C(C=C1)[N+](=O)[O-],27,"{20: 2, 21: 3}",27reac0,4,238.67998837074265,Atom with lone pair,None,None
+344,CC[C:20](=[O:21])OC1=CC=C(C=C1)[N+](=O)[O-],27,"{20: 2, 21: 3}",27reac0,7,235.47647207137197,Double bond,None,None
+345,CC[C:20](=[O:21])OC1=CC=C(C=C1)[N+](=O)[O-],27,"{20: 2, 21: 3}",27reac0,9,235.47647207137197,Double bond,None,None
+346,CN(C)C1=CC=[N:10]C=C1,27,{10: 6},27reac1,6,498.23423211602494,Imine,None,None
+347,CN(C)C1=CC=[N:10]C=C1,27,{10: 6},27reac1,1,421.50945936259814,Amine,None,None
+348,CN(C)C1=CC=[N:10]C=C1,27,{10: 6},27reac1,4,390.0544229154475,Double bond,None,None
+349,CN(C)C1=CC=[N:10]C=C1,27,{10: 6},27reac1,8,390.0544229154475,Double bond,None,None
+350,CN(C)C1=CC=[N:10]C=C1,27,{10: 6},27reac1,3,285.8832177363802,Double bond,None,Connectivity
+351,CN(C)C1=CC=[N:10]C=C1,27,{10: 6},27reac1,5,267.35726737976074,Double bond,None,None
+352,CN(C)C1=CC=[N:10]C=C1,27,{10: 6},27reac1,7,267.35726737976074,Double bond,None,None
+353,C[C+:20](C)C1=CC=CC=C1,28,{20: 1},28reac0,7,237.5022392218234,Double bond,None,None
+354,C[C+:20](C)C1=CC=CC=C1,28,{20: 1},28reac0,5,237.5022392218234,Double bond,None,None
+355,C[C+:20](C)C1=CC=CC=C1,28,{20: 1},28reac0,8,223.12449254305102,Double bond,None,None
+356,C[C+:20](C)C1=CC=CC=C1,28,{20: 1},28reac0,4,223.12449254305102,Double bond,None,None
+357,C[C+:20](C)C1=CC=CC=C1,28,{20: 1},28reac0,6,211.5333855036879,Double bond,None,None
+358,C[C+:20](C)C1=CC=CC=C1,28,{20: 1},28reac0,3,192.87211858388036,Double bond,None,None
+359,C1=CC=[N:10]C=C1,28,{10: 3},28reac1,3,467.1384945854079,Imine,None,None
+360,C1=CC=[N:10]C=C1,28,{10: 3},28reac1,1,276.35567590850405,Double bond,None,None
+361,C1=CC=[N:10]C=C1,28,{10: 3},28reac1,5,276.35567590850405,Double bond,None,None
+362,C1=CC=[N:10]C=C1,28,{10: 3},28reac1,2,251.74352699052542,Double bond,None,None
+363,C1=CC=[N:10]C=C1,28,{10: 3},28reac1,4,251.74352699052542,Double bond,None,None
+364,C1=CC=[N:10]C=C1,28,{10: 3},28reac1,0,233.33821776206605,Double bond,None,None
+365,CN(C)C1=CC=[N:10]C=C1,29,{10: 6},29reac0,6,498.23423211602494,Imine,None,None
+366,CN(C)C1=CC=[N:10]C=C1,29,{10: 6},29reac0,1,421.50945936259814,Amine,None,None
+367,CN(C)C1=CC=[N:10]C=C1,29,{10: 6},29reac0,4,390.0544229154475,Double bond,None,None
+368,CN(C)C1=CC=[N:10]C=C1,29,{10: 6},29reac0,8,390.0544229154475,Double bond,None,None
+369,CN(C)C1=CC=[N:10]C=C1,29,{10: 6},29reac0,3,285.8832177363802,Double bond,None,Connectivity
+370,CN(C)C1=CC=[N:10]C=C1,29,{10: 6},29reac0,5,267.35726737976074,Double bond,None,None
+371,CN(C)C1=CC=[N:10]C=C1,29,{10: 6},29reac0,7,267.35726737976074,Double bond,None,None
+372,C2([CH+:20]C3=CC=C(N4CCOCC4)C=C3)=CC=C(N5CCOCC5)C=C2,29,{20: 1},29reac1,17,398.4368572290987,Amine,None,None
+373,C2([CH+:20]C3=CC=C(N4CCOCC4)C=C3)=CC=C(N5CCOCC5)C=C2,29,{20: 1},29reac1,6,398.4368572290987,Amine,None,None
+374,C2([CH+:20]C3=CC=C(N4CCOCC4)C=C3)=CC=C(N5CCOCC5)C=C2,29,{20: 1},29reac1,4,353.76285694446415,Double bond,None,None
+375,C2([CH+:20]C3=CC=C(N4CCOCC4)C=C3)=CC=C(N5CCOCC5)C=C2,29,{20: 1},29reac1,12,353.76285694446415,Double bond,None,None
+376,C2([CH+:20]C3=CC=C(N4CCOCC4)C=C3)=CC=C(N5CCOCC5)C=C2,29,{20: 1},29reac1,15,353.76285694446415,Double bond,None,None
+377,C2([CH+:20]C3=CC=C(N4CCOCC4)C=C3)=CC=C(N5CCOCC5)C=C2,29,{20: 1},29reac1,23,353.76285694446415,Double bond,None,None
+378,C2([CH+:20]C3=CC=C(N4CCOCC4)C=C3)=CC=C(N5CCOCC5)C=C2,29,{20: 1},29reac1,20,331.1699601416476,Ether,None,None
+379,C2([CH+:20]C3=CC=C(N4CCOCC4)C=C3)=CC=C(N5CCOCC5)C=C2,29,{20: 1},29reac1,9,331.1699601416476,Ether,None,None
+380,C2([CH+:20]C3=CC=C(N4CCOCC4)C=C3)=CC=C(N5CCOCC5)C=C2,29,{20: 1},29reac1,2,326.70285130059347,Double bond,None,None
+381,C2([CH+:20]C3=CC=C(N4CCOCC4)C=C3)=CC=C(N5CCOCC5)C=C2,29,{20: 1},29reac1,0,326.70285130059347,Double bond,None,None
+382,C2([CH+:20]C3=CC=C(N4CCOCC4)C=C3)=CC=C(N5CCOCC5)C=C2,29,{20: 1},29reac1,13,274.1409230940044,Double bond,None,None
+383,C2([CH+:20]C3=CC=C(N4CCOCC4)C=C3)=CC=C(N5CCOCC5)C=C2,29,{20: 1},29reac1,3,274.1409230940044,Double bond,None,None
+384,C2([CH+:20]C3=CC=C(N4CCOCC4)C=C3)=CC=C(N5CCOCC5)C=C2,29,{20: 1},29reac1,14,274.1409230940044,Double bond,None,None
+385,C2([CH+:20]C3=CC=C(N4CCOCC4)C=C3)=CC=C(N5CCOCC5)C=C2,29,{20: 1},29reac1,24,274.1409230940044,Double bond,None,None
+386,C2([CH+:20]C3=CC=C(N4CCOCC4)C=C3)=CC=C(N5CCOCC5)C=C2,29,{20: 1},29reac1,5,269.76204434596,Double bond,None,Connectivity
+387,C2([CH+:20]C3=CC=C(N4CCOCC4)C=C3)=CC=C(N5CCOCC5)C=C2,29,{20: 1},29reac1,16,269.76204434596,Double bond,None,Connectivity
+388,COC1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,30,{20: 8},30reac0,3,293.4389188159257,Double bond,None,None
+389,COC1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,30,{20: 8},30reac0,7,293.4389188159257,Double bond,None,None
+390,COC1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,30,{20: 8},30reac0,19,265.40833367733285,Double bond,None,None
+391,COC1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,30,{20: 8},30reac0,17,265.40833367733285,Double bond,None,None
+392,COC1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,30,{20: 8},30reac0,13,265.40833367733285,Double bond,None,None
+393,COC1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,30,{20: 8},30reac0,11,265.40833367733285,Double bond,None,None
+394,COC1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,30,{20: 8},30reac0,14,261.7202120227739,Double bond,None,None
+395,COC1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,30,{20: 8},30reac0,20,261.7202120227739,Double bond,None,None
+396,COC1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,30,{20: 8},30reac0,16,261.7202120227739,Double bond,None,None
+397,COC1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,30,{20: 8},30reac0,10,261.7202120227739,Double bond,None,None
+398,COC1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,30,{20: 8},30reac0,12,256.7185455127619,Double bond,None,None
+399,COC1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,30,{20: 8},30reac0,18,256.7185455127619,Double bond,None,None
+400,COC1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,30,{20: 8},30reac0,1,244.58281373512,Ether,None,None
+401,COC1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,30,{20: 8},30reac0,6,231.06415769085288,Double bond,None,None
+402,COC1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,30,{20: 8},30reac0,4,231.06415769085288,Double bond,None,None
+403,COC1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,30,{20: 8},30reac0,5,215.44403142714873,Double bond,None,None
+404,COC1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,30,{20: 8},30reac0,9,192.495227411855,Double bond,None,None
+405,COC1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,30,{20: 8},30reac0,15,192.495227411855,Double bond,None,None
+406,COC1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,30,{20: 8},30reac0,2,158.59666319936514,Double bond,None,None
+407,C1C2C([NH:10]2)C3=C1C=CC=C3,30,{10: 3},30reac1,3,780.6928144940175,Amine,None,None
+408,C1C2C([NH:10]2)C3=C1C=CC=C3,30,{10: 3},30reac1,7,639.3787910307292,Double bond,None,None
+409,C1C2C([NH:10]2)C3=C1C=CC=C3,30,{10: 3},30reac1,9,630.6236417458858,Double bond,None,None
+410,C1C2C([NH:10]2)C3=C1C=CC=C3,30,{10: 3},30reac1,8,629.465956222266,Double bond,None,None
+411,C1C2C([NH:10]2)C3=C1C=CC=C3,30,{10: 3},30reac1,6,622.7898661834188,Double bond,None,None
+412,C1C2C([NH:10]2)C3=C1C=CC=C3,30,{10: 3},30reac1,4,598.083101184573,Double bond,None,None
+413,C1C2C([NH:10]2)C3=C1C=CC=C3,30,{10: 3},30reac1,5,595.5055104633793,Double bond,None,None
+414,C1C2C([NH:10]2)C3=C1C=CC=C3,31,{10: 3},31reac0,3,780.6928144940175,Amine,None,None
+415,C1C2C([NH:10]2)C3=C1C=CC=C3,31,{10: 3},31reac0,7,639.3787910307292,Double bond,None,None
+416,C1C2C([NH:10]2)C3=C1C=CC=C3,31,{10: 3},31reac0,9,630.6236417458858,Double bond,None,None
+417,C1C2C([NH:10]2)C3=C1C=CC=C3,31,{10: 3},31reac0,8,629.465956222266,Double bond,None,None
+418,C1C2C([NH:10]2)C3=C1C=CC=C3,31,{10: 3},31reac0,6,622.7898661834188,Double bond,None,None
+419,C1C2C([NH:10]2)C3=C1C=CC=C3,31,{10: 3},31reac0,4,598.083101184573,Double bond,None,None
+420,C1C2C([NH:10]2)C3=C1C=CC=C3,31,{10: 3},31reac0,5,595.5055104633793,Double bond,None,None
+421,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,31,{20: 6},31reac1,5,258.05696041858755,Double bond,None,None
+422,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,31,{20: 6},31reac1,1,258.05696041858755,Double bond,None,None
+423,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,31,{20: 6},31reac1,17,258.05696041858755,Double bond,None,None
+424,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,31,{20: 6},31reac1,15,258.05696041858755,Double bond,None,None
+425,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,31,{20: 6},31reac1,9,258.05696041858755,Double bond,None,None
+426,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,31,{20: 6},31reac1,11,258.05696041858755,Double bond,None,None
+427,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,31,{20: 6},31reac1,18,250.13060468970798,Double bond,None,None
+428,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,31,{20: 6},31reac1,8,250.13060468970798,Double bond,None,None
+429,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,31,{20: 6},31reac1,2,250.13060468970798,Double bond,None,None
+430,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,31,{20: 6},31reac1,4,250.13060468970798,Double bond,None,None
+431,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,31,{20: 6},31reac1,12,250.13060468970798,Double bond,None,None
+432,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,31,{20: 6},31reac1,14,250.13060468970798,Double bond,None,None
+433,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,31,{20: 6},31reac1,10,243.68387918174267,Double bond,None,None
+434,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,31,{20: 6},31reac1,0,243.68387918174267,Double bond,None,None
+435,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,31,{20: 6},31reac1,16,243.68387918174267,Double bond,None,None
+436,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,31,{20: 6},31reac1,3,174.12930040550418,Double bond,None,None
+437,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,31,{20: 6},31reac1,7,174.12930040550418,Double bond,None,None
+438,C1=CC=C(C=C1)[C+:20](C2=CC=CC=C2)C3=CC=CC=C3,31,{20: 6},31reac1,13,174.12930040550418,Double bond,None,None
+439,COC1=CC=C(C=C1)[CH:20]=[N+:21]2CCCCC2,32,"{20: 8, 21: 9}",32reac0,7,306.62640592223033,Double bond,None,None
+440,COC1=CC=C(C=C1)[CH:20]=[N+:21]2CCCCC2,32,"{20: 8, 21: 9}",32reac0,3,306.62640592223033,Double bond,None,None
+441,COC1=CC=C(C=C1)[CH:20]=[N+:21]2CCCCC2,32,"{20: 8, 21: 9}",32reac0,5,288.7941239939537,Double bond,None,None
+442,COC1=CC=C(C=C1)[CH:20]=[N+:21]2CCCCC2,32,"{20: 8, 21: 9}",32reac0,1,260.3437559749,Ether,None,None
+443,COC1=CC=C(C=C1)[CH:20]=[N+:21]2CCCCC2,32,"{20: 8, 21: 9}",32reac0,6,243.89183576172218,Double bond,None,None
+444,COC1=CC=C(C=C1)[CH:20]=[N+:21]2CCCCC2,32,"{20: 8, 21: 9}",32reac0,4,243.89183576172218,Double bond,None,None
+445,COC1=CC=C(C=C1)[CH:20]=[N+:21]2CCCCC2,32,"{20: 8, 21: 9}",32reac0,8,231.98657575272955,Double bond neighbouratom with charge plus1,None,Connectivity
+446,COC1=CC=C(C=C1)[CH:20]=[N+:21]2CCCCC2,32,"{20: 8, 21: 9}",32reac0,2,164.04242537729442,Double bond,None,None
+447,C1CC[NH:10]CC1,32,{10: 3},32reac1,3,512.216989437351,Amine,None,None
+448,C1CC([NH:10]C1)C(=O)N,33,{10: 3},33reac0,3,480.78721357882023,Amine,None,None
+449,C1CC([NH:10]C1)C(=O)N,33,{10: 3},33reac0,5,452.09418205195107,Double bond,None,Connectivity
+450,C1CC([NH:10]C1)C(=O)N,33,{10: 3},33reac0,6,382.90777437761426,Amide,None,None
+451,C1CC([NH:10]C1)C(=O)N,33,{10: 3},33reac0,7,379.2867802637629,Atom with lone pair,None,None
+452,C1=COC(=C1)[C:20](=[O:21])OC2=C(C(=C(C(=C2F)F)F)F)F,33,"{20: 5, 21: 6}",33reac1,3,331.2315466129221,Double bond,None,None
+453,C1=COC(=C1)[C:20](=[O:21])OC2=C(C(=C(C(=C2F)F)F)F)F,33,"{20: 5, 21: 6}",33reac1,5,330.7408433081582,Double bond,None,Connectivity
+454,C1=COC(=C1)[C:20](=[O:21])OC2=C(C(=C(C(=C2F)F)F)F)F,33,"{20: 5, 21: 6}",33reac1,1,330.4050926971249,Double bond,None,None
+455,C1=COC(=C1)[C:20](=[O:21])OC2=C(C(=C(C(=C2F)F)F)F)F,33,"{20: 5, 21: 6}",33reac1,8,294.6303155370988,Double bond,None,Connectivity
+456,C1=COC(=C1)[C:20](=[O:21])OC2=C(C(=C(C(=C2F)F)F)F)F,33,"{20: 5, 21: 6}",33reac1,0,288.63431824790314,Double bond,None,None
+457,C1=COC(=C1)[C:20](=[O:21])OC2=C(C(=C(C(=C2F)F)F)F)F,33,"{20: 5, 21: 6}",33reac1,6,280.369944261387,Ester,None,None
+458,C1=COC(=C1)[C:20](=[O:21])OC2=C(C(=C(C(=C2F)F)F)F)F,33,"{20: 5, 21: 6}",33reac1,11,268.078272475861,Double bond,None,None
+459,C1=COC(=C1)[C:20](=[O:21])OC2=C(C(=C(C(=C2F)F)F)F)F,33,"{20: 5, 21: 6}",33reac1,9,265.75650554848835,Double bond,None,None
+460,C1=COC(=C1)[C:20](=[O:21])OC2=C(C(=C(C(=C2F)F)F)F)F,33,"{20: 5, 21: 6}",33reac1,13,265.75650554848835,Double bond,None,None
+461,C1=COC(=C1)[C:20](=[O:21])OC2=C(C(=C(C(=C2F)F)F)F)F,33,"{20: 5, 21: 6}",33reac1,12,262.72752586752176,Double bond,None,None
+462,C1=COC(=C1)[C:20](=[O:21])OC2=C(C(=C(C(=C2F)F)F)F)F,33,"{20: 5, 21: 6}",33reac1,10,262.72752586752176,Double bond,None,None
+463,C1=COC(=C1)[C:20](=[O:21])OC2=C(C(=C(C(=C2F)F)F)F)F,33,"{20: 5, 21: 6}",33reac1,4,257.92501034773886,Double bond,None,None
+464,C1=COC(=C1)[C:20](=[O:21])OC2=C(C(=C(C(=C2F)F)F)F)F,33,"{20: 5, 21: 6}",33reac1,7,206.08354021748528,Atom with lone pair,None,None
+465,C1=COC(=C1)[C:20](=[O:21])OC2=C(C(=C(C(=C2F)F)F)F)F,33,"{20: 5, 21: 6}",33reac1,2,185.96883803838864,Ether,None,None
+466,C1=COC(=C1)[C:20](=[O:21])OC2=C(C(=C(C(=C2F)F)F)F)F,33,"{20: 5, 21: 6}",33reac1,15,80.56784341530874,Atom with lone pair,None,None
+467,C1=COC(=C1)[C:20](=[O:21])OC2=C(C(=C(C(=C2F)F)F)F)F,33,"{20: 5, 21: 6}",33reac1,17,80.56784341530874,Atom with lone pair,None,None
+468,C1=COC(=C1)[C:20](=[O:21])OC2=C(C(=C(C(=C2F)F)F)F)F,33,"{20: 5, 21: 6}",33reac1,14,78.61697401059791,Atom with lone pair,None,None
+469,C1=COC(=C1)[C:20](=[O:21])OC2=C(C(=C(C(=C2F)F)F)F)F,33,"{20: 5, 21: 6}",33reac1,18,78.61697401059791,Atom with lone pair,None,None
+470,C1=COC(=C1)[C:20](=[O:21])OC2=C(C(=C(C(=C2F)F)F)F)F,33,"{20: 5, 21: 6}",33reac1,16,77.06649042665958,Atom with lone pair,None,None
+471,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,1,446.2567739957012,Double bond,None,Connectivity
+472,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,2,439.56709759449586,Double bond,None,Connectivity
+473,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,10,430.6091681611724,Double bond,None,Connectivity
+474,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,8,389.0249727065675,Double bond,None,None
+475,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,9,382.98235546192154,Double bond,None,Connectivity
+476,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,4,376.7406990164891,Double bond,None,None
+477,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,11,345.8473374815658,Aldehyde,None,None
+478,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,6,345.13424179842696,Double bond,None,None
+479,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,17,317.4163347198628,Double bond,None,None
+480,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,25,310.8054347266443,Double bond,None,None
+481,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,23,303.03909517778084,Double bond,None,None
+482,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,27,303.03909517778084,Double bond,None,None
+483,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,26,297.59107293887064,Double bond,None,None
+484,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,24,297.59107293887064,Double bond,None,None
+485,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,12,295.2103674900718,Ether,None,None
+486,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,16,294.29835825925693,Double bond,None,None
+487,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,18,294.29835825925693,Double bond,None,None
+488,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,20,292.6844712290913,Ether,None,None
+489,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,15,290.3588614333421,Double bond,None,None
+490,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,19,290.3588614333421,Double bond,None,None
+491,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,14,284.92745758825913,Double bond,None,None
+492,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,22,276.978329686448,Double bond,None,None
+493,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,5,251.9362179567106,Double bond,None,Connectivity
+494,CC(=CCC1=C(C=C(C=C1[CH:20]=[O:21])OCC2=CC=CC=C2)OCC3=CC=CC=C3)C,34,"{20: 10, 21: 11}",34reac0,7,244.96942401537672,Double bond,None,Connectivity
+495,C(C[NH2:10])N,34,{10: 2},34reac1,2,492.09475147607736,Amine,None,None
+496,C(C[NH2:10])N,34,{10: 2},34reac1,3,492.09475147607736,Amine,None,None
+497,CC1([NH:10]C(C(=O)N1C)CC2=CC=CC=C2)C,35,{10: 2},35reac0,14,507.7769931727089,Double bond,None,Connectivity
+498,CC1([NH:10]C(C(=O)N1C)CC2=CC=CC=C2)C,35,{10: 2},35reac0,10,507.7769931727089,Double bond,None,Connectivity
+499,CC1([NH:10]C(C(=O)N1C)CC2=CC=CC=C2)C,35,{10: 2},35reac0,2,464.3992283982225,Amine,None,None
+500,CC1([NH:10]C(C(=O)N1C)CC2=CC=CC=C2)C,35,{10: 2},35reac0,4,406.52601427841,Double bond,None,Connectivity
+501,CC1([NH:10]C(C(=O)N1C)CC2=CC=CC=C2)C,35,{10: 2},35reac0,9,390.1188769363798,Double bond,None,Connectivity
+502,CC1([NH:10]C(C(=O)N1C)CC2=CC=CC=C2)C,35,{10: 2},35reac0,6,376.25454108277336,Atom with lone pair,None,None
+503,CC1([NH:10]C(C(=O)N1C)CC2=CC=CC=C2)C,35,{10: 2},35reac0,5,370.34092871122994,Atom with lone pair,None,None
+504,CC1([NH:10]C(C(=O)N1C)CC2=CC=CC=C2)C,35,{10: 2},35reac0,11,322.64928976399824,Double bond,None,Connectivity
+505,CC1([NH:10]C(C(=O)N1C)CC2=CC=CC=C2)C,35,{10: 2},35reac0,13,322.64928976399824,Double bond,None,Connectivity
+506,CC1([NH:10]C(C(=O)N1C)CC2=CC=CC=C2)C,35,{10: 2},35reac0,12,322.49331416818313,Double bond,None,None
+507,C1=CC=C(C=C1)C[CH:20]=[O:21],35,"{20: 7, 21: 8}",35reac1,7,349.85940321185626,Double bond,None,Connectivity
+508,C1=CC=C(C=C1)C[CH:20]=[O:21],35,"{20: 7, 21: 8}",35reac1,2,320.71237030345947,Double bond,None,None
+509,C1=CC=C(C=C1)C[CH:20]=[O:21],35,"{20: 7, 21: 8}",35reac1,4,320.71237030345947,Double bond,None,None
+510,C1=CC=C(C=C1)C[CH:20]=[O:21],35,"{20: 7, 21: 8}",35reac1,8,320.02955189161,Aldehyde,None,None
+511,C1=CC=C(C=C1)C[CH:20]=[O:21],35,"{20: 7, 21: 8}",35reac1,0,314.1216434808448,Double bond,None,None
+512,C1=CC=C(C=C1)C[CH:20]=[O:21],35,"{20: 7, 21: 8}",35reac1,1,305.186878381297,Double bond,None,None
+513,C1=CC=C(C=C1)C[CH:20]=[O:21],35,"{20: 7, 21: 8}",35reac1,5,305.186878381297,Double bond,None,None
+514,C1=CC=C(C=C1)C[CH:20]=[O:21],35,"{20: 7, 21: 8}",35reac1,3,278.83936655684374,Double bond,None,None
+515,COCC(CC1=CC=CC=C1)[NH2:10],36,{10: 11},36reac0,6,534.489454222843,Double bond,None,Connectivity
+516,COCC(CC1=CC=CC=C1)[NH2:10],36,{10: 11},36reac0,10,534.489454222843,Double bond,None,Connectivity
+517,COCC(CC1=CC=CC=C1)[NH2:10],36,{10: 11},36reac0,11,495.33355699758977,Amine,None,None
+518,COCC(CC1=CC=CC=C1)[NH2:10],36,{10: 11},36reac0,5,422.00439578644,Double bond,None,Connectivity
+519,COCC(CC1=CC=CC=C1)[NH2:10],36,{10: 11},36reac0,9,421.6555954341311,Double bond,None,Connectivity
+520,COCC(CC1=CC=CC=C1)[NH2:10],36,{10: 11},36reac0,7,421.6555954341311,Double bond,None,Connectivity
+521,COCC(CC1=CC=CC=C1)[NH2:10],36,{10: 11},36reac0,1,346.71105798333883,Ether,None,None
+522,COCC(CC1=CC=CC=C1)[NH2:10],36,{10: 11},36reac0,8,331.9874523151666,Double bond,None,None
+523,C1CC[C:20](=[O:21])CC1,36,"{20: 3, 21: 4}",36reac1,4,344.6540676741861,Ketone,None,None
+524,C1CC[C:20](=[O:21])CC1,36,"{20: 3, 21: 4}",36reac1,3,239.41852595994715,Double bond,None,Connectivity
+525,C1=CC=C(C=C1)C(C2=C(C=CC3=C2C=CC=C3)O)[NH:10]CCCCC[CH:20]=[O:21],37,"{10: 18, 20: 24, 21: 25}",37reac0,3,510.5315333935432,Double bond,None,Connectivity
+526,C1=CC=C(C=C1)C(C2=C(C=CC3=C2C=CC=C3)O)[NH:10]CCCCC[CH:20]=[O:21],37,"{10: 18, 20: 24, 21: 25}",37reac0,18,488.91721187578514,Amine,None,None
+527,C1=CC=C(C=C1)C(C2=C(C=CC3=C2C=CC=C3)O)[NH:10]CCCCC[CH:20]=[O:21],37,"{10: 18, 20: 24, 21: 25}",37reac0,17,465.852614922449,Phenol,None,Connectivity
+528,C1=CC=C(C=C1)C(C2=C(C=CC3=C2C=CC=C3)O)[NH:10]CCCCC[CH:20]=[O:21],37,"{10: 18, 20: 24, 21: 25}",37reac0,7,449.59818056505173,Double bond,None,Connectivity
+529,C1=CC=C(C=C1)C(C2=C(C=CC3=C2C=CC=C3)O)[NH:10]CCCCC[CH:20]=[O:21],37,"{10: 18, 20: 24, 21: 25}",37reac0,16,440.38142986781895,Double bond,None,Connectivity
+530,C1=CC=C(C=C1)C(C2=C(C=CC3=C2C=CC=C3)O)[NH:10]CCCCC[CH:20]=[O:21],37,"{10: 18, 20: 24, 21: 25}",37reac0,24,397.4825368667953,Double bond,None,Connectivity
+531,C1=CC=C(C=C1)C(C2=C(C=CC3=C2C=CC=C3)O)[NH:10]CCCCC[CH:20]=[O:21],37,"{10: 18, 20: 24, 21: 25}",37reac0,11,371.4374985084869,Double bond,None,Connectivity
+532,C1=CC=C(C=C1)C(C2=C(C=CC3=C2C=CC=C3)O)[NH:10]CCCCC[CH:20]=[O:21],37,"{10: 18, 20: 24, 21: 25}",37reac0,13,363.1443327362649,Double bond,None,None
+533,C1=CC=C(C=C1)C(C2=C(C=CC3=C2C=CC=C3)O)[NH:10]CCCCC[CH:20]=[O:21],37,"{10: 18, 20: 24, 21: 25}",37reac0,15,345.1491118199192,Double bond,None,None
+534,C1=CC=C(C=C1)C(C2=C(C=CC3=C2C=CC=C3)O)[NH:10]CCCCC[CH:20]=[O:21],37,"{10: 18, 20: 24, 21: 25}",37reac0,9,337.6096086651087,Double bond,None,None
+535,C1=CC=C(C=C1)C(C2=C(C=CC3=C2C=CC=C3)O)[NH:10]CCCCC[CH:20]=[O:21],37,"{10: 18, 20: 24, 21: 25}",37reac0,0,334.4006541138515,Double bond,None,None
+536,C1=CC=C(C=C1)C(C2=C(C=CC3=C2C=CC=C3)O)[NH:10]CCCCC[CH:20]=[O:21],37,"{10: 18, 20: 24, 21: 25}",37reac0,25,328.9668459673412,Aldehyde,None,None
+537,C1=CC=C(C=C1)C(C2=C(C=CC3=C2C=CC=C3)O)[NH:10]CCCCC[CH:20]=[O:21],37,"{10: 18, 20: 24, 21: 25}",37reac0,10,321.64206112734973,Double bond,None,None
+538,C1=CC=C(C=C1)C(C2=C(C=CC3=C2C=CC=C3)O)[NH:10]CCCCC[CH:20]=[O:21],37,"{10: 18, 20: 24, 21: 25}",37reac0,14,318.6317594004795,Double bond,None,None
+539,C1=CC=C(C=C1)C(C2=C(C=CC3=C2C=CC=C3)O)[NH:10]CCCCC[CH:20]=[O:21],37,"{10: 18, 20: 24, 21: 25}",37reac0,4,312.58874285500497,Double bond,None,None
+540,C1=CC=C(C=C1)C(C2=C(C=CC3=C2C=CC=C3)O)[NH:10]CCCCC[CH:20]=[O:21],37,"{10: 18, 20: 24, 21: 25}",37reac0,2,312.58874285500497,Double bond,None,None
+541,C1=CC=C(C=C1)C(C2=C(C=CC3=C2C=CC=C3)O)[NH:10]CCCCC[CH:20]=[O:21],37,"{10: 18, 20: 24, 21: 25}",37reac0,5,310.5474539892748,Double bond,None,None
+542,C1=CC=C(C=C1)C(C2=C(C=CC3=C2C=CC=C3)O)[NH:10]CCCCC[CH:20]=[O:21],37,"{10: 18, 20: 24, 21: 25}",37reac0,1,310.5474539892748,Double bond,None,None
+543,C1=CC=C(C=C1)C(C2=C(C=CC3=C2C=CC=C3)O)[NH:10]CCCCC[CH:20]=[O:21],37,"{10: 18, 20: 24, 21: 25}",37reac0,8,283.0038430262357,Double bond,None,None
+544,C1=CC=C(C=C1)C(C2=C(C=CC3=C2C=CC=C3)O)[NH:10]CCCCC[CH:20]=[O:21],37,"{10: 18, 20: 24, 21: 25}",37reac0,12,238.1331008314155,Double bond,None,None
+545,CC[NH:10]CC,38,{10: 2},38reac0,2,505.35226720024366,Amine,None,None
+546,COC1=CC=C(C=C1)/[CH:20]=[C:21](\C#N)/[C:22](=[O:23])OC,38,"{20: 8, 21: 9, 22: 12, 23: 13}",38reac1,10,606.4230614097323,Triple bond,None,Connectivity
+547,COC1=CC=C(C=C1)/[CH:20]=[C:21](\C#N)/[C:22](=[O:23])OC,38,"{20: 8, 21: 9, 22: 12, 23: 13}",38reac1,11,362.6567709944211,Atom with lone pair,None,None
+548,COC1=CC=C(C=C1)/[CH:20]=[C:21](\C#N)/[C:22](=[O:23])OC,38,"{20: 8, 21: 9, 22: 12, 23: 13}",38reac1,9,319.0181231829338,Double bond,None,None
+549,COC1=CC=C(C=C1)/[CH:20]=[C:21](\C#N)/[C:22](=[O:23])OC,38,"{20: 8, 21: 9, 22: 12, 23: 13}",38reac1,7,317.3501949585043,Double bond,None,None
+550,COC1=CC=C(C=C1)/[CH:20]=[C:21](\C#N)/[C:22](=[O:23])OC,38,"{20: 8, 21: 9, 22: 12, 23: 13}",38reac1,3,317.3501949585043,Double bond,None,None
+551,COC1=CC=C(C=C1)/[CH:20]=[C:21](\C#N)/[C:22](=[O:23])OC,38,"{20: 8, 21: 9, 22: 12, 23: 13}",38reac1,12,316.9782896817196,Double bond,None,Connectivity
+552,COC1=CC=C(C=C1)/[CH:20]=[C:21](\C#N)/[C:22](=[O:23])OC,38,"{20: 8, 21: 9, 22: 12, 23: 13}",38reac1,8,297.2852865306195,Double bond,None,Connectivity
+553,COC1=CC=C(C=C1)/[CH:20]=[C:21](\C#N)/[C:22](=[O:23])OC,38,"{20: 8, 21: 9, 22: 12, 23: 13}",38reac1,5,296.84722031699494,Double bond,None,None
+554,COC1=CC=C(C=C1)/[CH:20]=[C:21](\C#N)/[C:22](=[O:23])OC,38,"{20: 8, 21: 9, 22: 12, 23: 13}",38reac1,13,296.1004996439442,Atom with lone pair,None,None
+555,COC1=CC=C(C=C1)/[CH:20]=[C:21](\C#N)/[C:22](=[O:23])OC,38,"{20: 8, 21: 9, 22: 12, 23: 13}",38reac1,4,269.2747565386817,Double bond,None,None
+556,COC1=CC=C(C=C1)/[CH:20]=[C:21](\C#N)/[C:22](=[O:23])OC,38,"{20: 8, 21: 9, 22: 12, 23: 13}",38reac1,6,269.2747565386817,Double bond,None,None
+557,COC1=CC=C(C=C1)/[CH:20]=[C:21](\C#N)/[C:22](=[O:23])OC,38,"{20: 8, 21: 9, 22: 12, 23: 13}",38reac1,1,267.31773733976297,Ether,None,None
+558,COC1=CC=C(C=C1)/[CH:20]=[C:21](\C#N)/[C:22](=[O:23])OC,38,"{20: 8, 21: 9, 22: 12, 23: 13}",38reac1,14,249.75553151406348,Atom with lone pair,None,None
+559,COC1=CC=C(C=C1)/[CH:20]=[C:21](\C#N)/[C:22](=[O:23])OC,38,"{20: 8, 21: 9, 22: 12, 23: 13}",38reac1,2,204.3684382964857,Double bond,None,None
+560,CCOC(=O)C([C:21](=[CH2:20])[C:22]#[N:23])O,39,"{21: 6, 20: 7, 22: 8, 23: 9}",39reac0,6,383.30642825039104,Double bond,None,Connectivity
+561,CCOC(=O)C([C:21](=[CH2:20])[C:22]#[N:23])O,39,"{21: 6, 20: 7, 22: 8, 23: 9}",39reac0,3,370.9457725903485,Double bond,None,Connectivity
+562,CCOC(=O)C([C:21](=[CH2:20])[C:22]#[N:23])O,39,"{21: 6, 20: 7, 22: 8, 23: 9}",39reac0,8,348.5453177043237,Triple bond,None,Connectivity
+563,CCOC(=O)C([C:21](=[CH2:20])[C:22]#[N:23])O,39,"{21: 6, 20: 7, 22: 8, 23: 9}",39reac0,9,343.9345212667249,Atom with lone pair,None,None
+564,CCOC(=O)C([C:21](=[CH2:20])[C:22]#[N:23])O,39,"{21: 6, 20: 7, 22: 8, 23: 9}",39reac0,10,296.55314434622414,Atom with lone pair,None,Connectivity
+565,CCOC(=O)C([C:21](=[CH2:20])[C:22]#[N:23])O,39,"{21: 6, 20: 7, 22: 8, 23: 9}",39reac0,4,273.8112902888097,Ester,None,None
+566,CCOC(=O)C([C:21](=[CH2:20])[C:22]#[N:23])O,39,"{21: 6, 20: 7, 22: 8, 23: 9}",39reac0,7,253.42340598301962,Double bond,None,None
+567,CCOC(=O)C([C:21](=[CH2:20])[C:22]#[N:23])O,39,"{21: 6, 20: 7, 22: 8, 23: 9}",39reac0,2,212.664894802263,Atom with lone pair,None,None
+568,C1=CC(=CC=C1C[NH2:10])Cl,39,{10: 7},39reac1,7,486.1510674841702,Amine,None,None
+569,C1=CC(=CC=C1C[NH2:10])Cl,39,{10: 7},39reac1,5,321.85428317217156,Double bond,None,None
+570,C1=CC(=CC=C1C[NH2:10])Cl,39,{10: 7},39reac1,2,321.362007597927,Double bond,None,Connectivity
+571,C1=CC(=CC=C1C[NH2:10])Cl,39,{10: 7},39reac1,0,300.35348009876907,Double bond,None,None
+572,C1=CC(=CC=C1C[NH2:10])Cl,39,{10: 7},39reac1,4,300.35348009876907,Double bond,None,None
+573,C1=CC(=CC=C1C[NH2:10])Cl,39,{10: 7},39reac1,1,298.5638397340663,Double bond,None,None
+574,C1=CC(=CC=C1C[NH2:10])Cl,39,{10: 7},39reac1,3,298.5638397340663,Double bond,None,None
+575,C1=CC(=CC=C1C[NH2:10])Cl,39,{10: 7},39reac1,8,215.6249260394834,Atom with lone pair,None,None
+576,C1CC[NH:10]C1,40,{10: 3},40reac0,3,507.1701374963159,Amine,None,None
+577,C1=CC(=CC=C1[CH:20]=[O:21])Cl,40,"{20: 6, 21: 7}",40reac1,7,334.7463728431612,Aldehyde,None,None
+578,C1=CC(=CC=C1[CH:20]=[O:21])Cl,40,"{20: 6, 21: 7}",40reac1,6,296.2159483078867,Double bond,None,Connectivity
+579,C1=CC(=CC=C1[CH:20]=[O:21])Cl,40,"{20: 6, 21: 7}",40reac1,3,272.63103895727545,Double bond,None,None
+580,C1=CC(=CC=C1[CH:20]=[O:21])Cl,40,"{20: 6, 21: 7}",40reac1,1,272.63103895727545,Double bond,None,None
+581,C1=CC(=CC=C1[CH:20]=[O:21])Cl,40,"{20: 6, 21: 7}",40reac1,5,260.3754743975587,Double bond,None,None
+582,C1=CC(=CC=C1[CH:20]=[O:21])Cl,40,"{20: 6, 21: 7}",40reac1,0,248.18507018312812,Double bond,None,None
+583,C1=CC(=CC=C1[CH:20]=[O:21])Cl,40,"{20: 6, 21: 7}",40reac1,4,248.18507018312812,Double bond,None,None
+584,C1=CC(=CC=C1[CH:20]=[O:21])Cl,40,"{20: 6, 21: 7}",40reac1,8,196.95402649510652,Atom with lone pair,None,None
+585,C1=CC(=CC=C1[CH:20]=[O:21])Cl,40,"{20: 6, 21: 7}",40reac1,2,181.5614703935571,Double bond,None,Connectivity
+586,CC(C)(C)[CH:20]=[O:21],41,"{20: 4, 21: 5}",41reac0,4,371.0997123339912,Double bond,None,Connectivity
+587,CC(C)(C)[CH:20]=[O:21],41,"{20: 4, 21: 5}",41reac0,5,326.990058210562,Aldehyde,None,None
+588,C1CC([NH:10]C1)C(=O)O,41,{10: 3},41reac1,3,486.3693238599226,Amine,None,None
+589,C1CC([NH:10]C1)C(=O)O,41,{10: 3},41reac1,5,458.20256243040785,Double bond,None,Connectivity
+590,C1CC([NH:10]C1)C(=O)O,41,{10: 3},41reac1,6,457.5737518328242,Carboxylic acid,None,Connectivity
+591,C1CC([NH:10]C1)C(=O)O,41,{10: 3},41reac1,7,449.9005358493887,Atom with lone pair,None,Connectivity
+592,CC(C)[NH:10]C(C)C,42,{10: 3},42reac0,3,501.6228715678444,Amine,None,None
+593,CO[C:22](=[O:23])[CH:21]=[CH2:20],42,"{22: 2, 23: 3, 21: 4, 20: 5}",42reac1,3,319.88056892808527,Atom with lone pair,None,None
+594,CO[C:22](=[O:23])[CH:21]=[CH2:20],42,"{22: 2, 23: 3, 21: 4, 20: 5}",42reac1,4,318.3025310453959,Double bond,None,Connectivity
+595,CO[C:22](=[O:23])[CH:21]=[CH2:20],42,"{22: 2, 23: 3, 21: 4, 20: 5}",42reac1,2,316.4775321529014,Double bond,None,Connectivity
+596,CO[C:22](=[O:23])[CH:21]=[CH2:20],42,"{22: 2, 23: 3, 21: 4, 20: 5}",42reac1,5,302.22415599320084,Double bond,None,Connectivity
+597,CO[C:22](=[O:23])[CH:21]=[CH2:20],42,"{22: 2, 23: 3, 21: 4, 20: 5}",42reac1,1,248.80066156352405,Atom with lone pair,None,None
+598,C/[CH:20]=[C:21]/1\C2=C(C=CC=C2)C=C[C:22]1=[O:23],43,"{20: 1, 21: 2, 22: 11, 23: 12}",43reac0,12,374.9783966699615,Atom with lone pair,None,None
+599,C/[CH:20]=[C:21]/1\C2=C(C=CC=C2)C=C[C:22]1=[O:23],43,"{20: 1, 21: 2, 22: 11, 23: 12}",43reac0,10,354.92171293706633,Double bond,None,None
+600,C/[CH:20]=[C:21]/1\C2=C(C=CC=C2)C=C[C:22]1=[O:23],43,"{20: 1, 21: 2, 22: 11, 23: 12}",43reac0,9,352.94483114313334,Double bond,None,Connectivity
+601,C/[CH:20]=[C:21]/1\C2=C(C=CC=C2)C=C[C:22]1=[O:23],43,"{20: 1, 21: 2, 22: 11, 23: 12}",43reac0,2,322.6969443780836,Double bond,None,Connectivity
+602,C/[CH:20]=[C:21]/1\C2=C(C=CC=C2)C=C[C:22]1=[O:23],43,"{20: 1, 21: 2, 22: 11, 23: 12}",43reac0,6,316.7862337846309,Double bond,None,None
+603,C/[CH:20]=[C:21]/1\C2=C(C=CC=C2)C=C[C:22]1=[O:23],43,"{20: 1, 21: 2, 22: 11, 23: 12}",43reac0,1,313.4685879247263,Double bond,None,None
+604,C/[CH:20]=[C:21]/1\C2=C(C=CC=C2)C=C[C:22]1=[O:23],43,"{20: 1, 21: 2, 22: 11, 23: 12}",43reac0,8,307.7523152392823,Double bond,None,None
+605,C/[CH:20]=[C:21]/1\C2=C(C=CC=C2)C=C[C:22]1=[O:23],43,"{20: 1, 21: 2, 22: 11, 23: 12}",43reac0,7,306.2053790304344,Double bond,None,None
+606,C/[CH:20]=[C:21]/1\C2=C(C=CC=C2)C=C[C:22]1=[O:23],43,"{20: 1, 21: 2, 22: 11, 23: 12}",43reac0,5,304.38076581363566,Double bond,None,None
+607,C/[CH:20]=[C:21]/1\C2=C(C=CC=C2)C=C[C:22]1=[O:23],43,"{20: 1, 21: 2, 22: 11, 23: 12}",43reac0,11,299.73666683747433,Double bond,None,Connectivity
+608,C/[CH:20]=[C:21]/1\C2=C(C=CC=C2)C=C[C:22]1=[O:23],43,"{20: 1, 21: 2, 22: 11, 23: 12}",43reac0,4,278.42430933960713,Double bond,None,None
+609,C/[CH:20]=[C:21]/1\C2=C(C=CC=C2)C=C[C:22]1=[O:23],43,"{20: 1, 21: 2, 22: 11, 23: 12}",43reac0,3,265.9062610126566,Double bond,None,None
+610,COC1=C(C=C2C=[N:10]CCC2=C1)OC,43,{10: 7},43reac1,6,551.8146372635383,Double bond,None,Connectivity
+611,COC1=C(C=C2C=[N:10]CCC2=C1)OC,43,{10: 7},43reac1,7,485.7089479090646,Imine,None,None
+612,COC1=C(C=C2C=[N:10]CCC2=C1)OC,43,{10: 7},43reac1,5,332.00180679606274,Double bond,None,None
+613,COC1=C(C=C2C=[N:10]CCC2=C1)OC,43,{10: 7},43reac1,11,331.6797701125033,Double bond,None,None
+614,COC1=C(C=C2C=[N:10]CCC2=C1)OC,43,{10: 7},43reac1,10,331.43789455108345,Double bond,None,None
+615,COC1=C(C=C2C=[N:10]CCC2=C1)OC,43,{10: 7},43reac1,4,331.32755025685765,Double bond,None,None
+616,COC1=C(C=C2C=[N:10]CCC2=C1)OC,43,{10: 7},43reac1,2,319.95681452727877,Double bond,None,None
+617,COC1=C(C=C2C=[N:10]CCC2=C1)OC,43,{10: 7},43reac1,3,312.07139362511225,Double bond,None,None
+618,COC1=C(C=C2C=[N:10]CCC2=C1)OC,43,{10: 7},43reac1,12,294.67237236117944,Ether,None,None
+619,COC1=C(C=C2C=[N:10]CCC2=C1)OC,43,{10: 7},43reac1,1,287.95009993831627,Ether,None,None
+620,C[C:20]1=[N+:21](C2=C(C1(C)C)C=CC=C2)CC[NH2:10],44,"{20: 1, 21: 2, 10: 14}",44reac0,11,476.06515015033074,Double bond,None,Connectivity
+621,C[C:20]1=[N+:21](C2=C(C1(C)C)C=CC=C2)CC[NH2:10],44,"{20: 1, 21: 2, 10: 14}",44reac0,14,464.4664344575722,Amine,None,None
+622,C[C:20]1=[N+:21](C2=C(C1(C)C)C=CC=C2)CC[NH2:10],44,"{20: 1, 21: 2, 10: 14}",44reac0,9,384.2339102260303,Double bond,None,Connectivity
+623,C[C:20]1=[N+:21](C2=C(C1(C)C)C=CC=C2)CC[NH2:10],44,"{20: 1, 21: 2, 10: 14}",44reac0,10,373.28940861229785,Double bond,None,Connectivity
+624,C[C:20]1=[N+:21](C2=C(C1(C)C)C=CC=C2)CC[NH2:10],44,"{20: 1, 21: 2, 10: 14}",44reac0,8,366.3608223015908,Double bond,None,Connectivity
+625,C[C:20]1=[N+:21](C2=C(C1(C)C)C=CC=C2)CC[NH2:10],44,"{20: 1, 21: 2, 10: 14}",44reac0,1,365.8554590733256,Double bond neighbouratom with charge plus1,None,Connectivity
+626,C[C:20]1=[N+:21](C2=C(C1(C)C)C=CC=C2)CC[NH2:10],44,"{20: 1, 21: 2, 10: 14}",44reac0,4,357.59831257048063,Double bond,None,Connectivity
+627,C[C:20]1=[N+:21](C2=C(C1(C)C)C=CC=C2)CC[NH2:10],44,"{20: 1, 21: 2, 10: 14}",44reac0,3,318.1750583865214,Double bond,None,Connectivity
+628,COC(C[NH+:21]=[CH2:20])OC,45,"{21: 4, 20: 5}",45reac0,5,377.06926840310916,Double bond neighbouratom with charge plus1,None,Connectivity
+629,COC(C[NH+:21]=[CH2:20])OC,45,"{21: 4, 20: 5}",45reac0,1,300.1456891547423,Atom with lone pair,None,None
+630,COC(C[NH+:21]=[CH2:20])OC,45,"{21: 4, 20: 5}",45reac0,6,300.1456891547423,Atom with lone pair,None,None
+631,[C-:10]#[N+]CCC1=CC=CC=C1,45,{10: 0},45reac1,0,481.17209145706147,Isonitrile,None,None
+632,[C-:10]#[N+]CCC1=CC=CC=C1,45,{10: 0},45reac1,7,310.68599046510644,Double bond,None,None
+633,[C-:10]#[N+]CCC1=CC=CC=C1,45,{10: 0},45reac1,5,303.40198917593807,Double bond,None,None
+634,[C-:10]#[N+]CCC1=CC=CC=C1,45,{10: 0},45reac1,9,303.40198917593807,Double bond,None,None
+635,[C-:10]#[N+]CCC1=CC=CC=C1,45,{10: 0},45reac1,6,298.8039731194731,Double bond,None,None
+636,[C-:10]#[N+]CCC1=CC=CC=C1,45,{10: 0},45reac1,8,298.8039731194731,Double bond,None,None
+637,[C-:10]#[N+]CCC1=CC=CC=C1,45,{10: 0},45reac1,4,279.73174836160615,Double bond,None,None
+638,[B-](OC1=C(C=C(C=C1C(C)(C)C)[CH+:20]C2=CC=CC=C2)C(C)(C)C)(F)(F)F,46,{20: 12},46reac0,3,310.9446716471575,Double bond,None,None
+639,[B-](OC1=C(C=C(C=C1C(C)(C)C)[CH+:20]C2=CC=CC=C2)C(C)(C)C)(F)(F)F,46,{20: 12},46reac0,7,310.9446716471575,Double bond,None,None
+640,[B-](OC1=C(C=C(C=C1C(C)(C)C)[CH+:20]C2=CC=CC=C2)C(C)(C)C)(F)(F)F,46,{20: 12},46reac0,4,291.85304534528404,Double bond,None,Connectivity
+641,[B-](OC1=C(C=C(C=C1C(C)(C)C)[CH+:20]C2=CC=CC=C2)C(C)(C)C)(F)(F)F,46,{20: 12},46reac0,6,291.85304534528404,Double bond,None,Connectivity
+642,[B-](OC1=C(C=C(C=C1C(C)(C)C)[CH+:20]C2=CC=CC=C2)C(C)(C)C)(F)(F)F,46,{20: 12},46reac0,14,281.61274586385116,Double bond,None,None
+643,[B-](OC1=C(C=C(C=C1C(C)(C)C)[CH+:20]C2=CC=CC=C2)C(C)(C)C)(F)(F)F,46,{20: 12},46reac0,18,281.61274586385116,Double bond,None,None
+644,[B-](OC1=C(C=C(C=C1C(C)(C)C)[CH+:20]C2=CC=CC=C2)C(C)(C)C)(F)(F)F,46,{20: 12},46reac0,16,280.35515515273437,Double bond,None,None
+645,[B-](OC1=C(C=C(C=C1C(C)(C)C)[CH+:20]C2=CC=CC=C2)C(C)(C)C)(F)(F)F,46,{20: 12},46reac0,15,270.6958392513916,Double bond,None,None
+646,[B-](OC1=C(C=C(C=C1C(C)(C)C)[CH+:20]C2=CC=CC=C2)C(C)(C)C)(F)(F)F,46,{20: 12},46reac0,17,270.6958392513916,Double bond,None,None
+647,[B-](OC1=C(C=C(C=C1C(C)(C)C)[CH+:20]C2=CC=CC=C2)C(C)(C)C)(F)(F)F,46,{20: 12},46reac0,1,267.70855567604303,Atom with lone pair,None,None
+648,[B-](OC1=C(C=C(C=C1C(C)(C)C)[CH+:20]C2=CC=CC=C2)C(C)(C)C)(F)(F)F,46,{20: 12},46reac0,24,260.2971350955777,Atom with lone pair,None,Connectivity
+649,[B-](OC1=C(C=C(C=C1C(C)(C)C)[CH+:20]C2=CC=CC=C2)C(C)(C)C)(F)(F)F,46,{20: 12},46reac0,23,260.2971350955777,Atom with lone pair,None,Connectivity
+650,[B-](OC1=C(C=C(C=C1C(C)(C)C)[CH+:20]C2=CC=CC=C2)C(C)(C)C)(F)(F)F,46,{20: 12},46reac0,25,260.2971350955777,Atom with lone pair,None,Connectivity
+651,[B-](OC1=C(C=C(C=C1C(C)(C)C)[CH+:20]C2=CC=CC=C2)C(C)(C)C)(F)(F)F,46,{20: 12},46reac0,5,253.31544117676094,Double bond,None,Connectivity
+652,[B-](OC1=C(C=C(C=C1C(C)(C)C)[CH+:20]C2=CC=CC=C2)C(C)(C)C)(F)(F)F,46,{20: 12},46reac0,13,233.15176814468578,Double bond,None,None
+653,[B-](OC1=C(C=C(C=C1C(C)(C)C)[CH+:20]C2=CC=CC=C2)C(C)(C)C)(F)(F)F,46,{20: 12},46reac0,2,177.9200248713605,Double bond,None,Connectivity
+654,CC(C)(C)[N+]#[C-:10],46,{10: 5},46reac1,5,485.2302054204047,Isonitrile,None,None
+655,CC(C)(C)[N+]#[C-:10],47,{10: 5},47reac0,5,485.2302054204047,Isonitrile,None,None
+656,[C:22](#[N:23])[C:21](=[C:20](C(F)(F)F)C(F)(F)F)C#N,47,"{22: 0, 23: 1, 21: 2, 20: 3}",47reac1,0,339.11499317595735,Triple bond,None,Connectivity
+657,[C:22](#[N:23])[C:21](=[C:20](C(F)(F)F)C(F)(F)F)C#N,47,"{22: 0, 23: 1, 21: 2, 20: 3}",47reac1,12,338.8022975968197,Triple bond,None,Connectivity
+658,[C:22](#[N:23])[C:21](=[C:20](C(F)(F)F)C(F)(F)F)C#N,47,"{22: 0, 23: 1, 21: 2, 20: 3}",47reac1,1,315.7725862902589,Atom with lone pair,None,None
+659,[C:22](#[N:23])[C:21](=[C:20](C(F)(F)F)C(F)(F)F)C#N,47,"{22: 0, 23: 1, 21: 2, 20: 3}",47reac1,13,311.4749483070336,Atom with lone pair,None,None
+660,[C:22](#[N:23])[C:21](=[C:20](C(F)(F)F)C(F)(F)F)C#N,47,"{22: 0, 23: 1, 21: 2, 20: 3}",47reac1,2,168.3089899448678,Double bond,None,Connectivity
+661,[C:22](#[N:23])[C:21](=[C:20](C(F)(F)F)C(F)(F)F)C#N,47,"{22: 0, 23: 1, 21: 2, 20: 3}",47reac1,3,129.62063728738576,Double bond,None,None
+662,[C:22](#[N:23])[C:21](=[C:20](C(F)(F)F)C(F)(F)F)C#N,47,"{22: 0, 23: 1, 21: 2, 20: 3}",47reac1,6,95.04954292671755,Atom with lone pair,None,None
+663,[C:22](#[N:23])[C:21](=[C:20](C(F)(F)F)C(F)(F)F)C#N,47,"{22: 0, 23: 1, 21: 2, 20: 3}",47reac1,5,95.04954292671755,Atom with lone pair,None,None
+664,[C:22](#[N:23])[C:21](=[C:20](C(F)(F)F)C(F)(F)F)C#N,47,"{22: 0, 23: 1, 21: 2, 20: 3}",47reac1,7,95.04954292671755,Atom with lone pair,None,None
+665,[C:22](#[N:23])[C:21](=[C:20](C(F)(F)F)C(F)(F)F)C#N,47,"{22: 0, 23: 1, 21: 2, 20: 3}",47reac1,9,95.04954292671755,Atom with lone pair,None,None
+666,[C:22](#[N:23])[C:21](=[C:20](C(F)(F)F)C(F)(F)F)C#N,47,"{22: 0, 23: 1, 21: 2, 20: 3}",47reac1,10,95.04954292671755,Atom with lone pair,None,None
+667,[C:22](#[N:23])[C:21](=[C:20](C(F)(F)F)C(F)(F)F)C#N,47,"{22: 0, 23: 1, 21: 2, 20: 3}",47reac1,11,95.04954292671755,Atom with lone pair,None,None
+668,CC1=CC=C(C=C1)S(=O)(=O)C(CC2=CC(=C(C=C2)OC)OC)[N+]#[C-:10],48,{10: 23},48reac0,23,472.53003356140107,Isonitrile,None,None
+669,CC1=CC=C(C=C1)S(=O)(=O)C(CC2=CC(=C(C=C2)OC)OC)[N+]#[C-:10],48,{10: 23},48reac0,17,363.5476007987745,Double bond,None,None
+670,CC1=CC=C(C=C1)S(=O)(=O)C(CC2=CC(=C(C=C2)OC)OC)[N+]#[C-:10],48,{10: 23},48reac0,12,359.2005953169428,Double bond,None,None
+671,CC1=CC=C(C=C1)S(=O)(=O)C(CC2=CC(=C(C=C2)OC)OC)[N+]#[C-:10],48,{10: 23},48reac0,15,354.8358655553311,Double bond,None,None
+672,CC1=CC=C(C=C1)S(=O)(=O)C(CC2=CC(=C(C=C2)OC)OC)[N+]#[C-:10],48,{10: 23},48reac0,16,353.3048300999217,Double bond,None,None
+673,CC1=CC=C(C=C1)S(=O)(=O)C(CC2=CC(=C(C=C2)OC)OC)[N+]#[C-:10],48,{10: 23},48reac0,13,352.6198111223057,Double bond,None,None
+674,CC1=CC=C(C=C1)S(=O)(=O)C(CC2=CC(=C(C=C2)OC)OC)[N+]#[C-:10],48,{10: 23},48reac0,14,332.8163944510743,Double bond,None,None
+675,CC1=CC=C(C=C1)S(=O)(=O)C(CC2=CC(=C(C=C2)OC)OC)[N+]#[C-:10],48,{10: 23},48reac0,18,314.405427005142,Ether,None,None
+676,CC1=CC=C(C=C1)S(=O)(=O)C(CC2=CC(=C(C=C2)OC)OC)[N+]#[C-:10],48,{10: 23},48reac0,20,313.89524825429544,Ether,None,None
+677,CC1=CC=C(C=C1)S(=O)(=O)C(CC2=CC(=C(C=C2)OC)OC)[N+]#[C-:10],48,{10: 23},48reac0,4,291.68378119776025,Double bond,None,None
+678,CC1=CC=C(C=C1)S(=O)(=O)C(CC2=CC(=C(C=C2)OC)OC)[N+]#[C-:10],48,{10: 23},48reac0,8,291.6373336710967,Atom with lone pair,None,None
+679,CC1=CC=C(C=C1)S(=O)(=O)C(CC2=CC(=C(C=C2)OC)OC)[N+]#[C-:10],48,{10: 23},48reac0,9,291.6373336710967,Atom with lone pair,None,None
+680,CC1=CC=C(C=C1)S(=O)(=O)C(CC2=CC(=C(C=C2)OC)OC)[N+]#[C-:10],48,{10: 23},48reac0,2,275.40908860601485,Double bond,None,None
+681,CC1=CC=C(C=C1)S(=O)(=O)C(CC2=CC(=C(C=C2)OC)OC)[N+]#[C-:10],48,{10: 23},48reac0,6,275.40908860601485,Double bond,None,None
+682,CC1=CC=C(C=C1)S(=O)(=O)C(CC2=CC(=C(C=C2)OC)OC)[N+]#[C-:10],48,{10: 23},48reac0,3,262.5806927238591,Double bond,None,None
+683,CC1=CC=C(C=C1)S(=O)(=O)C(CC2=CC(=C(C=C2)OC)OC)[N+]#[C-:10],48,{10: 23},48reac0,5,262.5806927238591,Double bond,None,None
+684,CC1=CC=C(C=C1)S(=O)(=O)C(CC2=CC(=C(C=C2)OC)OC)[N+]#[C-:10],48,{10: 23},48reac0,1,230.4432363291271,Double bond,None,None
+685,CC1=CC=C(C=C1)S(=O)(=O)C(CC2=CC(=C(C=C2)OC)OC)[N+]#[C-:10],48,{10: 23},48reac0,7,-84.51656777923927,Double bond,None,Connectivity
+686,COC1=C(C=C(C=C1)[CH:20]=[O+:21]C)OC,48,"{20: 8, 21: 9}",48reac1,4,283.0614073947072,Double bond,None,None
+687,COC1=C(C=C(C=C1)[CH:20]=[O+:21]C)OC,48,"{20: 8, 21: 9}",48reac1,7,263.75563852349296,Double bond,None,None
+688,COC1=C(C=C(C=C1)[CH:20]=[O+:21]C)OC,48,"{20: 8, 21: 9}",48reac1,11,258.9058603295125,Ether,None,None
+689,COC1=C(C=C(C=C1)[CH:20]=[O+:21]C)OC,48,"{20: 8, 21: 9}",48reac1,6,253.06524226395413,Double bond,None,None
+690,COC1=C(C=C(C=C1)[CH:20]=[O+:21]C)OC,48,"{20: 8, 21: 9}",48reac1,1,232.73927621915936,Ether,None,None
+691,COC1=C(C=C(C=C1)[CH:20]=[O+:21]C)OC,48,"{20: 8, 21: 9}",48reac1,3,223.55194999766536,Double bond,None,None
+692,COC1=C(C=C(C=C1)[CH:20]=[O+:21]C)OC,48,"{20: 8, 21: 9}",48reac1,5,204.5364468174521,Double bond,None,Connectivity
+693,COC1=C(C=C(C=C1)[CH:20]=[O+:21]C)OC,48,"{20: 8, 21: 9}",48reac1,2,196.95043134875596,Double bond,None,None
+694,COC1=C(C=C(C=C1)[CH:20]=[O+:21]C)OC,48,"{20: 8, 21: 9}",48reac1,8,176.33678319863975,Double bond neighbouratom with charge plus1,None,None
+695,COC1=CC(=C(C=C1)OC)[CH:20]=[NH2+:21],49,"{20: 10, 21: 11}",49reac0,3,315.5387150896713,Double bond,None,None
+696,COC1=CC(=C(C=C1)OC)[CH:20]=[NH2+:21],49,"{20: 10, 21: 11}",49reac0,6,288.21243107761256,Double bond,None,None
+697,COC1=CC(=C(C=C1)OC)[CH:20]=[NH2+:21],49,"{20: 10, 21: 11}",49reac0,7,282.50685001234524,Double bond,None,None
+698,COC1=CC(=C(C=C1)OC)[CH:20]=[NH2+:21],49,"{20: 10, 21: 11}",49reac0,1,280.5729697539937,Ether,None,None
+699,COC1=CC(=C(C=C1)OC)[CH:20]=[NH2+:21],49,"{20: 10, 21: 11}",49reac0,4,263.8869491284713,Double bond,None,None
+700,COC1=CC(=C(C=C1)OC)[CH:20]=[NH2+:21],49,"{20: 10, 21: 11}",49reac0,2,259.65002563013695,Double bond,None,None
+701,COC1=CC(=C(C=C1)OC)[CH:20]=[NH2+:21],49,"{20: 10, 21: 11}",49reac0,8,253.40255069429986,Ether,None,None
+702,COC1=CC(=C(C=C1)OC)[CH:20]=[NH2+:21],49,"{20: 10, 21: 11}",49reac0,5,249.0988236889243,Double bond,None,None
+703,COC1=CC(=C(C=C1)OC)[CH:20]=[NH2+:21],49,"{20: 10, 21: 11}",49reac0,10,199.15601931908168,Double bond neighbouratom with charge plus1,None,Connectivity
+704,[CH2:10]=[N+:11]([O-:12])[O-],49,"{10: 0, 11: 1, 12: 2}",49reac1,0,613.7786008740077,Nitronate,None,None
+705,[CH2:10]=[N+:11]([O-:12])[O-],49,"{10: 0, 11: 1, 12: 2}",49reac1,3,487.3527770402143,Anion with charge minus1,None,None
+706,[CH2:10]=[N+:11]([O-:12])[O-],49,"{10: 0, 11: 1, 12: 2}",49reac1,2,487.24675764492713,Anion with charge minus1,None,None
+707,COC(CCC[CH:20]=[O:21])OC,50,"{20: 6, 21: 7}",50reac0,6,378.7795206324663,Double bond,None,Connectivity
+708,COC(CCC[CH:20]=[O:21])OC,50,"{20: 6, 21: 7}",50reac0,1,351.8309892921243,Atom with lone pair,None,None
+709,COC(CCC[CH:20]=[O:21])OC,50,"{20: 6, 21: 7}",50reac0,8,351.8309892921243,Atom with lone pair,None,None
+710,COC(CCC[CH:20]=[O:21])OC,50,"{20: 6, 21: 7}",50reac0,7,326.76257671485655,Aldehyde,None,None
+711,[CH2:10]=[N+:11]([O-:12])[O-],50,"{10: 0, 11: 1, 12: 2}",50reac1,0,613.7786008740077,Nitronate,None,None
+712,[CH2:10]=[N+:11]([O-:12])[O-],50,"{10: 0, 11: 1, 12: 2}",50reac1,3,487.3527770402143,Anion with charge minus1,None,None
+713,[CH2:10]=[N+:11]([O-:12])[O-],50,"{10: 0, 11: 1, 12: 2}",50reac1,2,487.24675764492713,Anion with charge minus1,None,None
+714,C[C:22](=[O:23])/[CH:21]=[CH:20]/C1=CC=CC=C1,51,"{22: 1, 23: 2, 21: 3, 20: 4}",51reac0,4,381.7374106517527,Double bond,None,Connectivity
+715,C[C:22](=[O:23])/[CH:21]=[CH:20]/C1=CC=CC=C1,51,"{22: 1, 23: 2, 21: 3, 20: 4}",51reac0,2,368.0184889594093,Atom with lone pair,None,None
+716,C[C:22](=[O:23])/[CH:21]=[CH:20]/C1=CC=CC=C1,51,"{22: 1, 23: 2, 21: 3, 20: 4}",51reac0,1,351.8536978312768,Double bond,None,Connectivity
+717,C[C:22](=[O:23])/[CH:21]=[CH:20]/C1=CC=CC=C1,51,"{22: 1, 23: 2, 21: 3, 20: 4}",51reac0,3,351.28083675168455,Double bond,None,None
+718,C[C:22](=[O:23])/[CH:21]=[CH:20]/C1=CC=CC=C1,51,"{22: 1, 23: 2, 21: 3, 20: 4}",51reac0,8,308.0984872588888,Double bond,None,None
+719,C[C:22](=[O:23])/[CH:21]=[CH:20]/C1=CC=CC=C1,51,"{22: 1, 23: 2, 21: 3, 20: 4}",51reac0,6,303.7221205236856,Double bond,None,None
+720,C[C:22](=[O:23])/[CH:21]=[CH:20]/C1=CC=CC=C1,51,"{22: 1, 23: 2, 21: 3, 20: 4}",51reac0,10,303.7221205236856,Double bond,None,None
+721,C[C:22](=[O:23])/[CH:21]=[CH:20]/C1=CC=CC=C1,51,"{22: 1, 23: 2, 21: 3, 20: 4}",51reac0,9,287.6223849891685,Double bond,None,None
+722,C[C:22](=[O:23])/[CH:21]=[CH:20]/C1=CC=CC=C1,51,"{22: 1, 23: 2, 21: 3, 20: 4}",51reac0,7,287.6223849891685,Double bond,None,None
+723,C[C:22](=[O:23])/[CH:21]=[CH:20]/C1=CC=CC=C1,51,"{22: 1, 23: 2, 21: 3, 20: 4}",51reac0,5,247.81221395288594,Double bond,None,Connectivity
+724,C1CC[C:10](=[N+:11]([O-:12])[O-])C1,51,"{10: 3, 11: 4, 12: 5}",51reac1,3,610.6971070889849,Nitronate,None,None
+725,C1CC[C:10](=[N+:11]([O-:12])[O-])C1,51,"{10: 3, 11: 4, 12: 5}",51reac1,5,511.66671315277927,Anion with charge minus1,None,None
+726,C1CC[C:10](=[N+:11]([O-:12])[O-])C1,51,"{10: 3, 11: 4, 12: 5}",51reac1,6,511.5617824892979,Anion with charge minus1,None,None
+727,COC(=O)CC[C:10](=[N+:11]([O-:12])[O-])C1=CC=CC=C1,52,"{10: 6, 11: 7, 12: 8}",52reac0,6,565.1639193301089,Nitronate,None,None
+728,COC(=O)CC[C:10](=[N+:11]([O-:12])[O-])C1=CC=CC=C1,52,"{10: 6, 11: 7, 12: 8}",52reac0,9,476.43283030204475,Anion with charge minus1,None,None
+729,COC(=O)CC[C:10](=[N+:11]([O-:12])[O-])C1=CC=CC=C1,52,"{10: 6, 11: 7, 12: 8}",52reac0,8,475.9753195825033,Anion with charge minus1,None,None
+730,COC(=O)CC[C:10](=[N+:11]([O-:12])[O-])C1=CC=CC=C1,52,"{10: 6, 11: 7, 12: 8}",52reac0,2,464.7903990210034,Double bond,None,Connectivity
+731,COC(=O)CC[C:10](=[N+:11]([O-:12])[O-])C1=CC=CC=C1,52,"{10: 6, 11: 7, 12: 8}",52reac0,13,448.8328100196086,Double bond,None,None
+732,COC(=O)CC[C:10](=[N+:11]([O-:12])[O-])C1=CC=CC=C1,52,"{10: 6, 11: 7, 12: 8}",52reac0,15,435.3421090012416,Double bond,None,None
+733,COC(=O)CC[C:10](=[N+:11]([O-:12])[O-])C1=CC=CC=C1,52,"{10: 6, 11: 7, 12: 8}",52reac0,11,435.3421090012416,Double bond,None,None
+734,COC(=O)CC[C:10](=[N+:11]([O-:12])[O-])C1=CC=CC=C1,52,"{10: 6, 11: 7, 12: 8}",52reac0,10,414.5996717712842,Double bond,None,Connectivity
+735,COC(=O)CC[C:10](=[N+:11]([O-:12])[O-])C1=CC=CC=C1,52,"{10: 6, 11: 7, 12: 8}",52reac0,3,410.23274855921045,Ester,None,Connectivity
+736,COC(=O)CC[C:10](=[N+:11]([O-:12])[O-])C1=CC=CC=C1,52,"{10: 6, 11: 7, 12: 8}",52reac0,12,329.6913567557931,Double bond,None,None
+737,COC(=O)CC[C:10](=[N+:11]([O-:12])[O-])C1=CC=CC=C1,52,"{10: 6, 11: 7, 12: 8}",52reac0,14,329.6913567557931,Double bond,None,None
+738,COC(=O)CC[C:10](=[N+:11]([O-:12])[O-])C1=CC=CC=C1,52,"{10: 6, 11: 7, 12: 8}",52reac0,1,273.99038364505395,Atom with lone pair,None,None
+739,[CH2:20]=[NH2+:21],52,"{20: 0, 21: 1}",52reac1,0,63.448415582533926,Double bond neighbouratom with charge plus1,None,Connectivity
+740,CCCC[C:22](=[O:23])[CH:21]=[CH2:20],53,"{22: 4, 23: 5, 21: 6, 20: 7}",53reac0,4,369.5264960109489,Double bond,None,Connectivity
+741,CCCC[C:22](=[O:23])[CH:21]=[CH2:20],53,"{22: 4, 23: 5, 21: 6, 20: 7}",53reac0,7,360.2156904595904,Double bond,None,Connectivity
+742,CCCC[C:22](=[O:23])[CH:21]=[CH2:20],53,"{22: 4, 23: 5, 21: 6, 20: 7}",53reac0,5,347.7341654658085,Atom with lone pair,None,None
+743,CCCC[C:22](=[O:23])[CH:21]=[CH2:20],53,"{22: 4, 23: 5, 21: 6, 20: 7}",53reac0,6,346.1199127616128,Double bond,None,Connectivity
+744,C1CCC(=O)C(=[N+]([O-:10])[O-])C1,53,{10: 7},53reac1,5,552.1764736231416,Nitronate,None,None
+745,C1CCC(=O)C(=[N+]([O-:10])[O-])C1,53,{10: 7},53reac1,3,524.9856517736334,Double bond,None,Connectivity
+746,C1CCC(=O)C(=[N+]([O-:10])[O-])C1,53,{10: 7},53reac1,4,452.7571612247266,Ketone,None,None
+747,C1CCC(=O)C(=[N+]([O-:10])[O-])C1,53,{10: 7},53reac1,7,452.02836372703314,Anion with charge minus1,None,None
+748,C1CCC(=O)C(=[N+]([O-:10])[O-])C1,53,{10: 7},53reac1,8,451.83650405169465,Anion with charge minus1,None,None
+749,CCOC(=O)[CH:10]=[C:11]=[N-:12],54,"{10: 5, 11: 6, 12: 7}",54reac0,3,539.4601510998327,Double bond,None,Connectivity
+750,CCOC(=O)[CH:10]=[C:11]=[N-:12],54,"{10: 5, 11: 6, 12: 7}",54reac0,5,538.7977404026315,Cyanoalkyl/nitrile anion,None,None
+751,CCOC(=O)[CH:10]=[C:11]=[N-:12],54,"{10: 5, 11: 6, 12: 7}",54reac0,7,449.200575592462,Anion with charge minus1,None,None
+752,CCOC(=O)[CH:10]=[C:11]=[N-:12],54,"{10: 5, 11: 6, 12: 7}",54reac0,6,449.10633897501975,Double bond,None,Connectivity
+753,CCOC(=O)[CH:10]=[C:11]=[N-:12],54,"{10: 5, 11: 6, 12: 7}",54reac0,4,421.0305110164918,Ester,None,None
+754,CCOC(=O)[CH:10]=[C:11]=[N-:12],54,"{10: 5, 11: 6, 12: 7}",54reac0,2,357.2949092912022,Atom with lone pair,None,None
+755,C1=CC(=CC=C1[CH:20]=[O:21])Br,54,"{20: 6, 21: 7}",54reac1,7,333.1444466523826,Aldehyde,None,None
+756,C1=CC(=CC=C1[CH:20]=[O:21])Br,54,"{20: 6, 21: 7}",54reac1,6,295.8611203758046,Double bond,None,Connectivity
+757,C1=CC(=CC=C1[CH:20]=[O:21])Br,54,"{20: 6, 21: 7}",54reac1,3,267.85845835134387,Double bond,None,None
+758,C1=CC(=CC=C1[CH:20]=[O:21])Br,54,"{20: 6, 21: 7}",54reac1,1,267.85845835134387,Double bond,None,None
+759,C1=CC(=CC=C1[CH:20]=[O:21])Br,54,"{20: 6, 21: 7}",54reac1,2,265.25858939345926,Double bond,None,Connectivity
+760,C1=CC(=CC=C1[CH:20]=[O:21])Br,54,"{20: 6, 21: 7}",54reac1,5,257.5320523940027,Double bond,None,None
+761,C1=CC(=CC=C1[CH:20]=[O:21])Br,54,"{20: 6, 21: 7}",54reac1,4,246.22410390060395,Double bond,None,None
+762,C1=CC(=CC=C1[CH:20]=[O:21])Br,54,"{20: 6, 21: 7}",54reac1,0,246.22410390060395,Double bond,None,None
+763,C1=CC(=CC=C1[CH:20]=[O:21])Br,54,"{20: 6, 21: 7}",54reac1,8,205.11036579404026,Atom with lone pair,None,None
+764,COC1=C(C=C(C=C1)[CH:20]=[O:21])OC,55,"{20: 8, 21: 9}",55reac0,9,335.4423826134298,Aldehyde,None,None
+765,COC1=C(C=C(C=C1)[CH:20]=[O:21])OC,55,"{20: 8, 21: 9}",55reac0,8,325.7318615184631,Double bond,None,Connectivity
+766,COC1=C(C=C(C=C1)[CH:20]=[O:21])OC,55,"{20: 8, 21: 9}",55reac0,4,315.2332112188451,Double bond,None,None
+767,COC1=C(C=C(C=C1)[CH:20]=[O:21])OC,55,"{20: 8, 21: 9}",55reac0,6,312.68924868968315,Double bond,None,None
+768,COC1=C(C=C(C=C1)[CH:20]=[O:21])OC,55,"{20: 8, 21: 9}",55reac0,7,312.61216217977926,Double bond,None,None
+769,COC1=C(C=C(C=C1)[CH:20]=[O:21])OC,55,"{20: 8, 21: 9}",55reac0,5,298.442824248923,Double bond,None,None
+770,COC1=C(C=C(C=C1)[CH:20]=[O:21])OC,55,"{20: 8, 21: 9}",55reac0,10,283.25767406541854,Ether,None,None
+771,COC1=C(C=C(C=C1)[CH:20]=[O:21])OC,55,"{20: 8, 21: 9}",55reac0,2,280.390835598344,Double bond,None,None
+772,COC1=C(C=C(C=C1)[CH:20]=[O:21])OC,55,"{20: 8, 21: 9}",55reac0,3,275.37824945524335,Double bond,None,None
+773,COC1=C(C=C(C=C1)[CH:20]=[O:21])OC,55,"{20: 8, 21: 9}",55reac0,1,275.00519638322294,Ether,None,None
+774,COC1=C(C=C(C=C1)[C:10](=[C:11]=[N-:12])O)OC,55,"{10: 8, 11: 9, 12: 10}",55reac1,9,652.3093371009454,Double bond,None,Connectivity
+775,COC1=C(C=C(C=C1)[C:10](=[C:11]=[N-:12])O)OC,55,"{10: 8, 11: 9, 12: 10}",55reac1,8,597.791499581188,Cyanoalkyl/nitrile anion,None,None
+776,COC1=C(C=C(C=C1)[C:10](=[C:11]=[N-:12])O)OC,55,"{10: 8, 11: 9, 12: 10}",55reac1,2,541.7626431267709,Double bond,None,None
+777,COC1=C(C=C(C=C1)[C:10](=[C:11]=[N-:12])O)OC,55,"{10: 8, 11: 9, 12: 10}",55reac1,6,508.1148524431046,Double bond,None,None
+778,COC1=C(C=C(C=C1)[C:10](=[C:11]=[N-:12])O)OC,55,"{10: 8, 11: 9, 12: 10}",55reac1,4,503.48547742399387,Double bond,None,None
+779,COC1=C(C=C(C=C1)[C:10](=[C:11]=[N-:12])O)OC,55,"{10: 8, 11: 9, 12: 10}",55reac1,10,479.65974974259734,Anion with charge minus1,None,None
+780,COC1=C(C=C(C=C1)[C:10](=[C:11]=[N-:12])O)OC,55,"{10: 8, 11: 9, 12: 10}",55reac1,5,455.4840820056852,Double bond,None,Connectivity
+781,COC1=C(C=C(C=C1)[C:10](=[C:11]=[N-:12])O)OC,55,"{10: 8, 11: 9, 12: 10}",55reac1,3,371.2288266927935,Double bond,None,None
+782,COC1=C(C=C(C=C1)[C:10](=[C:11]=[N-:12])O)OC,55,"{10: 8, 11: 9, 12: 10}",55reac1,7,347.66025402233936,Double bond,None,None
+783,COC1=C(C=C(C=C1)[C:10](=[C:11]=[N-:12])O)OC,55,"{10: 8, 11: 9, 12: 10}",55reac1,11,344.57233451562934,Atom with lone pair,None,None
+784,COC1=C(C=C(C=C1)[C:10](=[C:11]=[N-:12])O)OC,55,"{10: 8, 11: 9, 12: 10}",55reac1,1,338.7275875133928,Ether,None,None
+785,COC1=C(C=C(C=C1)[C:10](=[C:11]=[N-:12])O)OC,55,"{10: 8, 11: 9, 12: 10}",55reac1,12,320.9033562357072,Ether,None,None
+786,CC1(C2CCC(C2)([C:20]1=[O:21])C)C,56,"{20: 7, 21: 8}",56reac0,7,407.03723805444315,Double bond,None,Connectivity
+787,CC1(C2CCC(C2)([C:20]1=[O:21])C)C,56,"{20: 7, 21: 8}",56reac0,8,332.61723588895984,Ketone,None,None
+788,[CH2:10]=[C:11]=[N-:12],56,"{10: 0, 11: 1, 12: 2}",56reac1,0,637.6447720330325,Cyanoalkyl/nitrile anion,None,None
+789,[CH2:10]=[C:11]=[N-:12],56,"{10: 0, 11: 1, 12: 2}",56reac1,2,505.14691459428286,Anion with charge minus1,None,None
+790,[CH2:10]=[C:11]=[N-:12],56,"{10: 0, 11: 1, 12: 2}",56reac1,1,478.42400197079405,Double bond,None,Connectivity
+791,C1=CN=CC(=C1)[CH:20]=[NH2+:21],58,"{20: 6, 21: 7}",58reac0,2,427.9637750276597,Imine,None,None
+792,C1=CN=CC(=C1)[CH:20]=[NH2+:21],58,"{20: 6, 21: 7}",58reac0,0,226.0405273779761,Double bond,None,None
+793,C1=CN=CC(=C1)[CH:20]=[NH2+:21],58,"{20: 6, 21: 7}",58reac0,4,189.61470494396053,Double bond,None,None
+794,C1=CN=CC(=C1)[CH:20]=[NH2+:21],58,"{20: 6, 21: 7}",58reac0,3,180.34516378771514,Double bond,None,None
+795,C1=CN=CC(=C1)[CH:20]=[NH2+:21],58,"{20: 6, 21: 7}",58reac0,1,179.46601524401922,Double bond,None,None
+796,C1=CN=CC(=C1)[CH:20]=[NH2+:21],58,"{20: 6, 21: 7}",58reac0,5,171.1451049091993,Double bond,None,None
+797,C1=CN=CC(=C1)[CH:20]=[NH2+:21],58,"{20: 6, 21: 7}",58reac0,6,146.74236986448523,Double bond neighbouratom with charge plus1,None,Connectivity
+798,[CH:10](=[C:11]=[N-:12])C#N,58,"{10: 0, 11: 1, 12: 2}",58reac1,0,511.0874233900104,Cyanoalkyl/nitrile anion,None,None
+799,[CH:10](=[C:11]=[N-:12])C#N,58,"{10: 0, 11: 1, 12: 2}",58reac1,2,432.9068660570774,Anion with charge minus1,None,None
+800,[CH:10](=[C:11]=[N-:12])C#N,58,"{10: 0, 11: 1, 12: 2}",58reac1,4,432.7819339935668,Atom with lone pair,None,None
+801,[CH:10](=[C:11]=[N-:12])C#N,58,"{10: 0, 11: 1, 12: 2}",58reac1,1,401.40390239527915,Double bond,None,Connectivity
+802,[CH:10](=[C:11]=[N-:12])C#N,58,"{10: 0, 11: 1, 12: 2}",58reac1,3,401.37895940302406,Triple bond,None,Connectivity
+803,[CH2:10]=[C:11]=[N-:12],59,"{10: 0, 11: 1, 12: 2}",59reac0,0,637.6447720330325,Cyanoalkyl/nitrile anion,None,None
+804,[CH2:10]=[C:11]=[N-:12],59,"{10: 0, 11: 1, 12: 2}",59reac0,2,505.14691459428286,Anion with charge minus1,None,None
+805,[CH2:10]=[C:11]=[N-:12],59,"{10: 0, 11: 1, 12: 2}",59reac0,1,478.42400197079405,Double bond,None,Connectivity
+806,C1C=CC=C1[CH:20]=[O:21],59,"{20: 5, 21: 6}",59reac1,3,389.29832244256977,Double bond,None,Connectivity
+807,C1C=CC=C1[CH:20]=[O:21],59,"{20: 5, 21: 6}",59reac1,5,386.74692920362577,Double bond,None,Connectivity
+808,C1C=CC=C1[CH:20]=[O:21],59,"{20: 5, 21: 6}",59reac1,6,360.7706251369091,Aldehyde,None,None
+809,C1C=CC=C1[CH:20]=[O:21],59,"{20: 5, 21: 6}",59reac1,1,339.3241404191358,Double bond,None,None
+810,C1C=CC=C1[CH:20]=[O:21],59,"{20: 5, 21: 6}",59reac1,4,309.27145866223145,Double bond,None,Connectivity
+811,C1C=CC=C1[CH:20]=[O:21],59,"{20: 5, 21: 6}",59reac1,2,288.66782200487796,Double bond,None,None
+812,CC/C=C\C[CH:20]=[O+:21]C,60,"{20: 5, 21: 6}",60reac0,5,350.72632144542877,Double bond neighbouratom with charge plus1,Connectivity,Connectivity
+813,CC/C=C\C[CH:20]=[O+:21]C,60,"{20: 5, 21: 6}",60reac0,3,335.0001153034391,Double bond,Connectivity,None
+814,CC/C=C\C[CH:20]=[O+:21]C,60,"{20: 5, 21: 6}",60reac0,2,331.19240551418625,Double bond,Connectivity,Connectivity
+815,CC(C)[Si](C(C)C)(C(C)C)[O:12][CH:11]=[C:10]1CCC1,60,"{12: 10, 11: 11, 10: 12}",60reac1,12,447.89895146433264,Double bond,None,None
+816,CC(C)[Si](C(C)C)(C(C)C)[O:12][CH:11]=[C:10]1CCC1,60,"{12: 10, 11: 11, 10: 12}",60reac1,11,367.0072145406157,Double bond,None,None
+817,CC(C)[Si](C(C)C)(C(C)C)[O:12][CH:11]=[C:10]1CCC1,60,"{12: 10, 11: 11, 10: 12}",60reac1,10,348.6863953084685,Silyl ether,None,None
+818,CCO/[C:11](=[CH:10]/[N+]#N)/[O-:12],61,"{11: 3, 10: 4, 12: 7}",61reac0,4,391.49413983128034,Enolate,None,None
+819,CCO/[C:11](=[CH:10]/[N+]#N)/[O-:12],61,"{11: 3, 10: 4, 12: 7}",61reac0,3,391.44376977556385,Double bond,None,Connectivity
+820,CCO/[C:11](=[CH:10]/[N+]#N)/[O-:12],61,"{11: 3, 10: 4, 12: 7}",61reac0,7,320.0330553322565,Anion with charge minus1,None,None
+821,CCO/[C:11](=[CH:10]/[N+]#N)/[O-:12],61,"{11: 3, 10: 4, 12: 7}",61reac0,6,294.584359561326,Atom with lone pair,None,None
+822,CCO/[C:11](=[CH:10]/[N+]#N)/[O-:12],61,"{11: 3, 10: 4, 12: 7}",61reac0,2,263.98366524651647,Atom with lone pair,None,None
+823,CC1=CC(=CC=C1)[C:20](=[OH+:21])C,61,"{20: 7, 21: 8}",61reac1,2,250.49277963419445,Double bond,None,None
+824,CC1=CC(=CC=C1)[C:20](=[OH+:21])C,61,"{20: 7, 21: 8}",61reac1,4,249.00132330483757,Double bond,None,None
+825,CC1=CC(=CC=C1)[C:20](=[OH+:21])C,61,"{20: 7, 21: 8}",61reac1,5,239.88549478910863,Double bond,None,None
+826,CC1=CC(=CC=C1)[C:20](=[OH+:21])C,61,"{20: 7, 21: 8}",61reac1,6,228.80469572590664,Double bond,None,None
+827,CC1=CC(=CC=C1)[C:20](=[OH+:21])C,61,"{20: 7, 21: 8}",61reac1,1,225.28947101999074,Double bond,None,None
+828,CC1=CC(=CC=C1)[C:20](=[OH+:21])C,61,"{20: 7, 21: 8}",61reac1,7,194.96950229420327,Double bond neighbouratom with charge plus1,None,Connectivity
+829,CC1=CC(=CC=C1)[C:20](=[OH+:21])C,61,"{20: 7, 21: 8}",61reac1,3,194.11224227352068,Double bond,None,None
+830,COC1=CC=C(C=C1)[CH:20]=[O:21],62,"{20: 8, 21: 9}",62reac0,9,357.7712538719643,Aldehyde,None,None
+831,COC1=CC=C(C=C1)[CH:20]=[O:21],62,"{20: 8, 21: 9}",62reac0,7,328.5257944187615,Double bond,None,None
+832,COC1=CC=C(C=C1)[CH:20]=[O:21],62,"{20: 8, 21: 9}",62reac0,3,328.5257944187615,Double bond,None,None
+833,COC1=CC=C(C=C1)[CH:20]=[O:21],62,"{20: 8, 21: 9}",62reac0,8,327.6909553927835,Double bond,None,Connectivity
+834,COC1=CC=C(C=C1)[CH:20]=[O:21],62,"{20: 8, 21: 9}",62reac0,5,313.81646151538007,Double bond,None,None
+835,COC1=CC=C(C=C1)[CH:20]=[O:21],62,"{20: 8, 21: 9}",62reac0,1,272.1654097000137,Ether,None,None
+836,COC1=CC=C(C=C1)[CH:20]=[O:21],62,"{20: 8, 21: 9}",62reac0,6,263.84294085018337,Double bond,None,None
+837,COC1=CC=C(C=C1)[CH:20]=[O:21],62,"{20: 8, 21: 9}",62reac0,4,263.84294085018337,Double bond,None,None
+838,COC1=CC=C(C=C1)[CH:20]=[O:21],62,"{20: 8, 21: 9}",62reac0,2,197.05845056613907,Double bond,None,None
+839,[CH2:10]=[C:11](C1CC1)[O-:12],62,"{10: 0, 11: 1, 12: 5}",62reac1,0,642.951133604045,Enolate,None,None
+840,[CH2:10]=[C:11](C1CC1)[O-:12],62,"{10: 0, 11: 1, 12: 5}",62reac1,1,633.745137890568,Double bond,None,Connectivity
+841,[CH2:10]=[C:11](C1CC1)[O-:12],62,"{10: 0, 11: 1, 12: 5}",62reac1,5,526.8516183301108,Anion with charge minus1,None,None
+842,CC1(C[C:11](=[CH:10]C(=O)C1)[O-:12])C,63,"{11: 3, 10: 4, 12: 8}",63reac0,4,543.2662869784981,Enolate,None,None
+843,CC1(C[C:11](=[CH:10]C(=O)C1)[O-:12])C,63,"{11: 3, 10: 4, 12: 8}",63reac0,8,478.66896018153057,Anion with charge minus1,None,None
+844,CC1(C[C:11](=[CH:10]C(=O)C1)[O-:12])C,63,"{11: 3, 10: 4, 12: 8}",63reac0,6,478.2199923393782,Ketone,None,None
+845,CC1(C[C:11](=[CH:10]C(=O)C1)[O-:12])C,63,"{11: 3, 10: 4, 12: 8}",63reac0,5,433.5509249398019,Double bond,None,Connectivity
+846,CC1(C[C:11](=[CH:10]C(=O)C1)[O-:12])C,63,"{11: 3, 10: 4, 12: 8}",63reac0,3,420.79934361577034,Double bond,None,Connectivity
+847,[CH:21](=[CH:20]\Cl)\[N+:22](=[O:23])[O-],63,"{21: 0, 20: 1, 22: 3, 23: 4}",63reac1,5,303.74161398713477,Anion with charge minus1,None,None
+848,[CH:21](=[CH:20]\Cl)\[N+:22](=[O:23])[O-],63,"{21: 0, 20: 1, 22: 3, 23: 4}",63reac1,4,303.6685894038528,Atom with lone pair,None,None
+849,[CH:21](=[CH:20]\Cl)\[N+:22](=[O:23])[O-],63,"{21: 0, 20: 1, 22: 3, 23: 4}",63reac1,1,301.87018017214723,Double bond,None,Connectivity
+850,[CH:21](=[CH:20]\Cl)\[N+:22](=[O:23])[O-],63,"{21: 0, 20: 1, 22: 3, 23: 4}",63reac1,0,253.11069714534096,Double bond,None,None
+851,[CH:21](=[CH:20]\Cl)\[N+:22](=[O:23])[O-],63,"{21: 0, 20: 1, 22: 3, 23: 4}",63reac1,2,176.1336078045424,Atom with lone pair,None,None
+852,CCCCN1C(=C)C(C2=C1C=CC(=C2)[CH:20]=[N+:21]3CCCCC3)(C)C,64,"{20: 14, 21: 15}",64reac0,6,471.7742652138695,Double bond,None,None
+853,CCCCN1C(=C)C(C2=C1C=CC(=C2)[CH:20]=[N+:21]3CCCCC3)(C)C,64,"{20: 14, 21: 15}",64reac0,5,374.1757876109332,Double bond,None,Connectivity
+854,CCCCN1C(=C)C(C2=C1C=CC(=C2)[CH:20]=[N+:21]3CCCCC3)(C)C,64,"{20: 14, 21: 15}",64reac0,4,345.99890531552956,Amine,None,None
+855,CCCCN1C(=C)C(C2=C1C=CC(=C2)[CH:20]=[N+:21]3CCCCC3)(C)C,64,"{20: 14, 21: 15}",64reac0,12,335.90893903467804,Double bond,None,None
+856,CCCCN1C(=C)C(C2=C1C=CC(=C2)[CH:20]=[N+:21]3CCCCC3)(C)C,64,"{20: 14, 21: 15}",64reac0,8,333.0061985589564,Double bond,None,None
+857,CCCCN1C(=C)C(C2=C1C=CC(=C2)[CH:20]=[N+:21]3CCCCC3)(C)C,64,"{20: 14, 21: 15}",64reac0,10,329.9414226585068,Double bond,None,None
+858,CCCCN1C(=C)C(C2=C1C=CC(=C2)[CH:20]=[N+:21]3CCCCC3)(C)C,64,"{20: 14, 21: 15}",64reac0,14,286.7324539781548,Double bond neighbouratom with charge plus1,None,Connectivity
+859,CCCCN1C(=C)C(C2=C1C=CC(=C2)[CH:20]=[N+:21]3CCCCC3)(C)C,64,"{20: 14, 21: 15}",64reac0,13,266.96321121416986,Double bond,None,None
+860,CCCCN1C(=C)C(C2=C1C=CC(=C2)[CH:20]=[N+:21]3CCCCC3)(C)C,64,"{20: 14, 21: 15}",64reac0,11,263.95893789688125,Double bond,None,None
+861,CCCCN1C(=C)C(C2=C1C=CC(=C2)[CH:20]=[N+:21]3CCCCC3)(C)C,64,"{20: 14, 21: 15}",64reac0,9,182.33965160232037,Double bond,None,None
+862,CC(C)(C)O/[C:11](=[CH:10]/C#N)/[O-:12],64,"{11: 5, 10: 6, 12: 9}",64reac1,6,545.2055555181578,Enolate,None,None
+863,CC(C)(C)O/[C:11](=[CH:10]/C#N)/[O-:12],64,"{11: 5, 10: 6, 12: 9}",64reac1,5,543.6537524941377,Double bond,None,Connectivity
+864,CC(C)(C)O/[C:11](=[CH:10]/C#N)/[O-:12],64,"{11: 5, 10: 6, 12: 9}",64reac1,7,452.1566086593084,Triple bond,None,Connectivity
+865,CC(C)(C)O/[C:11](=[CH:10]/C#N)/[O-:12],64,"{11: 5, 10: 6, 12: 9}",64reac1,8,451.8469446033705,Atom with lone pair,None,None
+866,CC(C)(C)O/[C:11](=[CH:10]/C#N)/[O-:12],64,"{11: 5, 10: 6, 12: 9}",64reac1,9,411.88339166529477,Anion with charge minus1,None,None
+867,CC(C)(C)O/[C:11](=[CH:10]/C#N)/[O-:12],64,"{11: 5, 10: 6, 12: 9}",64reac1,4,357.41307176160626,Atom with lone pair,None,None
+868,CCCCCC(CC)O/[C:11](=[CH:10]\C#N)/[O-:12],65,"{11: 9, 10: 10, 12: 13}",65reac0,10,542.7461826647632,Enolate,None,None
+869,CCCCCC(CC)O/[C:11](=[CH:10]\C#N)/[O-:12],65,"{11: 9, 10: 10, 12: 13}",65reac0,9,537.9585202634335,Double bond,None,Connectivity
+870,CCCCCC(CC)O/[C:11](=[CH:10]\C#N)/[O-:12],65,"{11: 9, 10: 10, 12: 13}",65reac0,12,440.619014356751,Atom with lone pair,None,None
+871,CCCCCC(CC)O/[C:11](=[CH:10]\C#N)/[O-:12],65,"{11: 9, 10: 10, 12: 13}",65reac0,13,424.40339394425973,Anion with charge minus1,None,None
+872,CCCCCC(CC)O/[C:11](=[CH:10]\C#N)/[O-:12],65,"{11: 9, 10: 10, 12: 13}",65reac0,11,421.27182380715385,Triple bond,None,Connectivity
+873,CCCCCC(CC)O/[C:11](=[CH:10]\C#N)/[O-:12],65,"{11: 9, 10: 10, 12: 13}",65reac0,8,343.5598312083166,Atom with lone pair,None,None
+874,C1=CC=C(C=C1)[C:20](=[O:21])C2=CC=CC=C2,65,"{20: 6, 21: 7}",65reac1,7,336.9612646366004,Ketone,None,None
+875,C1=CC=C(C=C1)[C:20](=[O:21])C2=CC=CC=C2,65,"{20: 6, 21: 7}",65reac1,1,287.25338916038163,Double bond,None,None
+876,C1=CC=C(C=C1)[C:20](=[O:21])C2=CC=CC=C2,65,"{20: 6, 21: 7}",65reac1,10,287.25338916038163,Double bond,None,None
+877,C1=CC=C(C=C1)[C:20](=[O:21])C2=CC=CC=C2,65,"{20: 6, 21: 7}",65reac1,5,287.25338916038163,Double bond,None,None
+878,C1=CC=C(C=C1)[C:20](=[O:21])C2=CC=CC=C2,65,"{20: 6, 21: 7}",65reac1,12,287.25338916038163,Double bond,None,None
+879,C1=CC=C(C=C1)[C:20](=[O:21])C2=CC=CC=C2,65,"{20: 6, 21: 7}",65reac1,2,286.2975255209021,Double bond,None,None
+880,C1=CC=C(C=C1)[C:20](=[O:21])C2=CC=CC=C2,65,"{20: 6, 21: 7}",65reac1,13,286.2975255209021,Double bond,None,None
+881,C1=CC=C(C=C1)[C:20](=[O:21])C2=CC=CC=C2,65,"{20: 6, 21: 7}",65reac1,9,286.2975255209021,Double bond,None,None
+882,C1=CC=C(C=C1)[C:20](=[O:21])C2=CC=CC=C2,65,"{20: 6, 21: 7}",65reac1,4,286.2975255209021,Double bond,None,None
+883,C1=CC=C(C=C1)[C:20](=[O:21])C2=CC=CC=C2,65,"{20: 6, 21: 7}",65reac1,0,285.82534606428817,Double bond,None,None
+884,C1=CC=C(C=C1)[C:20](=[O:21])C2=CC=CC=C2,65,"{20: 6, 21: 7}",65reac1,11,285.82534606428817,Double bond,None,None
+885,C1=CC=C(C=C1)[C:20](=[O:21])C2=CC=CC=C2,65,"{20: 6, 21: 7}",65reac1,3,271.65689360932447,Double bond,None,None
+886,C1=CC=C(C=C1)[C:20](=[O:21])C2=CC=CC=C2,65,"{20: 6, 21: 7}",65reac1,8,271.65689360932447,Double bond,None,None
+887,C1=CC=C(C=C1)[C:20](=[O:21])C2=CC=CC=C2,65,"{20: 6, 21: 7}",65reac1,6,267.2972921752371,Double bond,None,Connectivity
+888,CCO/[C:11](=[CH:10]/C1=CC=CS1)/[O-:12],66,"{11: 3, 10: 4, 12: 10}",66reac0,4,594.6976577383466,Enolate,None,None
+889,CCO/[C:11](=[CH:10]/C1=CC=CS1)/[O-:12],66,"{11: 3, 10: 4, 12: 10}",66reac0,3,588.4312103851698,Double bond,None,Connectivity
+890,CCO/[C:11](=[CH:10]/C1=CC=CS1)/[O-:12],66,"{11: 3, 10: 4, 12: 10}",66reac0,8,574.0069929878227,Double bond,None,None
+891,CCO/[C:11](=[CH:10]/C1=CC=CS1)/[O-:12],66,"{11: 3, 10: 4, 12: 10}",66reac0,6,547.5936491014436,Double bond,None,None
+892,CCO/[C:11](=[CH:10]/C1=CC=CS1)/[O-:12],66,"{11: 3, 10: 4, 12: 10}",66reac0,5,509.17049875855446,Double bond,None,Connectivity
+893,CCO/[C:11](=[CH:10]/C1=CC=CS1)/[O-:12],66,"{11: 3, 10: 4, 12: 10}",66reac0,10,453.1547700702213,Anion with charge minus1,None,None
+894,CCO/[C:11](=[CH:10]/C1=CC=CS1)/[O-:12],66,"{11: 3, 10: 4, 12: 10}",66reac0,9,387.03520541265607,Atom with lone pair,None,None
+895,CCO/[C:11](=[CH:10]/C1=CC=CS1)/[O-:12],66,"{11: 3, 10: 4, 12: 10}",66reac0,2,385.26889987662435,Atom with lone pair,None,Connectivity
+896,CCO/[C:11](=[CH:10]/C1=CC=CS1)/[O-:12],66,"{11: 3, 10: 4, 12: 10}",66reac0,7,376.0645852754824,Double bond,None,None
+897,CCO[C:20](=[O:21])OCC,66,"{20: 3, 21: 4}",66reac1,3,321.98251810949296,Double bond,None,Connectivity
+898,CCO[C:20](=[O:21])OCC,66,"{20: 3, 21: 4}",66reac1,4,321.68099454115145,Atom with lone pair,None,None
+899,CCO[C:20](=[O:21])OCC,66,"{20: 3, 21: 4}",66reac1,2,256.35706426622346,Atom with lone pair,None,None
+900,CCO[C:20](=[O:21])OCC,66,"{20: 3, 21: 4}",66reac1,5,256.35706426622346,Atom with lone pair,None,None
+901,C[C:10]1=[C:11](N(C(=O)N(C1=O)C)C)[O-:12],67,"{10: 1, 11: 2, 12: 11}",67reac0,7,535.3476281748153,Double bond,None,Connectivity
+902,C[C:10]1=[C:11](N(C(=O)N(C1=O)C)C)[O-:12],67,"{10: 1, 11: 2, 12: 11}",67reac0,1,535.0921824246179,Enolate,None,None
+903,C[C:10]1=[C:11](N(C(=O)N(C1=O)C)C)[O-:12],67,"{10: 1, 11: 2, 12: 11}",67reac0,2,534.8873340114951,Double bond,None,Connectivity
+904,C[C:10]1=[C:11](N(C(=O)N(C1=O)C)C)[O-:12],67,"{10: 1, 11: 2, 12: 11}",67reac0,8,417.7517174030654,Atom with lone pair,None,None
+905,C[C:10]1=[C:11](N(C(=O)N(C1=O)C)C)[O-:12],67,"{10: 1, 11: 2, 12: 11}",67reac0,11,416.5017048816662,Anion with charge minus1,None,None
+906,C[C:10]1=[C:11](N(C(=O)N(C1=O)C)C)[O-:12],67,"{10: 1, 11: 2, 12: 11}",67reac0,3,381.6278759255074,Amine,None,None
+907,C[C:10]1=[C:11](N(C(=O)N(C1=O)C)C)[O-:12],67,"{10: 1, 11: 2, 12: 11}",67reac0,6,381.5054979925044,Atom with lone pair,None,None
+908,C[C:10]1=[C:11](N(C(=O)N(C1=O)C)C)[O-:12],67,"{10: 1, 11: 2, 12: 11}",67reac0,5,369.8383952022996,Atom with lone pair,None,None
+909,C[C:10]1=[C:11](N(C(=O)N(C1=O)C)C)[O-:12],67,"{10: 1, 11: 2, 12: 11}",67reac0,4,164.57949890196323,Double bond,None,None
+910,C[C:22](=[O:23])[CH:21]=[CH2:20],67,"{22: 1, 23: 2, 21: 3, 20: 4}",67reac1,2,347.39217529702,Atom with lone pair,None,None
+911,C[C:22](=[O:23])[CH:21]=[CH2:20],67,"{22: 1, 23: 2, 21: 3, 20: 4}",67reac1,4,342.4491923042806,Double bond,None,Connectivity
+912,C[C:22](=[O:23])[CH:21]=[CH2:20],67,"{22: 1, 23: 2, 21: 3, 20: 4}",67reac1,3,342.16957021539565,Double bond,None,Connectivity
+913,C[C:22](=[O:23])[CH:21]=[CH2:20],67,"{22: 1, 23: 2, 21: 3, 20: 4}",67reac1,1,266.4231458439026,Double bond,None,Connectivity
+914,CCOC(=O)CC[C:20](=[O:21])C(=O)OCC,68,"{20: 7, 21: 8}",68reac0,7,420.4642348792404,Double bond,None,Connectivity
+915,CCOC(=O)CC[C:20](=[O:21])C(=O)OCC,68,"{20: 7, 21: 8}",68reac0,9,383.77032646536827,Double bond,None,Connectivity
+916,CCOC(=O)CC[C:20](=[O:21])C(=O)OCC,68,"{20: 7, 21: 8}",68reac0,4,332.26539430744015,Ester,None,None
+917,CCOC(=O)CC[C:20](=[O:21])C(=O)OCC,68,"{20: 7, 21: 8}",68reac0,8,331.7566796245519,Ketone,None,Connectivity
+918,CCOC(=O)CC[C:20](=[O:21])C(=O)OCC,68,"{20: 7, 21: 8}",68reac0,3,331.0084635296371,Double bond,None,Connectivity
+919,CCOC(=O)CC[C:20](=[O:21])C(=O)OCC,68,"{20: 7, 21: 8}",68reac0,10,274.1999386334792,Ester,None,Connectivity
+920,CCOC(=O)CC[C:20](=[O:21])C(=O)OCC,68,"{20: 7, 21: 8}",68reac0,2,265.0204523797147,Atom with lone pair,None,None
+921,CCOC(=O)CC[C:20](=[O:21])C(=O)OCC,68,"{20: 7, 21: 8}",68reac0,11,236.84272721852176,Atom with lone pair,None,None
+922,CCO/[C:11](=[C:10](\C)/P(=O)(OCC)OCC)/[O-:12],68,"{11: 3, 10: 4, 12: 14}",68reac1,3,595.567584103439,Double bond,None,Connectivity
+923,CCO/[C:11](=[C:10](\C)/P(=O)(OCC)OCC)/[O-:12],68,"{11: 3, 10: 4, 12: 14}",68reac1,4,595.2229592069052,Enolate,None,None
+924,CCO/[C:11](=[C:10](\C)/P(=O)(OCC)OCC)/[O-:12],68,"{11: 3, 10: 4, 12: 14}",68reac1,14,433.346469597891,Anion with charge minus1,None,None
+925,CCO/[C:11](=[C:10](\C)/P(=O)(OCC)OCC)/[O-:12],68,"{11: 3, 10: 4, 12: 14}",68reac1,2,415.49517121724784,Atom with lone pair,None,Connectivity
+926,CCO/[C:11](=[C:10](\C)/P(=O)(OCC)OCC)/[O-:12],68,"{11: 3, 10: 4, 12: 14}",68reac1,7,391.591049275361,Atom with lone pair,None,None
+927,CCO/[C:11](=[C:10](\C)/P(=O)(OCC)OCC)/[O-:12],68,"{11: 3, 10: 4, 12: 14}",68reac1,8,365.89765968732536,Atom with lone pair,None,Connectivity
+928,CCO/[C:11](=[C:10](\C)/P(=O)(OCC)OCC)/[O-:12],68,"{11: 3, 10: 4, 12: 14}",68reac1,11,365.89765968732536,Atom with lone pair,None,Connectivity
+929,CCO/[C:11](=[C:10](\C)/P(=O)(OCC)OCC)/[O-:12],68,"{11: 3, 10: 4, 12: 14}",68reac1,6,123.33222343912348,Double bond,None,Connectivity
+930,CCO/[C:11](=[CH:10]/C1=C(C=CC=C1)C(=O)OC)/[O-:12],69,"{11: 3, 10: 4, 12: 15}",69reac0,4,587.5242936988361,Enolate,None,None
+931,CCO/[C:11](=[CH:10]/C1=C(C=CC=C1)C(=O)OC)/[O-:12],69,"{11: 3, 10: 4, 12: 15}",69reac0,3,578.5903769792058,Double bond,None,Connectivity
+932,CCO/[C:11](=[CH:10]/C1=C(C=CC=C1)C(=O)OC)/[O-:12],69,"{11: 3, 10: 4, 12: 15}",69reac0,11,508.32481965608895,Double bond,None,Connectivity
+933,CCO/[C:11](=[CH:10]/C1=C(C=CC=C1)C(=O)OC)/[O-:12],69,"{11: 3, 10: 4, 12: 15}",69reac0,8,477.75576586229727,Double bond,None,None
+934,CCO/[C:11](=[CH:10]/C1=C(C=CC=C1)C(=O)OC)/[O-:12],69,"{11: 3, 10: 4, 12: 15}",69reac0,10,471.57155409129336,Double bond,None,None
+935,CCO/[C:11](=[CH:10]/C1=C(C=CC=C1)C(=O)OC)/[O-:12],69,"{11: 3, 10: 4, 12: 15}",69reac0,6,457.78035382786766,Double bond,None,None
+936,CCO/[C:11](=[CH:10]/C1=C(C=CC=C1)C(=O)OC)/[O-:12],69,"{11: 3, 10: 4, 12: 15}",69reac0,5,453.5619294922799,Double bond,None,Connectivity
+937,CCO/[C:11](=[CH:10]/C1=C(C=CC=C1)C(=O)OC)/[O-:12],69,"{11: 3, 10: 4, 12: 15}",69reac0,15,438.6638914537616,Anion with charge minus1,None,None
+938,CCO/[C:11](=[CH:10]/C1=C(C=CC=C1)C(=O)OC)/[O-:12],69,"{11: 3, 10: 4, 12: 15}",69reac0,2,391.3241174630821,Atom with lone pair,None,Connectivity
+939,CCO/[C:11](=[CH:10]/C1=C(C=CC=C1)C(=O)OC)/[O-:12],69,"{11: 3, 10: 4, 12: 15}",69reac0,12,363.46572994813323,Ester,None,None
+940,CCO/[C:11](=[CH:10]/C1=C(C=CC=C1)C(=O)OC)/[O-:12],69,"{11: 3, 10: 4, 12: 15}",69reac0,7,330.57078194385394,Double bond,None,None
+941,CCO/[C:11](=[CH:10]/C1=C(C=CC=C1)C(=O)OC)/[O-:12],69,"{11: 3, 10: 4, 12: 15}",69reac0,9,329.28282239381224,Double bond,None,None
+942,CCO/[C:11](=[CH:10]/C1=C(C=CC=C1)C(=O)OC)/[O-:12],69,"{11: 3, 10: 4, 12: 15}",69reac0,13,323.6031421604566,Atom with lone pair,None,None
+943,C1=CC=C(C=C1)[CH:20]=[O:21],69,"{20: 6, 21: 7}",69reac1,7,338.2049158998998,Aldehyde,None,None
+944,C1=CC=C(C=C1)[CH:20]=[O:21],69,"{20: 6, 21: 7}",69reac1,6,307.58885888615623,Double bond,None,Connectivity
+945,C1=CC=C(C=C1)[CH:20]=[O:21],69,"{20: 6, 21: 7}",69reac1,3,280.35447593114804,Double bond,None,None
+946,C1=CC=C(C=C1)[CH:20]=[O:21],69,"{20: 6, 21: 7}",69reac1,1,280.039457956329,Double bond,None,None
+947,C1=CC=C(C=C1)[CH:20]=[O:21],69,"{20: 6, 21: 7}",69reac1,5,280.039457956329,Double bond,None,None
+948,C1=CC=C(C=C1)[CH:20]=[O:21],69,"{20: 6, 21: 7}",69reac1,4,271.87856028229,Double bond,None,None
+949,C1=CC=C(C=C1)[CH:20]=[O:21],69,"{20: 6, 21: 7}",69reac1,2,271.87856028229,Double bond,None,None
+950,C1=CC=C(C=C1)[CH:20]=[O:21],69,"{20: 6, 21: 7}",69reac1,0,269.1781293200329,Double bond,None,None
+951,CCO[C:20](=[O:21])CC1=CC=CC=C1,70,"{20: 3, 21: 4}",70reac0,3,342.2161842316855,Double bond,None,Connectivity
+952,CCO[C:20](=[O:21])CC1=CC=CC=C1,70,"{20: 3, 21: 4}",70reac0,4,323.62950279423967,Ester,None,None
+953,CCO[C:20](=[O:21])CC1=CC=CC=C1,70,"{20: 3, 21: 4}",70reac0,7,317.6928612331394,Double bond,None,None
+954,CCO[C:20](=[O:21])CC1=CC=CC=C1,70,"{20: 3, 21: 4}",70reac0,11,317.6928612331394,Double bond,None,None
+955,CCO[C:20](=[O:21])CC1=CC=CC=C1,70,"{20: 3, 21: 4}",70reac0,9,313.3500828901306,Double bond,None,None
+956,CCO[C:20](=[O:21])CC1=CC=CC=C1,70,"{20: 3, 21: 4}",70reac0,10,303.0884493445046,Double bond,None,None
+957,CCO[C:20](=[O:21])CC1=CC=CC=C1,70,"{20: 3, 21: 4}",70reac0,8,303.0884493445046,Double bond,None,None
+958,CCO[C:20](=[O:21])CC1=CC=CC=C1,70,"{20: 3, 21: 4}",70reac0,6,273.64554704376496,Double bond,None,Connectivity
+959,CCO[C:20](=[O:21])CC1=CC=CC=C1,70,"{20: 3, 21: 4}",70reac0,2,265.9106275339145,Atom with lone pair,None,None
+960,CCO/[C:11](=[CH:10]/C1=CC=CC=C1)/[O-:12],70,"{11: 3, 10: 4, 12: 11}",70reac1,3,600.166601654375,Double bond,None,Connectivity
+961,CCO/[C:11](=[CH:10]/C1=CC=CC=C1)/[O-:12],70,"{11: 3, 10: 4, 12: 11}",70reac1,4,599.4111652702559,Enolate,None,None
+962,CCO/[C:11](=[CH:10]/C1=CC=CC=C1)/[O-:12],70,"{11: 3, 10: 4, 12: 11}",70reac1,8,499.7554659359157,Double bond,None,None
+963,CCO/[C:11](=[CH:10]/C1=CC=CC=C1)/[O-:12],70,"{11: 3, 10: 4, 12: 11}",70reac1,10,487.73102804482915,Double bond,None,None
+964,CCO/[C:11](=[CH:10]/C1=CC=CC=C1)/[O-:12],70,"{11: 3, 10: 4, 12: 11}",70reac1,6,487.73102804482915,Double bond,None,None
+965,CCO/[C:11](=[CH:10]/C1=CC=CC=C1)/[O-:12],70,"{11: 3, 10: 4, 12: 11}",70reac1,5,462.64667606470175,Double bond,None,Connectivity
+966,CCO/[C:11](=[CH:10]/C1=CC=CC=C1)/[O-:12],70,"{11: 3, 10: 4, 12: 11}",70reac1,11,451.6383749882225,Anion with charge minus1,None,None
+967,CCO/[C:11](=[CH:10]/C1=CC=CC=C1)/[O-:12],70,"{11: 3, 10: 4, 12: 11}",70reac1,2,400.8159355246462,Atom with lone pair,None,Connectivity
+968,CCO/[C:11](=[CH:10]/C1=CC=CC=C1)/[O-:12],70,"{11: 3, 10: 4, 12: 11}",70reac1,9,344.218684915686,Double bond,None,None
+969,CCO/[C:11](=[CH:10]/C1=CC=CC=C1)/[O-:12],70,"{11: 3, 10: 4, 12: 11}",70reac1,7,344.218684915686,Double bond,None,None
+970,CCO[CH:20]=[O:21],71,"{20: 3, 21: 4}",71reac0,4,315.04783714201767,Ester,None,None
+971,CCO[CH:20]=[O:21],71,"{20: 3, 21: 4}",71reac0,2,254.85687805549242,Atom with lone pair,None,None
+972,CCO[CH:20]=[O:21],71,"{20: 3, 21: 4}",71reac0,3,211.43200586293824,Double bond,None,Connectivity
+973,CCO/[C:11](=[CH:10]/C1=CC=C(C=C1)Cl)/[O-:12],71,"{11: 3, 10: 4, 12: 12}",71reac1,3,593.2943877638318,Double bond,None,Connectivity
+974,CCO/[C:11](=[CH:10]/C1=CC=C(C=C1)Cl)/[O-:12],71,"{11: 3, 10: 4, 12: 12}",71reac1,4,592.2541921571828,Enolate,None,None
+975,CCO/[C:11](=[CH:10]/C1=CC=C(C=C1)Cl)/[O-:12],71,"{11: 3, 10: 4, 12: 12}",71reac1,8,501.1516543966718,Double bond,None,None
+976,CCO/[C:11](=[CH:10]/C1=CC=C(C=C1)Cl)/[O-:12],71,"{11: 3, 10: 4, 12: 12}",71reac1,10,479.02551006386057,Double bond,None,None
+977,CCO/[C:11](=[CH:10]/C1=CC=C(C=C1)Cl)/[O-:12],71,"{11: 3, 10: 4, 12: 12}",71reac1,6,479.02551006386057,Double bond,None,None
+978,CCO/[C:11](=[CH:10]/C1=CC=C(C=C1)Cl)/[O-:12],71,"{11: 3, 10: 4, 12: 12}",71reac1,5,455.96834506932646,Double bond,None,Connectivity
+979,CCO/[C:11](=[CH:10]/C1=CC=C(C=C1)Cl)/[O-:12],71,"{11: 3, 10: 4, 12: 12}",71reac1,12,441.95836809882894,Anion with charge minus1,None,None
+980,CCO/[C:11](=[CH:10]/C1=CC=C(C=C1)Cl)/[O-:12],71,"{11: 3, 10: 4, 12: 12}",71reac1,2,392.9349697041325,Atom with lone pair,None,Connectivity
+981,CCO/[C:11](=[CH:10]/C1=CC=C(C=C1)Cl)/[O-:12],71,"{11: 3, 10: 4, 12: 12}",71reac1,7,334.4471270828508,Double bond,None,None
+982,CCO/[C:11](=[CH:10]/C1=CC=C(C=C1)Cl)/[O-:12],71,"{11: 3, 10: 4, 12: 12}",71reac1,9,334.4471270828508,Double bond,None,None
+983,CCO/[C:11](=[CH:10]/C1=CC=C(C=C1)Cl)/[O-:12],71,"{11: 3, 10: 4, 12: 12}",71reac1,11,249.4275981867686,Atom with lone pair,None,None
+984,CC(C)[N+:21](=[CH2:20])C(C)C,72,"{21: 3, 20: 4}",72reac0,4,105.80124089028686,Double bond neighbouratom with charge plus1,None,None
+985,CO/[C:11](=[C:10](/C(=O)OC)\F)/[O-:12],72,"{11: 2, 10: 3, 12: 9}",72reac1,2,589.6956535207573,Double bond,None,Connectivity
+986,CO/[C:11](=[C:10](/C(=O)OC)\F)/[O-:12],72,"{11: 2, 10: 3, 12: 9}",72reac1,3,587.7812946874183,Enolate,None,None
+987,CO/[C:11](=[C:10](/C(=O)OC)\F)/[O-:12],72,"{11: 2, 10: 3, 12: 9}",72reac1,4,432.98589885002,Double bond,None,Connectivity
+988,CO/[C:11](=[C:10](/C(=O)OC)\F)/[O-:12],72,"{11: 2, 10: 3, 12: 9}",72reac1,9,409.26432684762403,Anion with charge minus1,None,None
+989,CO/[C:11](=[C:10](/C(=O)OC)\F)/[O-:12],72,"{11: 2, 10: 3, 12: 9}",72reac1,5,409.2411896265112,Atom with lone pair,None,None
+990,CO/[C:11](=[C:10](/C(=O)OC)\F)/[O-:12],72,"{11: 2, 10: 3, 12: 9}",72reac1,1,355.3048108103685,Atom with lone pair,None,None
+991,CO/[C:11](=[C:10](/C(=O)OC)\F)/[O-:12],72,"{11: 2, 10: 3, 12: 9}",72reac1,6,354.79797377693467,Atom with lone pair,None,None
+992,CO/[C:11](=[C:10](/C(=O)OC)\F)/[O-:12],72,"{11: 2, 10: 3, 12: 9}",72reac1,8,217.304828831926,Atom with lone pair,None,None
+993,C1=CC=C(C=C1)[CH:20]=[O:21],73,"{20: 6, 21: 7}",73reac0,7,338.2049158998998,Aldehyde,None,None
+994,C1=CC=C(C=C1)[CH:20]=[O:21],73,"{20: 6, 21: 7}",73reac0,6,307.58885888615623,Double bond,None,Connectivity
+995,C1=CC=C(C=C1)[CH:20]=[O:21],73,"{20: 6, 21: 7}",73reac0,3,280.35447593114804,Double bond,None,None
+996,C1=CC=C(C=C1)[CH:20]=[O:21],73,"{20: 6, 21: 7}",73reac0,1,280.039457956329,Double bond,None,None
+997,C1=CC=C(C=C1)[CH:20]=[O:21],73,"{20: 6, 21: 7}",73reac0,5,280.039457956329,Double bond,None,None
+998,C1=CC=C(C=C1)[CH:20]=[O:21],73,"{20: 6, 21: 7}",73reac0,4,271.87856028229,Double bond,None,None
+999,C1=CC=C(C=C1)[CH:20]=[O:21],73,"{20: 6, 21: 7}",73reac0,2,271.87856028229,Double bond,None,None
+1000,C1=CC=C(C=C1)[CH:20]=[O:21],73,"{20: 6, 21: 7}",73reac0,0,269.1781293200329,Double bond,None,None
+1001,C1=CC=C(C=C1)/[C:11](=[CH:10]\Cl)/[O-:12],73,"{11: 6, 10: 7, 12: 9}",73reac1,7,625.5670943390578,Enolate,None,None
+1002,C1=CC=C(C=C1)/[C:11](=[CH:10]\Cl)/[O-:12],73,"{11: 6, 10: 7, 12: 9}",73reac1,6,613.6059783454984,Double bond,None,Connectivity
+1003,C1=CC=C(C=C1)/[C:11](=[CH:10]\Cl)/[O-:12],73,"{11: 6, 10: 7, 12: 9}",73reac1,9,493.27874918002635,Anion with charge minus1,None,None
+1004,C1=CC=C(C=C1)/[C:11](=[CH:10]\Cl)/[O-:12],73,"{11: 6, 10: 7, 12: 9}",73reac1,3,456.6409449502826,Double bond,None,Connectivity
+1005,C1=CC=C(C=C1)/[C:11](=[CH:10]\Cl)/[O-:12],73,"{11: 6, 10: 7, 12: 9}",73reac1,2,353.3959541581571,Double bond,None,None
+1006,C1=CC=C(C=C1)/[C:11](=[CH:10]\Cl)/[O-:12],73,"{11: 6, 10: 7, 12: 9}",73reac1,4,353.3959541581571,Double bond,None,None
+1007,C1=CC=C(C=C1)/[C:11](=[CH:10]\Cl)/[O-:12],73,"{11: 6, 10: 7, 12: 9}",73reac1,0,352.209177528508,Double bond,None,None
+1008,C1=CC=C(C=C1)/[C:11](=[CH:10]\Cl)/[O-:12],73,"{11: 6, 10: 7, 12: 9}",73reac1,1,328.75576271722093,Double bond,None,None
+1009,C1=CC=C(C=C1)/[C:11](=[CH:10]\Cl)/[O-:12],73,"{11: 6, 10: 7, 12: 9}",73reac1,5,328.75576271722093,Double bond,None,None
+1010,C1=CC=C(C=C1)/[C:11](=[CH:10]\Cl)/[O-:12],73,"{11: 6, 10: 7, 12: 9}",73reac1,8,307.8608289877884,Atom with lone pair,None,None
+1011,COC1=CC=C(C=C1)COCC[C:10]2=[C:11](CCCC2C=C)[O-:12],74,"{10: 12, 11: 13, 12: 20}",74reac0,19,683.6795826149173,Double bond,None,Connectivity
+1012,COC1=CC=C(C=C1)COCC[C:10]2=[C:11](CCCC2C=C)[O-:12],74,"{10: 12, 11: 13, 12: 20}",74reac0,18,637.595278726425,Double bond,None,Connectivity
+1013,COC1=CC=C(C=C1)COCC[C:10]2=[C:11](CCCC2C=C)[O-:12],74,"{10: 12, 11: 13, 12: 20}",74reac0,12,636.8504917365499,Enolate,None,None
+1014,COC1=CC=C(C=C1)COCC[C:10]2=[C:11](CCCC2C=C)[O-:12],74,"{10: 12, 11: 13, 12: 20}",74reac0,13,601.6063269590959,Double bond,None,Connectivity
+1015,COC1=CC=C(C=C1)COCC[C:10]2=[C:11](CCCC2C=C)[O-:12],74,"{10: 12, 11: 13, 12: 20}",74reac0,6,597.5017543276772,Double bond,None,Connectivity
+1016,COC1=CC=C(C=C1)COCC[C:10]2=[C:11](CCCC2C=C)[O-:12],74,"{10: 12, 11: 13, 12: 20}",74reac0,4,597.5017543276772,Double bond,None,Connectivity
+1017,COC1=CC=C(C=C1)COCC[C:10]2=[C:11](CCCC2C=C)[O-:12],74,"{10: 12, 11: 13, 12: 20}",74reac0,20,528.3776966962032,Anion with charge minus1,None,None
+1018,COC1=CC=C(C=C1)COCC[C:10]2=[C:11](CCCC2C=C)[O-:12],74,"{10: 12, 11: 13, 12: 20}",74reac0,3,380.33043655287474,Double bond,None,None
+1019,COC1=CC=C(C=C1)COCC[C:10]2=[C:11](CCCC2C=C)[O-:12],74,"{10: 12, 11: 13, 12: 20}",74reac0,7,380.33043655287474,Double bond,None,None
+1020,COC1=CC=C(C=C1)COCC[C:10]2=[C:11](CCCC2C=C)[O-:12],74,"{10: 12, 11: 13, 12: 20}",74reac0,5,378.6553864083253,Double bond,None,None
+1021,COC1=CC=C(C=C1)COCC[C:10]2=[C:11](CCCC2C=C)[O-:12],74,"{10: 12, 11: 13, 12: 20}",74reac0,9,360.84428807673976,Ether,None,None
+1022,COC1=CC=C(C=C1)COCC[C:10]2=[C:11](CCCC2C=C)[O-:12],74,"{10: 12, 11: 13, 12: 20}",74reac0,2,323.0945294070989,Double bond,None,None
+1023,COC1=CC=C(C=C1)COCC[C:10]2=[C:11](CCCC2C=C)[O-:12],74,"{10: 12, 11: 13, 12: 20}",74reac0,1,296.1113184518181,Ether,None,None
+1024,C#C[CH2:20][Br:21],74,"{20: 2, 21: 3}",74reac1,1,326.3744461722672,Triple bond,None,Connectivity
+1025,C#C[CH2:20][Br:21],74,"{20: 2, 21: 3}",74reac1,0,322.9062779452652,Triple bond,None,Connectivity
+1026,C#C[CH2:20][Br:21],74,"{20: 2, 21: 3}",74reac1,3,229.13333532679826,Atom with lone pair,None,None
+1027,CC1(C[C:11](=[CH:10]C(=O)C1)[O-:12])C,75,"{11: 3, 10: 4, 12: 8}",75reac0,4,543.2662869784981,Enolate,None,None
+1028,CC1(C[C:11](=[CH:10]C(=O)C1)[O-:12])C,75,"{11: 3, 10: 4, 12: 8}",75reac0,8,478.66896018153057,Anion with charge minus1,None,None
+1029,CC1(C[C:11](=[CH:10]C(=O)C1)[O-:12])C,75,"{11: 3, 10: 4, 12: 8}",75reac0,6,478.2199923393782,Ketone,None,None
+1030,CC1(C[C:11](=[CH:10]C(=O)C1)[O-:12])C,75,"{11: 3, 10: 4, 12: 8}",75reac0,5,433.5509249398019,Double bond,None,Connectivity
+1031,CC1(C[C:11](=[CH:10]C(=O)C1)[O-:12])C,75,"{11: 3, 10: 4, 12: 8}",75reac0,3,420.79934361577034,Double bond,None,Connectivity
+1032,[CH2:20]=[N+:21]1CCC2C1(CCC2)C/C=C/C3=CC=CC=C3,75,"{20: 0, 21: 1}",75reac1,0,399.34724465338513,Double bond neighbouratom with charge plus1,None,Connectivity
+1033,[CH2:20]=[N+:21]1CCC2C1(CCC2)C/C=C/C3=CC=CC=C3,75,"{20: 0, 21: 1}",75reac1,11,375.69153602421284,Double bond,None,Connectivity
+1034,[CH2:20]=[N+:21]1CCC2C1(CCC2)C/C=C/C3=CC=CC=C3,75,"{20: 0, 21: 1}",75reac1,10,344.62631745357066,Double bond,None,None
+1035,[CH2:20]=[N+:21]1CCC2C1(CCC2)C/C=C/C3=CC=CC=C3,75,"{20: 0, 21: 1}",75reac1,15,321.5750406284351,Double bond,None,None
+1036,[CH2:20]=[N+:21]1CCC2C1(CCC2)C/C=C/C3=CC=CC=C3,75,"{20: 0, 21: 1}",75reac1,13,310.57418786385097,Double bond,None,None
+1037,[CH2:20]=[N+:21]1CCC2C1(CCC2)C/C=C/C3=CC=CC=C3,75,"{20: 0, 21: 1}",75reac1,17,310.57418786385097,Double bond,None,None
+1038,[CH2:20]=[N+:21]1CCC2C1(CCC2)C/C=C/C3=CC=CC=C3,75,"{20: 0, 21: 1}",75reac1,16,283.71382686612196,Double bond,None,None
+1039,[CH2:20]=[N+:21]1CCC2C1(CCC2)C/C=C/C3=CC=CC=C3,75,"{20: 0, 21: 1}",75reac1,14,283.71382686612196,Double bond,None,None
+1040,[CH2:20]=[N+:21]1CCC2C1(CCC2)C/C=C/C3=CC=CC=C3,75,"{20: 0, 21: 1}",75reac1,12,261.2056012712419,Double bond,None,Connectivity
+1041,C[Si](C)(C)[C:20](=[O:21])C=C(Cl)Cl,76,"{20: 4, 21: 5}",76reac0,4,509.16816197615117,Double bond,None,Connectivity
+1042,C[Si](C)(C)[C:20](=[O:21])C=C(Cl)Cl,76,"{20: 4, 21: 5}",76reac0,7,384.4333926602267,Double bond,None,Connectivity
+1043,C[Si](C)(C)[C:20](=[O:21])C=C(Cl)Cl,76,"{20: 4, 21: 5}",76reac0,6,358.009579135105,Double bond,None,None
+1044,C[Si](C)(C)[C:20](=[O:21])C=C(Cl)Cl,76,"{20: 4, 21: 5}",76reac0,5,343.8076290199533,Atom with lone pair,None,None
+1045,C[Si](C)(C)[C:20](=[O:21])C=C(Cl)Cl,76,"{20: 4, 21: 5}",76reac0,8,169.26028702082112,Atom with lone pair,None,None
+1046,C[Si](C)(C)[C:20](=[O:21])C=C(Cl)Cl,76,"{20: 4, 21: 5}",76reac0,9,169.26028702082112,Atom with lone pair,None,None
+1047,[CH2:10]=[C:11](C1CC1)[O-:12],76,"{10: 0, 11: 1, 12: 5}",76reac1,0,642.951133604045,Enolate,None,None
+1048,[CH2:10]=[C:11](C1CC1)[O-:12],76,"{10: 0, 11: 1, 12: 5}",76reac1,1,633.745137890568,Double bond,None,Connectivity
+1049,[CH2:10]=[C:11](C1CC1)[O-:12],76,"{10: 0, 11: 1, 12: 5}",76reac1,5,526.8516183301108,Anion with charge minus1,None,None
+1050,C[C:20](=[O:21])C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3,77,"{20: 1, 21: 2}",77reac0,1,406.33285781927407,Double bond,None,Connectivity
+1051,C[C:20](=[O:21])C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3,77,"{20: 1, 21: 2}",77reac0,2,348.2261289814487,Ketone,None,None
+1052,C[C:20](=[O:21])C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3,77,"{20: 1, 21: 2}",77reac0,7,334.03307307930663,Double bond,None,None
+1053,C[C:20](=[O:21])C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3,77,"{20: 1, 21: 2}",77reac0,19,334.03307307930663,Double bond,None,None
+1054,C[C:20](=[O:21])C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3,77,"{20: 1, 21: 2}",77reac0,13,334.03307307930663,Double bond,None,None
+1055,C[C:20](=[O:21])C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3,77,"{20: 1, 21: 2}",77reac0,12,327.47762696491554,Double bond,None,None
+1056,C[C:20](=[O:21])C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3,77,"{20: 1, 21: 2}",77reac0,20,327.47762696491554,Double bond,None,None
+1057,C[C:20](=[O:21])C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3,77,"{20: 1, 21: 2}",77reac0,6,327.47762696491554,Double bond,None,None
+1058,C[C:20](=[O:21])C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3,77,"{20: 1, 21: 2}",77reac0,8,327.47762696491554,Double bond,None,None
+1059,C[C:20](=[O:21])C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3,77,"{20: 1, 21: 2}",77reac0,18,327.47762696491554,Double bond,None,None
+1060,C[C:20](=[O:21])C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3,77,"{20: 1, 21: 2}",77reac0,14,327.47762696491554,Double bond,None,None
+1061,C[C:20](=[O:21])C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3,77,"{20: 1, 21: 2}",77reac0,9,324.2906220704317,Double bond,None,None
+1062,C[C:20](=[O:21])C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3,77,"{20: 1, 21: 2}",77reac0,5,324.2906220704317,Double bond,None,None
+1063,C[C:20](=[O:21])C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3,77,"{20: 1, 21: 2}",77reac0,11,324.2906220704317,Double bond,None,None
+1064,C[C:20](=[O:21])C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3,77,"{20: 1, 21: 2}",77reac0,15,324.2906220704317,Double bond,None,None
+1065,C[C:20](=[O:21])C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3,77,"{20: 1, 21: 2}",77reac0,21,324.2906220704317,Double bond,None,None
+1066,C[C:20](=[O:21])C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3,77,"{20: 1, 21: 2}",77reac0,17,324.2906220704317,Double bond,None,None
+1067,C[C:20](=[O:21])C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3,77,"{20: 1, 21: 2}",77reac0,4,273.2257238179445,Double bond,None,None
+1068,C[C:20](=[O:21])C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3,77,"{20: 1, 21: 2}",77reac0,10,273.2257238179445,Double bond,None,None
+1069,C[C:20](=[O:21])C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3,77,"{20: 1, 21: 2}",77reac0,16,273.2257238179445,Double bond,None,None
+1070,[CH2:10]=[C:11](C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3)[O-:12],77,"{10: 0, 11: 1, 12: 21}",77reac1,0,633.0075176139362,Enolate,None,None
+1071,[CH2:10]=[C:11](C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3)[O-:12],77,"{10: 0, 11: 1, 12: 21}",77reac1,14,631.9763266462833,Double bond,None,Connectivity
+1072,[CH2:10]=[C:11](C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3)[O-:12],77,"{10: 0, 11: 1, 12: 21}",77reac1,10,631.9763266462833,Double bond,None,Connectivity
+1073,[CH2:10]=[C:11](C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3)[O-:12],77,"{10: 0, 11: 1, 12: 21}",77reac1,8,631.9763266462833,Double bond,None,Connectivity
+1074,[CH2:10]=[C:11](C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3)[O-:12],77,"{10: 0, 11: 1, 12: 21}",77reac1,4,631.9763266462833,Double bond,None,Connectivity
+1075,[CH2:10]=[C:11](C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3)[O-:12],77,"{10: 0, 11: 1, 12: 21}",77reac1,20,631.9763266462833,Double bond,None,Connectivity
+1076,[CH2:10]=[C:11](C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3)[O-:12],77,"{10: 0, 11: 1, 12: 21}",77reac1,16,631.9763266462833,Double bond,None,Connectivity
+1077,[CH2:10]=[C:11](C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3)[O-:12],77,"{10: 0, 11: 1, 12: 21}",77reac1,1,631.7492132559419,Double bond,None,Connectivity
+1078,[CH2:10]=[C:11](C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3)[O-:12],77,"{10: 0, 11: 1, 12: 21}",77reac1,13,582.9905314245261,Double bond,None,Connectivity
+1079,[CH2:10]=[C:11](C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3)[O-:12],77,"{10: 0, 11: 1, 12: 21}",77reac1,19,582.9905314245261,Double bond,None,Connectivity
+1080,[CH2:10]=[C:11](C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3)[O-:12],77,"{10: 0, 11: 1, 12: 21}",77reac1,11,582.9905314245261,Double bond,None,Connectivity
+1081,[CH2:10]=[C:11](C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3)[O-:12],77,"{10: 0, 11: 1, 12: 21}",77reac1,5,582.9905314245261,Double bond,None,Connectivity
+1082,[CH2:10]=[C:11](C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3)[O-:12],77,"{10: 0, 11: 1, 12: 21}",77reac1,7,582.9905314245261,Double bond,None,Connectivity
+1083,[CH2:10]=[C:11](C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3)[O-:12],77,"{10: 0, 11: 1, 12: 21}",77reac1,17,582.9905314245261,Double bond,None,Connectivity
+1084,[CH2:10]=[C:11](C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3)[O-:12],77,"{10: 0, 11: 1, 12: 21}",77reac1,21,517.6769007765688,Anion with charge minus1,None,None
+1085,[CH2:10]=[C:11](C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3)[O-:12],77,"{10: 0, 11: 1, 12: 21}",77reac1,9,455.43869550852105,Double bond,None,Connectivity
+1086,[CH2:10]=[C:11](C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3)[O-:12],77,"{10: 0, 11: 1, 12: 21}",77reac1,3,455.43869550852105,Double bond,None,Connectivity
+1087,[CH2:10]=[C:11](C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3)[O-:12],77,"{10: 0, 11: 1, 12: 21}",77reac1,15,455.43869550852105,Double bond,None,Connectivity
+1088,[CH2:10]=[C:11](C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3)[O-:12],77,"{10: 0, 11: 1, 12: 21}",77reac1,6,452.9989876211621,Double bond,None,Connectivity
+1089,[CH2:10]=[C:11](C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3)[O-:12],77,"{10: 0, 11: 1, 12: 21}",77reac1,12,452.9989876211621,Double bond,None,Connectivity
+1090,[CH2:10]=[C:11](C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3)[O-:12],77,"{10: 0, 11: 1, 12: 21}",77reac1,18,452.9989876211621,Double bond,None,Connectivity
+1091,CC1=CC2=C(C(=C1)C)[C:20](=[O:21])C2,78,"{20: 8, 21: 9}",78reac0,8,354.43731301650405,Double bond,None,Connectivity
+1092,CC1=CC2=C(C(=C1)C)[C:20](=[O:21])C2,78,"{20: 8, 21: 9}",78reac0,9,337.39343944960274,Ketone,None,None
+1093,CC1=CC2=C(C(=C1)C)[C:20](=[O:21])C2,78,"{20: 8, 21: 9}",78reac0,6,336.09594076895155,Double bond,None,None
+1094,CC1=CC2=C(C(=C1)C)[C:20](=[O:21])C2,78,"{20: 8, 21: 9}",78reac0,2,332.0796344585251,Double bond,None,None
+1095,CC1=CC2=C(C(=C1)C)[C:20](=[O:21])C2,78,"{20: 8, 21: 9}",78reac0,4,323.7419068189338,Double bond,None,None
+1096,CC1=CC2=C(C(=C1)C)[C:20](=[O:21])C2,78,"{20: 8, 21: 9}",78reac0,3,275.88674053549767,Double bond,None,None
+1097,CC1=CC2=C(C(=C1)C)[C:20](=[O:21])C2,78,"{20: 8, 21: 9}",78reac0,5,262.9624295933172,Double bond,None,None
+1098,CC1=CC2=C(C(=C1)C)[C:20](=[O:21])C2,78,"{20: 8, 21: 9}",78reac0,1,262.2079860654194,Double bond,None,None
+1099,CC1=CC2=C(C(=C1)C)[C:11](=[CH:10]2)[O-:12],78,"{11: 8, 10: 9, 12: 10}",78reac1,9,654.1071841896046,Enolate,None,None
+1100,CC1=CC2=C(C(=C1)C)[C:11](=[CH:10]2)[O-:12],78,"{11: 8, 10: 9, 12: 10}",78reac1,4,541.9973637922667,Double bond,None,None
+1101,CC1=CC2=C(C(=C1)C)[C:11](=[CH:10]2)[O-:12],78,"{11: 8, 10: 9, 12: 10}",78reac1,6,532.8394347676076,Double bond,None,None
+1102,CC1=CC2=C(C(=C1)C)[C:11](=[CH:10]2)[O-:12],78,"{11: 8, 10: 9, 12: 10}",78reac1,2,514.9137512068264,Double bond,None,None
+1103,CC1=CC2=C(C(=C1)C)[C:11](=[CH:10]2)[O-:12],78,"{11: 8, 10: 9, 12: 10}",78reac1,3,483.78997214790434,Double bond,None,Connectivity
+1104,CC1=CC2=C(C(=C1)C)[C:11](=[CH:10]2)[O-:12],78,"{11: 8, 10: 9, 12: 10}",78reac1,8,474.03174143494107,Double bond,None,Connectivity
+1105,CC1=CC2=C(C(=C1)C)[C:11](=[CH:10]2)[O-:12],78,"{11: 8, 10: 9, 12: 10}",78reac1,10,454.214810752077,Anion with charge minus1,None,None
+1106,CC1=CC2=C(C(=C1)C)[C:11](=[CH:10]2)[O-:12],78,"{11: 8, 10: 9, 12: 10}",78reac1,5,392.3551572363358,Double bond,None,None
+1107,CC1=CC2=C(C(=C1)C)[C:11](=[CH:10]2)[O-:12],78,"{11: 8, 10: 9, 12: 10}",78reac1,1,386.86974032316357,Double bond,None,None
+1108,CCOC(=O)[C:10]1=[C:11](C(CC1)C)[O-:12],79,"{10: 5, 11: 6, 12: 11}",79reac0,3,574.342366237659,Double bond,None,Connectivity
+1109,CCOC(=O)[C:10]1=[C:11](C(CC1)C)[O-:12],79,"{10: 5, 11: 6, 12: 11}",79reac0,5,573.5809275463689,Enolate,None,None
+1110,CCOC(=O)[C:10]1=[C:11](C(CC1)C)[O-:12],79,"{10: 5, 11: 6, 12: 11}",79reac0,6,487.44289993541315,Double bond,None,Connectivity
+1111,CCOC(=O)[C:10]1=[C:11](C(CC1)C)[O-:12],79,"{10: 5, 11: 6, 12: 11}",79reac0,11,460.50786360306665,Anion with charge minus1,None,None
+1112,CCOC(=O)[C:10]1=[C:11](C(CC1)C)[O-:12],79,"{10: 5, 11: 6, 12: 11}",79reac0,4,423.7235002890229,Ester,None,None
+1113,CCOC(=O)[C:10]1=[C:11](C(CC1)C)[O-:12],79,"{10: 5, 11: 6, 12: 11}",79reac0,2,382.6516805118881,Atom with lone pair,None,None
+1114,CO[C:22](=[O:23])[CH:21]=[CH2:20],79,"{22: 2, 23: 3, 21: 4, 20: 5}",79reac1,3,319.88056892808527,Atom with lone pair,None,None
+1115,CO[C:22](=[O:23])[CH:21]=[CH2:20],79,"{22: 2, 23: 3, 21: 4, 20: 5}",79reac1,4,318.3025310453959,Double bond,None,Connectivity
+1116,CO[C:22](=[O:23])[CH:21]=[CH2:20],79,"{22: 2, 23: 3, 21: 4, 20: 5}",79reac1,2,316.4775321529014,Double bond,None,Connectivity
+1117,CO[C:22](=[O:23])[CH:21]=[CH2:20],79,"{22: 2, 23: 3, 21: 4, 20: 5}",79reac1,5,302.22415599320084,Double bond,None,Connectivity
+1118,CO[C:22](=[O:23])[CH:21]=[CH2:20],79,"{22: 2, 23: 3, 21: 4, 20: 5}",79reac1,1,248.80066156352405,Atom with lone pair,None,None
+1119,CC/[C:21](=[CH:20]/C(=O)C1=CC=CC=C1)/[N+:22](=[O:23])[O-],80,"{21: 2, 20: 3, 22: 12, 23: 13}",80reac0,5,309.1392073384486,Atom with lone pair,None,Connectivity
+1120,CC/[C:21](=[CH:20]/C(=O)C1=CC=CC=C1)/[N+:22](=[O:23])[O-],80,"{21: 2, 20: 3, 22: 12, 23: 13}",80reac0,14,283.7518643483054,Anion with charge minus1,None,None
+1121,CC/[C:21](=[CH:20]/C(=O)C1=CC=CC=C1)/[N+:22](=[O:23])[O-],80,"{21: 2, 20: 3, 22: 12, 23: 13}",80reac0,13,283.32682902226225,Atom with lone pair,None,None
+1122,CC/[C:21](=[CH:20]/C(=O)C1=CC=CC=C1)/[N+:22](=[O:23])[O-],80,"{21: 2, 20: 3, 22: 12, 23: 13}",80reac0,8,279.68711496004835,Double bond,None,None
+1123,CC/[C:21](=[CH:20]/C(=O)C1=CC=CC=C1)/[N+:22](=[O:23])[O-],80,"{21: 2, 20: 3, 22: 12, 23: 13}",80reac0,10,279.68711496004835,Double bond,None,None
+1124,CC/[C:21](=[CH:20]/C(=O)C1=CC=CC=C1)/[N+:22](=[O:23])[O-],80,"{21: 2, 20: 3, 22: 12, 23: 13}",80reac0,7,276.40199337154627,Double bond,None,None
+1125,CC/[C:21](=[CH:20]/C(=O)C1=CC=CC=C1)/[N+:22](=[O:23])[O-],80,"{21: 2, 20: 3, 22: 12, 23: 13}",80reac0,11,276.40199337154627,Double bond,None,None
+1126,CC/[C:21](=[CH:20]/C(=O)C1=CC=CC=C1)/[N+:22](=[O:23])[O-],80,"{21: 2, 20: 3, 22: 12, 23: 13}",80reac0,9,275.17945116199553,Double bond,None,None
+1127,CC/[C:21](=[CH:20]/C(=O)C1=CC=CC=C1)/[N+:22](=[O:23])[O-],80,"{21: 2, 20: 3, 22: 12, 23: 13}",80reac0,3,265.63448898657225,Double bond,None,None
+1128,CC/[C:21](=[CH:20]/C(=O)C1=CC=CC=C1)/[N+:22](=[O:23])[O-],80,"{21: 2, 20: 3, 22: 12, 23: 13}",80reac0,4,264.43619759287685,Double bond,None,Connectivity
+1129,CC/[C:21](=[CH:20]/C(=O)C1=CC=CC=C1)/[N+:22](=[O:23])[O-],80,"{21: 2, 20: 3, 22: 12, 23: 13}",80reac0,2,260.21191514027305,Double bond,None,Connectivity
+1130,CC/[C:21](=[CH:20]/C(=O)C1=CC=CC=C1)/[N+:22](=[O:23])[O-],80,"{21: 2, 20: 3, 22: 12, 23: 13}",80reac0,6,260.00228622253053,Double bond,None,None
+1131,CC(C)(C)[C:11](=[CH2:10])[O-:12],80,"{11: 4, 10: 5, 12: 6}",80reac1,4,644.3077385826036,Double bond,None,Connectivity
+1132,CC(C)(C)[C:11](=[CH2:10])[O-:12],80,"{11: 4, 10: 5, 12: 6}",80reac1,5,643.8716943500331,Enolate,None,None
+1133,CC(C)(C)[C:11](=[CH2:10])[O-:12],80,"{11: 4, 10: 5, 12: 6}",80reac1,6,536.7272714765277,Anion with charge minus1,None,None
+1134,CC1=CC=CC(=C1)/N=C\2/C(=O)[N-:10]C3=CC=C(C=C23)C,82,{10: 11},82reac0,8,593.804298050236,Double bond,None,Connectivity
+1135,CC1=CC=CC(=C1)/N=C\2/C(=O)[N-:10]C3=CC=C(C=C23)C,82,{10: 11},82reac0,11,546.0523598827422,Nitranion,None,None
+1136,CC1=CC=CC(=C1)/N=C\2/C(=O)[N-:10]C3=CC=C(C=C23)C,82,{10: 11},82reac0,9,539.7571302722208,Double bond,None,Connectivity
+1137,CC1=CC=CC(=C1)/N=C\2/C(=O)[N-:10]C3=CC=C(C=C23)C,82,{10: 11},82reac0,5,484.1401774706319,Double bond,None,Connectivity
+1138,CC1=CC=CC(=C1)/N=C\2/C(=O)[N-:10]C3=CC=C(C=C23)C,82,{10: 11},82reac0,7,467.76504146913067,Imine,None,None
+1139,CC1=CC=CC(=C1)/N=C\2/C(=O)[N-:10]C3=CC=C(C=C23)C,82,{10: 11},82reac0,10,444.95105395652354,Atom with lone pair,None,None
+1140,CC1=CC=CC(=C1)/N=C\2/C(=O)[N-:10]C3=CC=C(C=C23)C,82,{10: 11},82reac0,15,432.7846969724633,Double bond,None,None
+1141,CC1=CC=CC(=C1)/N=C\2/C(=O)[N-:10]C3=CC=C(C=C23)C,82,{10: 11},82reac0,13,428.0690388381481,Double bond,None,None
+1142,CC1=CC=CC(=C1)/N=C\2/C(=O)[N-:10]C3=CC=C(C=C23)C,82,{10: 11},82reac0,17,410.50791294360533,Double bond,None,None
+1143,CC1=CC=CC(=C1)/N=C\2/C(=O)[N-:10]C3=CC=C(C=C23)C,82,{10: 11},82reac0,2,398.4966394575313,Double bond,None,None
+1144,CC1=CC=CC(=C1)/N=C\2/C(=O)[N-:10]C3=CC=C(C=C23)C,82,{10: 11},82reac0,4,391.6830219957046,Double bond,None,None
+1145,CC1=CC=CC(=C1)/N=C\2/C(=O)[N-:10]C3=CC=C(C=C23)C,82,{10: 11},82reac0,6,387.45599657297134,Double bond,None,None
+1146,CC1=CC=CC(=C1)/N=C\2/C(=O)[N-:10]C3=CC=C(C=C23)C,82,{10: 11},82reac0,16,341.012288516853,Double bond,None,None
+1147,CC1=CC=CC(=C1)/N=C\2/C(=O)[N-:10]C3=CC=C(C=C23)C,82,{10: 11},82reac0,14,340.3383821588941,Double bond,None,None
+1148,CC1=CC=CC(=C1)/N=C\2/C(=O)[N-:10]C3=CC=C(C=C23)C,82,{10: 11},82reac0,3,307.2099651908502,Double bond,None,None
+1149,CC1=CC=CC(=C1)/N=C\2/C(=O)[N-:10]C3=CC=C(C=C23)C,82,{10: 11},82reac0,1,293.9285594704561,Double bond,None,None
+1150,CC1=CC=CC(=C1)/N=C\2/C(=O)[N-:10]C3=CC=C(C=C23)C,82,{10: 11},82reac0,12,284.26653886027634,Double bond,None,None
+1151,C1=CC=C(C=C1)/[CH:20]=[CH:21]/[C:22](=[O:23])/C=C/C2=CC=CC=C2,82,"{20: 6, 21: 7, 22: 8, 23: 9}",82reac1,9,378.0486176414415,Atom with lone pair,None,None
+1152,C1=CC=C(C=C1)/[CH:20]=[CH:21]/[C:22](=[O:23])/C=C/C2=CC=CC=C2,82,"{20: 6, 21: 7, 22: 8, 23: 9}",82reac1,8,352.46992753935046,Double bond,None,Connectivity
+1153,C1=CC=C(C=C1)/[CH:20]=[CH:21]/[C:22](=[O:23])/C=C/C2=CC=CC=C2,82,"{20: 6, 21: 7, 22: 8, 23: 9}",82reac1,10,350.88443332677707,Double bond,None,None
+1154,C1=CC=C(C=C1)/[CH:20]=[CH:21]/[C:22](=[O:23])/C=C/C2=CC=CC=C2,82,"{20: 6, 21: 7, 22: 8, 23: 9}",82reac1,7,350.88443332677707,Double bond,None,None
+1155,C1=CC=C(C=C1)/[CH:20]=[CH:21]/[C:22](=[O:23])/C=C/C2=CC=CC=C2,82,"{20: 6, 21: 7, 22: 8, 23: 9}",82reac1,11,316.66970779397525,Double bond,None,Connectivity
+1156,C1=CC=C(C=C1)/[CH:20]=[CH:21]/[C:22](=[O:23])/C=C/C2=CC=CC=C2,82,"{20: 6, 21: 7, 22: 8, 23: 9}",82reac1,6,316.66970779397525,Double bond,None,Connectivity
+1157,C1=CC=C(C=C1)/[CH:20]=[CH:21]/[C:22](=[O:23])/C=C/C2=CC=CC=C2,82,"{20: 6, 21: 7, 22: 8, 23: 9}",82reac1,15,311.1153749022633,Double bond,None,None
+1158,C1=CC=C(C=C1)/[CH:20]=[CH:21]/[C:22](=[O:23])/C=C/C2=CC=CC=C2,82,"{20: 6, 21: 7, 22: 8, 23: 9}",82reac1,0,311.1153749022633,Double bond,None,None
+1159,C1=CC=C(C=C1)/[CH:20]=[CH:21]/[C:22](=[O:23])/C=C/C2=CC=CC=C2,82,"{20: 6, 21: 7, 22: 8, 23: 9}",82reac1,17,306.14125732472166,Double bond,None,None
+1160,C1=CC=C(C=C1)/[CH:20]=[CH:21]/[C:22](=[O:23])/C=C/C2=CC=CC=C2,82,"{20: 6, 21: 7, 22: 8, 23: 9}",82reac1,4,306.14125732472166,Double bond,None,None
+1161,C1=CC=C(C=C1)/[CH:20]=[CH:21]/[C:22](=[O:23])/C=C/C2=CC=CC=C2,82,"{20: 6, 21: 7, 22: 8, 23: 9}",82reac1,2,306.14125732472166,Double bond,None,None
+1162,C1=CC=C(C=C1)/[CH:20]=[CH:21]/[C:22](=[O:23])/C=C/C2=CC=CC=C2,82,"{20: 6, 21: 7, 22: 8, 23: 9}",82reac1,13,306.14125732472166,Double bond,None,None
+1163,C1=CC=C(C=C1)/[CH:20]=[CH:21]/[C:22](=[O:23])/C=C/C2=CC=CC=C2,82,"{20: 6, 21: 7, 22: 8, 23: 9}",82reac1,1,289.4570485011209,Double bond,None,None
+1164,C1=CC=C(C=C1)/[CH:20]=[CH:21]/[C:22](=[O:23])/C=C/C2=CC=CC=C2,82,"{20: 6, 21: 7, 22: 8, 23: 9}",82reac1,5,289.4570485011209,Double bond,None,None
+1165,C1=CC=C(C=C1)/[CH:20]=[CH:21]/[C:22](=[O:23])/C=C/C2=CC=CC=C2,82,"{20: 6, 21: 7, 22: 8, 23: 9}",82reac1,14,289.4570485011209,Double bond,None,None
+1166,C1=CC=C(C=C1)/[CH:20]=[CH:21]/[C:22](=[O:23])/C=C/C2=CC=CC=C2,82,"{20: 6, 21: 7, 22: 8, 23: 9}",82reac1,16,289.4570485011209,Double bond,None,None
+1167,C1=CC=C(C=C1)/[CH:20]=[CH:21]/[C:22](=[O:23])/C=C/C2=CC=CC=C2,82,"{20: 6, 21: 7, 22: 8, 23: 9}",82reac1,3,249.43936946475878,Double bond,None,Connectivity
+1168,C1=CC=C(C=C1)/[CH:20]=[CH:21]/[C:22](=[O:23])/C=C/C2=CC=CC=C2,82,"{20: 6, 21: 7, 22: 8, 23: 9}",82reac1,12,249.43936946475878,Double bond,None,Connectivity
+1169,CCO[C:22](=[O:23])[CH:21]=[CH2:20],83,"{22: 3, 23: 4, 21: 5, 20: 6}",83reac0,4,323.04778836935293,Atom with lone pair,None,None
+1170,CCO[C:22](=[O:23])[CH:21]=[CH2:20],83,"{22: 3, 23: 4, 21: 5, 20: 6}",83reac0,5,321.1294953535544,Double bond,None,Connectivity
+1171,CCO[C:22](=[O:23])[CH:21]=[CH2:20],83,"{22: 3, 23: 4, 21: 5, 20: 6}",83reac0,3,317.3979392076144,Double bond,None,Connectivity
+1172,CCO[C:22](=[O:23])[CH:21]=[CH2:20],83,"{22: 3, 23: 4, 21: 5, 20: 6}",83reac0,6,311.26021230162587,Double bond,None,Connectivity
+1173,CCO[C:22](=[O:23])[CH:21]=[CH2:20],83,"{22: 3, 23: 4, 21: 5, 20: 6}",83reac0,2,257.18139991222415,Atom with lone pair,None,None
+1174,C=CCCCC1CCC[N-:10]C1=O,83,{10: 9},83reac1,10,624.4881084135268,Double bond,None,Connectivity
+1175,C=CCCCC1CCC[N-:10]C1=O,83,{10: 9},83reac1,0,607.7706112684682,Double bond,None,Connectivity
+1176,C=CCCCC1CCC[N-:10]C1=O,83,{10: 9},83reac1,9,606.1993024076801,Nitranion,None,None
+1177,C=CCCCC1CCC[N-:10]C1=O,83,{10: 9},83reac1,1,582.4762263195589,Double bond,None,Connectivity
+1178,C=CCCCC1CCC[N-:10]C1=O,83,{10: 9},83reac1,11,531.7779300357215,Atom with lone pair,None,None
+1179,C1=CC=C(C=C1)C[N-:10]CC2=CC=CC=C2,84,{10: 7},84reac0,4,716.583118725568,Double bond,None,Connectivity
+1180,C1=CC=C(C=C1)C[N-:10]CC2=CC=CC=C2,84,{10: 7},84reac0,10,716.583118725568,Double bond,None,Connectivity
+1181,C1=CC=C(C=C1)C[N-:10]CC2=CC=CC=C2,84,{10: 7},84reac0,14,716.583118725568,Double bond,None,Connectivity
+1182,C1=CC=C(C=C1)C[N-:10]CC2=CC=CC=C2,84,{10: 7},84reac0,2,716.583118725568,Double bond,None,Connectivity
+1183,C1=CC=C(C=C1)C[N-:10]CC2=CC=CC=C2,84,{10: 7},84reac0,7,684.5894620222971,Nitranion,None,None
+1184,C1=CC=C(C=C1)C[N-:10]CC2=CC=CC=C2,84,{10: 7},84reac0,3,625.5334678608924,Double bond,None,Connectivity
+1185,C1=CC=C(C=C1)C[N-:10]CC2=CC=CC=C2,84,{10: 7},84reac0,9,625.5334678608924,Double bond,None,Connectivity
+1186,C1=CC=C(C=C1)C[N-:10]CC2=CC=CC=C2,84,{10: 7},84reac0,1,577.3723443541676,Double bond,None,Connectivity
+1187,C1=CC=C(C=C1)C[N-:10]CC2=CC=CC=C2,84,{10: 7},84reac0,5,577.3723443541676,Double bond,None,Connectivity
+1188,C1=CC=C(C=C1)C[N-:10]CC2=CC=CC=C2,84,{10: 7},84reac0,11,577.3723443541676,Double bond,None,Connectivity
+1189,C1=CC=C(C=C1)C[N-:10]CC2=CC=CC=C2,84,{10: 7},84reac0,13,577.3723443541676,Double bond,None,Connectivity
+1190,C1=CC=C(C=C1)C[N-:10]CC2=CC=CC=C2,84,{10: 7},84reac0,0,531.7136830904055,Double bond,None,Connectivity
+1191,C1=CC=C(C=C1)C[N-:10]CC2=CC=CC=C2,84,{10: 7},84reac0,12,531.7136830904055,Double bond,None,Connectivity
+1192,C1=CC2=C(C=C1)[C:20](=[O:21])OC3=C2C=CN=C3,84,"{20: 6, 21: 7}",84reac1,13,453.6429192959331,Imine,None,None
+1193,C1=CC2=C(C=C1)[C:20](=[O:21])OC3=C2C=CN=C3,84,"{20: 6, 21: 7}",84reac1,7,320.2086709414143,Ester,None,None
+1194,C1=CC2=C(C=C1)[C:20](=[O:21])OC3=C2C=CN=C3,84,"{20: 6, 21: 7}",84reac1,11,281.157524039736,Double bond,None,None
+1195,C1=CC2=C(C=C1)[C:20](=[O:21])OC3=C2C=CN=C3,84,"{20: 6, 21: 7}",84reac1,1,278.7459636668209,Double bond,None,None
+1196,C1=CC2=C(C=C1)[C:20](=[O:21])OC3=C2C=CN=C3,84,"{20: 6, 21: 7}",84reac1,5,276.73400153801776,Double bond,None,None
+1197,C1=CC2=C(C=C1)[C:20](=[O:21])OC3=C2C=CN=C3,84,"{20: 6, 21: 7}",84reac1,14,275.68828051397577,Double bond,None,None
+1198,C1=CC2=C(C=C1)[C:20](=[O:21])OC3=C2C=CN=C3,84,"{20: 6, 21: 7}",84reac1,12,275.44429060909897,Double bond,None,None
+1199,C1=CC2=C(C=C1)[C:20](=[O:21])OC3=C2C=CN=C3,84,"{20: 6, 21: 7}",84reac1,4,254.44738842360675,Double bond,None,None
+1200,C1=CC2=C(C=C1)[C:20](=[O:21])OC3=C2C=CN=C3,84,"{20: 6, 21: 7}",84reac1,0,246.89191651297733,Double bond,None,None
+1201,C1=CC2=C(C=C1)[C:20](=[O:21])OC3=C2C=CN=C3,84,"{20: 6, 21: 7}",84reac1,6,243.91260277316906,Double bond,None,Connectivity
+1202,C1=CC2=C(C=C1)[C:20](=[O:21])OC3=C2C=CN=C3,84,"{20: 6, 21: 7}",84reac1,3,243.454890395049,Double bond,None,None
+1203,C1=CC2=C(C=C1)[C:20](=[O:21])OC3=C2C=CN=C3,84,"{20: 6, 21: 7}",84reac1,9,240.97649688413367,Double bond,None,None
+1204,C1=CC2=C(C=C1)[C:20](=[O:21])OC3=C2C=CN=C3,84,"{20: 6, 21: 7}",84reac1,8,210.67045363993384,Atom with lone pair,None,None
+1205,C1=CC2=C(C=C1)[C:20](=[O:21])OC3=C2C=CN=C3,84,"{20: 6, 21: 7}",84reac1,2,203.93222571746446,Double bond,None,None
+1206,C1=CC2=C(C=C1)[C:20](=[O:21])OC3=C2C=CN=C3,84,"{20: 6, 21: 7}",84reac1,10,203.25375095335767,Double bond,None,None
+1207,[CH2-:10]CCC1CCCC12OCCO2,85,{10: 0},85reac0,0,793.2303102433216,Carbanion,None,None
+1208,[CH2-:10]CCC1CCCC12OCCO2,85,{10: 0},85reac0,8,438.6610250649974,Atom with lone pair,None,Connectivity
+1209,[CH2-:10]CCC1CCCC12OCCO2,85,{10: 0},85reac0,11,438.6610250649974,Atom with lone pair,None,Connectivity
+1210,C1=CC=C(C=C1)[CH:20]=[O:21],85,"{20: 6, 21: 7}",85reac1,7,338.2049158998998,Aldehyde,None,None
+1211,C1=CC=C(C=C1)[CH:20]=[O:21],85,"{20: 6, 21: 7}",85reac1,6,307.58885888615623,Double bond,None,Connectivity
+1212,C1=CC=C(C=C1)[CH:20]=[O:21],85,"{20: 6, 21: 7}",85reac1,3,280.35447593114804,Double bond,None,None
+1213,C1=CC=C(C=C1)[CH:20]=[O:21],85,"{20: 6, 21: 7}",85reac1,1,280.039457956329,Double bond,None,None
+1214,C1=CC=C(C=C1)[CH:20]=[O:21],85,"{20: 6, 21: 7}",85reac1,5,280.039457956329,Double bond,None,None
+1215,C1=CC=C(C=C1)[CH:20]=[O:21],85,"{20: 6, 21: 7}",85reac1,4,271.87856028229,Double bond,None,None
+1216,C1=CC=C(C=C1)[CH:20]=[O:21],85,"{20: 6, 21: 7}",85reac1,2,271.87856028229,Double bond,None,None
+1217,C1=CC=C(C=C1)[CH:20]=[O:21],85,"{20: 6, 21: 7}",85reac1,0,269.1781293200329,Double bond,None,None
+1218,C/C(=C\[CH:20]=[O:21])/CC/C=C/C(=O)OC,86,"{20: 3, 21: 4}",86reac0,3,397.16667916742153,Double bond,None,Connectivity
+1219,C/C(=C\[CH:20]=[O:21])/CC/C=C/C(=O)OC,86,"{20: 3, 21: 4}",86reac0,4,363.0651557382662,Atom with lone pair,None,None
+1220,C/C(=C\[CH:20]=[O:21])/CC/C=C/C(=O)OC,86,"{20: 3, 21: 4}",86reac0,7,358.7692962314468,Double bond,None,Connectivity
+1221,C/C(=C\[CH:20]=[O:21])/CC/C=C/C(=O)OC,86,"{20: 3, 21: 4}",86reac0,1,357.47652873792686,Double bond,None,Connectivity
+1222,C/C(=C\[CH:20]=[O:21])/CC/C=C/C(=O)OC,86,"{20: 3, 21: 4}",86reac0,2,349.6174353379756,Double bond,None,None
+1223,C/C(=C\[CH:20]=[O:21])/CC/C=C/C(=O)OC,86,"{20: 3, 21: 4}",86reac0,10,330.2272782768123,Atom with lone pair,None,None
+1224,C/C(=C\[CH:20]=[O:21])/CC/C=C/C(=O)OC,86,"{20: 3, 21: 4}",86reac0,8,302.8708819630556,Double bond,None,Connectivity
+1225,C/C(=C\[CH:20]=[O:21])/CC/C=C/C(=O)OC,86,"{20: 3, 21: 4}",86reac0,9,292.6129248912912,Double bond,None,Connectivity
+1226,C/C(=C\[CH:20]=[O:21])/CC/C=C/C(=O)OC,86,"{20: 3, 21: 4}",86reac0,11,263.42416801536456,Atom with lone pair,None,None
+1227,C[Si](C)(C)[CH2-:10],86,{10: 4},86reac1,4,743.4114103424363,Carbanion,None,None
+1228,CCC1(OCC(O1)[CH:20]=[O:21])CC,87,"{20: 7, 21: 8}",87reac0,7,363.9497637823224,Double bond,None,Connectivity
+1229,CCC1(OCC(O1)[CH:20]=[O:21])CC,87,"{20: 7, 21: 8}",87reac0,3,320.8352021565661,Atom with lone pair,None,None
+1230,CCC1(OCC(O1)[CH:20]=[O:21])CC,87,"{20: 7, 21: 8}",87reac0,8,311.17217874736525,Aldehyde,None,None
+1231,CCC1(OCC(O1)[CH:20]=[O:21])CC,87,"{20: 7, 21: 8}",87reac0,6,306.58649472054094,Atom with lone pair,None,None
+1232,C1=CO[C-:10]=C1,87,{10: 3},87reac1,3,725.8839464487974,Carbanion,None,None
+1233,C1=CO[C-:10]=C1,87,{10: 3},87reac1,1,511.79086160683073,Double bond,None,None
+1234,C1=CO[C-:10]=C1,87,{10: 3},87reac1,0,407.1974592907354,Double bond,None,None
+1235,C1=CO[C-:10]=C1,87,{10: 3},87reac1,2,334.23900698160287,Ether,None,None
+1236,C[C-:10]=C,88,{10: 1},88reac0,1,773.909681023215,Carbanion,None,None
+1237,C/C(=C\CCCC#CC[Si](C)(C)C)/CC[CH:20]=[O:21],88,"{20: 15, 21: 16}",88reac1,15,513.1755768731236,Double bond,None,Connectivity
+1238,C/C(=C\CCCC#CC[Si](C)(C)C)/CC[CH:20]=[O:21],88,"{20: 15, 21: 16}",88reac1,2,449.21755436016247,Double bond,None,Connectivity
+1239,C/C(=C\CCCC#CC[Si](C)(C)C)/CC[CH:20]=[O:21],88,"{20: 15, 21: 16}",88reac1,6,409.607696921099,Triple bond,None,None
+1240,C/C(=C\CCCC#CC[Si](C)(C)C)/CC[CH:20]=[O:21],88,"{20: 15, 21: 16}",88reac1,1,403.56977511011064,Double bond,None,Connectivity
+1241,C/C(=C\CCCC#CC[Si](C)(C)C)/CC[CH:20]=[O:21],88,"{20: 15, 21: 16}",88reac1,7,367.5619456563145,Triple bond,None,None
+1242,C/C(=C\CCCC#CC[Si](C)(C)C)/CC[CH:20]=[O:21],88,"{20: 15, 21: 16}",88reac1,16,328.8758524064906,Aldehyde,None,None
+1243,COC1=CC(=C(C=C1)OC)C#CCC[CH:20]=[O:21],89,"{20: 14, 21: 15}",89reac0,14,518.0904368504416,Double bond,None,Connectivity
+1244,COC1=CC(=C(C=C1)OC)C#CCC[CH:20]=[O:21],89,"{20: 14, 21: 15}",89reac0,10,466.3516194683034,Triple bond,None,Connectivity
+1245,COC1=CC(=C(C=C1)OC)C#CCC[CH:20]=[O:21],89,"{20: 14, 21: 15}",89reac0,11,402.4311970009003,Triple bond,None,None
+1246,COC1=CC(=C(C=C1)OC)C#CCC[CH:20]=[O:21],89,"{20: 14, 21: 15}",89reac0,7,368.72451753891073,Double bond,None,None
+1247,COC1=CC(=C(C=C1)OC)C#CCC[CH:20]=[O:21],89,"{20: 14, 21: 15}",89reac0,3,362.64443384762853,Double bond,None,None
+1248,COC1=CC(=C(C=C1)OC)C#CCC[CH:20]=[O:21],89,"{20: 14, 21: 15}",89reac0,5,343.13136077928357,Double bond,None,None
+1249,COC1=CC(=C(C=C1)OC)C#CCC[CH:20]=[O:21],89,"{20: 14, 21: 15}",89reac0,6,317.4238947869744,Double bond,None,None
+1250,COC1=CC(=C(C=C1)OC)C#CCC[CH:20]=[O:21],89,"{20: 14, 21: 15}",89reac0,2,311.79187206109054,Double bond,None,None
+1251,COC1=CC(=C(C=C1)OC)C#CCC[CH:20]=[O:21],89,"{20: 14, 21: 15}",89reac0,4,309.7253840386402,Double bond,None,None
+1252,COC1=CC(=C(C=C1)OC)C#CCC[CH:20]=[O:21],89,"{20: 14, 21: 15}",89reac0,15,302.54427773458883,Aldehyde,None,None
+1253,COC1=CC(=C(C=C1)OC)C#CCC[CH:20]=[O:21],89,"{20: 14, 21: 15}",89reac0,1,299.7673557882663,Ether,None,None
+1254,COC1=CC(=C(C=C1)OC)C#CCC[CH:20]=[O:21],89,"{20: 14, 21: 15}",89reac0,8,293.23157622874714,Ether,None,None
+1255,C1CC=[C-:10]C1,89,{10: 3},89reac1,3,767.9745264586527,Carbanion,None,None
+1256,CC1(C2CCC(C2)([C:20]1=[O:21])C)C,90,"{20: 7, 21: 8}",90reac0,7,407.03723805444315,Double bond,None,Connectivity
+1257,CC1(C2CCC(C2)([C:20]1=[O:21])C)C,90,"{20: 7, 21: 8}",90reac0,8,332.61723588895984,Ketone,None,None
+1258,COC1=CC=CC=[C-:10]1,90,{10: 7},90reac1,7,748.0560666748788,Carbanion,None,None
+1259,COC1=CC=CC=[C-:10]1,90,{10: 7},90reac1,3,436.32301827427,Double bond,None,None
+1260,COC1=CC=CC=[C-:10]1,90,{10: 7},90reac1,5,432.42512408993207,Double bond,None,None
+1261,COC1=CC=CC=[C-:10]1,90,{10: 7},90reac1,4,381.6990068620071,Double bond,None,None
+1262,COC1=CC=CC=[C-:10]1,90,{10: 7},90reac1,1,343.3150979219936,Ether,None,None
+1263,COC1=CC=CC=[C-:10]1,90,{10: 7},90reac1,2,342.9436614359729,Double bond,None,None
+1264,CCC[CH2-:10],91,{10: 3},91reac0,3,796.4427910143277,Carbanion,None,None
+1265,CO[C:20](=[O:21])C1(CC1C2=CC=CC=C2)C(=O)N3CCCC3,91,"{20: 2, 21: 3}",91reac1,8,413.79023752594367,Double bond,None,Connectivity
+1266,CO[C:20](=[O:21])C1(CC1C2=CC=CC=C2)C(=O)N3CCCC3,91,"{20: 2, 21: 3}",91reac1,12,413.79023752594367,Double bond,None,Connectivity
+1267,CO[C:20](=[O:21])C1(CC1C2=CC=CC=C2)C(=O)N3CCCC3,91,"{20: 2, 21: 3}",91reac1,14,373.3679137020372,Atom with lone pair,None,None
+1268,CO[C:20](=[O:21])C1(CC1C2=CC=CC=C2)C(=O)N3CCCC3,91,"{20: 2, 21: 3}",91reac1,15,354.6902709691785,Atom with lone pair,None,None
+1269,CO[C:20](=[O:21])C1(CC1C2=CC=CC=C2)C(=O)N3CCCC3,91,"{20: 2, 21: 3}",91reac1,11,329.68694382952526,Double bond,None,Connectivity
+1270,CO[C:20](=[O:21])C1(CC1C2=CC=CC=C2)C(=O)N3CCCC3,91,"{20: 2, 21: 3}",91reac1,9,329.68694382952526,Double bond,None,Connectivity
+1271,CO[C:20](=[O:21])C1(CC1C2=CC=CC=C2)C(=O)N3CCCC3,91,"{20: 2, 21: 3}",91reac1,10,326.76485559763387,Double bond,None,Connectivity
+1272,CO[C:20](=[O:21])C1(CC1C2=CC=CC=C2)C(=O)N3CCCC3,91,"{20: 2, 21: 3}",91reac1,2,324.9405899127014,Double bond,None,Connectivity
+1273,CO[C:20](=[O:21])C1(CC1C2=CC=CC=C2)C(=O)N3CCCC3,91,"{20: 2, 21: 3}",91reac1,3,316.13039248110726,Ester,None,None
+1274,CO[C:20](=[O:21])C1(CC1C2=CC=CC=C2)C(=O)N3CCCC3,91,"{20: 2, 21: 3}",91reac1,7,264.8716256483458,Double bond,None,None
+1275,CO[C:20](=[O:21])C1(CC1C2=CC=CC=C2)C(=O)N3CCCC3,91,"{20: 2, 21: 3}",91reac1,1,261.0267016943544,Atom with lone pair,None,None
+1276,CO[C:20](=[O:21])C1(CC1C2=CC=CC=C2)C(=O)N3CCCC3,91,"{20: 2, 21: 3}",91reac1,13,182.13098883628845,Double bond,None,Connectivity
+1277,[CH3-:10],92,{10: 0},92reac0,0,766.7854965672595,Carbanion,None,None
+1278,COC1CCC(C2C1C[C:20](=[O:21])C=C2)O[Si](C)(C)C,92,"{20: 9, 21: 10}",92reac1,12,429.4743058648892,Double bond,None,Connectivity
+1279,COC1CCC(C2C1C[C:20](=[O:21])C=C2)O[Si](C)(C)C,92,"{20: 9, 21: 10}",92reac1,11,408.9817440044135,Double bond,None,Connectivity
+1280,COC1CCC(C2C1C[C:20](=[O:21])C=C2)O[Si](C)(C)C,92,"{20: 9, 21: 10}",92reac1,13,351.7469388623722,Silyl ether,None,None
+1281,COC1CCC(C2C1C[C:20](=[O:21])C=C2)O[Si](C)(C)C,92,"{20: 9, 21: 10}",92reac1,10,330.6416020770557,Ketone,None,Connectivity
+1282,COC1CCC(C2C1C[C:20](=[O:21])C=C2)O[Si](C)(C)C,92,"{20: 9, 21: 10}",92reac1,1,329.67177055124193,Ether,None,None
+1283,COC1CCC(C2C1C[C:20](=[O:21])C=C2)O[Si](C)(C)C,92,"{20: 9, 21: 10}",92reac1,9,231.31127208610997,Double bond,None,Connectivity
+1284,[CH3-:10],93,{10: 0},93reac0,0,766.7854965672595,Carbanion,None,None
+1285,CC(C)C1CCC2(C3C1C2[C:20](=[O:21])CC3)C,93,"{20: 10, 21: 11}",93reac1,11,357.80906584486365,Ketone,None,None
+1286,CC(C)C1CCC2(C3C1C2[C:20](=[O:21])CC3)C,93,"{20: 10, 21: 11}",93reac1,10,357.4656648274977,Double bond,None,Connectivity
+1287,C1=CC=C(C=C1)N(C2=CC=CC=C2)C3=CC=[C-:10]C=C3,94,{10: 16},94reac0,16,755.1545491148718,Carbanion,None,None
+1288,C1=CC=C(C=C1)N(C2=CC=CC=C2)C3=CC=[C-:10]C=C3,94,{10: 16},94reac0,18,424.1315177853685,Double bond,None,None
+1289,C1=CC=C(C=C1)N(C2=CC=CC=C2)C3=CC=[C-:10]C=C3,94,{10: 16},94reac0,14,424.1315177853685,Double bond,None,None
+1290,C1=CC=C(C=C1)N(C2=CC=CC=C2)C3=CC=[C-:10]C=C3,94,{10: 16},94reac0,10,397.7713012706954,Double bond,None,None
+1291,C1=CC=C(C=C1)N(C2=CC=CC=C2)C3=CC=[C-:10]C=C3,94,{10: 16},94reac0,0,397.7713012706954,Double bond,None,None
+1292,C1=CC=C(C=C1)N(C2=CC=CC=C2)C3=CC=[C-:10]C=C3,94,{10: 16},94reac0,4,378.9739143818151,Double bond,None,None
+1293,C1=CC=C(C=C1)N(C2=CC=CC=C2)C3=CC=[C-:10]C=C3,94,{10: 16},94reac0,8,378.9739143818151,Double bond,None,None
+1294,C1=CC=C(C=C1)N(C2=CC=CC=C2)C3=CC=[C-:10]C=C3,94,{10: 16},94reac0,2,378.9739143818151,Double bond,None,None
+1295,C1=CC=C(C=C1)N(C2=CC=CC=C2)C3=CC=[C-:10]C=C3,94,{10: 16},94reac0,12,378.9739143818151,Double bond,None,None
+1296,C1=CC=C(C=C1)N(C2=CC=CC=C2)C3=CC=[C-:10]C=C3,94,{10: 16},94reac0,15,375.4990001404658,Double bond,None,None
+1297,C1=CC=C(C=C1)N(C2=CC=CC=C2)C3=CC=[C-:10]C=C3,94,{10: 16},94reac0,17,375.4990001404658,Double bond,None,None
+1298,C1=CC=C(C=C1)N(C2=CC=CC=C2)C3=CC=[C-:10]C=C3,94,{10: 16},94reac0,6,373.313441169681,Amine,None,None
+1299,C1=CC=C(C=C1)N(C2=CC=CC=C2)C3=CC=[C-:10]C=C3,94,{10: 16},94reac0,13,326.264821840683,Double bond,None,None
+1300,C1=CC=C(C=C1)N(C2=CC=CC=C2)C3=CC=[C-:10]C=C3,94,{10: 16},94reac0,5,309.13151943171397,Double bond,None,None
+1301,C1=CC=C(C=C1)N(C2=CC=CC=C2)C3=CC=[C-:10]C=C3,94,{10: 16},94reac0,9,309.13151943171397,Double bond,None,None
+1302,C1=CC=C(C=C1)N(C2=CC=CC=C2)C3=CC=[C-:10]C=C3,94,{10: 16},94reac0,11,309.13151943171397,Double bond,None,None
+1303,C1=CC=C(C=C1)N(C2=CC=CC=C2)C3=CC=[C-:10]C=C3,94,{10: 16},94reac0,1,309.13151943171397,Double bond,None,None
+1304,C1=CC=C(C=C1)N(C2=CC=CC=C2)C3=CC=[C-:10]C=C3,94,{10: 16},94reac0,7,278.7114221234806,Double bond,None,None
+1305,C1=CC=C(C=C1)N(C2=CC=CC=C2)C3=CC=[C-:10]C=C3,94,{10: 16},94reac0,3,278.7114221234806,Double bond,None,None
+1306,C1=CC2=C3C(=C1)C=CC4=C3C(=CC(=C4)Br)[C:20]2=[O:21],94,"{20: 15, 21: 16}",94reac1,16,317.9031074028462,Ketone,None,None
+1307,C1=CC2=C3C(=C1)C=CC4=C3C(=CC(=C4)Br)[C:20]2=[O:21],94,"{20: 15, 21: 16}",94reac1,7,317.8948223795742,Double bond,None,None
+1308,C1=CC2=C3C(=C1)C=CC4=C3C(=CC(=C4)Br)[C:20]2=[O:21],94,"{20: 15, 21: 16}",94reac1,6,309.5163888297975,Double bond,None,None
+1309,C1=CC2=C3C(=C1)C=CC4=C3C(=CC(=C4)Br)[C:20]2=[O:21],94,"{20: 15, 21: 16}",94reac1,0,308.9240724686533,Double bond,None,None
+1310,C1=CC2=C3C(=C1)C=CC4=C3C(=CC(=C4)Br)[C:20]2=[O:21],94,"{20: 15, 21: 16}",94reac1,12,308.5863865148276,Double bond,None,Connectivity
+1311,C1=CC2=C3C(=C1)C=CC4=C3C(=CC(=C4)Br)[C:20]2=[O:21],94,"{20: 15, 21: 16}",94reac1,13,302.6949334349483,Double bond,None,None
+1312,C1=CC2=C3C(=C1)C=CC4=C3C(=CC(=C4)Br)[C:20]2=[O:21],94,"{20: 15, 21: 16}",94reac1,5,301.85096350871027,Double bond,None,None
+1313,C1=CC2=C3C(=C1)C=CC4=C3C(=CC(=C4)Br)[C:20]2=[O:21],94,"{20: 15, 21: 16}",94reac1,2,296.2719165813178,Double bond,None,None
+1314,C1=CC2=C3C(=C1)C=CC4=C3C(=CC(=C4)Br)[C:20]2=[O:21],94,"{20: 15, 21: 16}",94reac1,15,295.89226218499243,Double bond,None,Connectivity
+1315,C1=CC2=C3C(=C1)C=CC4=C3C(=CC(=C4)Br)[C:20]2=[O:21],94,"{20: 15, 21: 16}",94reac1,11,288.97931022942066,Double bond,None,None
+1316,C1=CC2=C3C(=C1)C=CC4=C3C(=CC(=C4)Br)[C:20]2=[O:21],94,"{20: 15, 21: 16}",94reac1,1,288.32667059637606,Double bond,None,None
+1317,C1=CC2=C3C(=C1)C=CC4=C3C(=CC(=C4)Br)[C:20]2=[O:21],94,"{20: 15, 21: 16}",94reac1,10,282.2106974516064,Double bond,None,None
+1318,C1=CC2=C3C(=C1)C=CC4=C3C(=CC(=C4)Br)[C:20]2=[O:21],94,"{20: 15, 21: 16}",94reac1,9,263.77909833192825,Double bond,None,None
+1319,C1=CC2=C3C(=C1)C=CC4=C3C(=CC(=C4)Br)[C:20]2=[O:21],94,"{20: 15, 21: 16}",94reac1,3,256.29089935310185,Double bond,None,None
+1320,C1=CC2=C3C(=C1)C=CC4=C3C(=CC(=C4)Br)[C:20]2=[O:21],94,"{20: 15, 21: 16}",94reac1,4,234.54416392743587,Double bond,None,None
+1321,C1=CC2=C3C(=C1)C=CC4=C3C(=CC(=C4)Br)[C:20]2=[O:21],94,"{20: 15, 21: 16}",94reac1,8,224.2762187924236,Double bond,None,None
+1322,C1=CC2=C3C(=C1)C=CC4=C3C(=CC(=C4)Br)[C:20]2=[O:21],94,"{20: 15, 21: 16}",94reac1,14,214.60816790163517,Atom with lone pair,None,None
+1323,COC(=O)C1(CCCCC[C:20]1=[O:21])C2=CC=CC=[C-:10]2,95,"{20: 10, 21: 11, 10: 17}",95reac0,2,602.7469461727887,Double bond,Connectivity,Connectivity
+1324,COC(=O)C1(CCCCC[C:20]1=[O:21])C2=CC=CC=[C-:10]2,95,"{20: 10, 21: 11, 10: 17}",95reac0,17,594.3264139895327,Carbanion,Connectivity,None
+1325,COC(=O)C1(CCCCC[C:20]1=[O:21])C2=CC=CC=[C-:10]2,95,"{20: 10, 21: 11, 10: 17}",95reac0,11,495.5286690732464,Ketone,Connectivity,Connectivity
+1326,COC(=O)C1(CCCCC[C:20]1=[O:21])C2=CC=CC=[C-:10]2,95,"{20: 10, 21: 11, 10: 17}",95reac0,10,473.0003458065912,Double bond,Connectivity,Connectivity
+1327,COC(=O)C1(CCCCC[C:20]1=[O:21])C2=CC=CC=[C-:10]2,95,"{20: 10, 21: 11, 10: 17}",95reac0,3,415.4368423325941,Ester,Connectivity,Connectivity
+1328,COC(=O)C1(CCCCC[C:20]1=[O:21])C2=CC=CC=[C-:10]2,95,"{20: 10, 21: 11, 10: 17}",95reac0,13,273.66504411399364,Double bond,Connectivity,None
+1329,COC(=O)C1(CCCCC[C:20]1=[O:21])C2=CC=CC=[C-:10]2,95,"{20: 10, 21: 11, 10: 17}",95reac0,15,266.8545073582791,Double bond,Connectivity,None
+1330,COC(=O)C1(CCCCC[C:20]1=[O:21])C2=CC=CC=[C-:10]2,95,"{20: 10, 21: 11, 10: 17}",95reac0,14,253.7948578381911,Double bond,Connectivity,Connectivity
+1331,COC(=O)C1(CCCCC[C:20]1=[O:21])C2=CC=CC=[C-:10]2,95,"{20: 10, 21: 11, 10: 17}",95reac0,12,208.79985724342987,Double bond,Connectivity,None
+1332,COC(=O)C1(CCCCC[C:20]1=[O:21])C2=CC=CC=[C-:10]2,95,"{20: 10, 21: 11, 10: 17}",95reac0,1,113.2221184601076,Atom with lone pair,Connectivity,None
+1333,COC1=CC(=[C-:10]C=C1)OC,96,{10: 5},96reac0,6,752.4565502130426,Double bond,None,Connectivity
+1334,COC1=CC(=[C-:10]C=C1)OC,96,{10: 5},96reac0,5,750.7814305901993,Carbanion,None,None
+1335,COC1=CC(=[C-:10]C=C1)OC,96,{10: 5},96reac0,7,461.14473771629855,Double bond,None,None
+1336,COC1=CC(=[C-:10]C=C1)OC,96,{10: 5},96reac0,3,456.83636325155385,Double bond,None,None
+1337,COC1=CC(=[C-:10]C=C1)OC,96,{10: 5},96reac0,2,352.68287516967393,Double bond,None,None
+1338,COC1=CC(=[C-:10]C=C1)OC,96,{10: 5},96reac0,8,343.65844183787704,Ether,None,None
+1339,COC1=CC(=[C-:10]C=C1)OC,96,{10: 5},96reac0,1,326.0668780822307,Ether,None,None
+1340,CO[C:20](=[O:21])C1=CC=C(C=C1)Br,96,"{20: 2, 21: 3}",96reac1,3,300.4236325919628,Ester,None,None
+1341,CO[C:20](=[O:21])C1=CC=C(C=C1)Br,96,"{20: 2, 21: 3}",96reac1,6,271.21977191232145,Double bond,None,None
+1342,CO[C:20](=[O:21])C1=CC=C(C=C1)Br,96,"{20: 2, 21: 3}",96reac1,8,271.21977191232145,Double bond,None,None
+1343,CO[C:20](=[O:21])C1=CC=C(C=C1)Br,96,"{20: 2, 21: 3}",96reac1,4,255.95327983610332,Double bond,None,None
+1344,CO[C:20](=[O:21])C1=CC=C(C=C1)Br,96,"{20: 2, 21: 3}",96reac1,2,253.4670388707891,Double bond,None,Connectivity
+1345,CO[C:20](=[O:21])C1=CC=C(C=C1)Br,96,"{20: 2, 21: 3}",96reac1,1,249.4805734017864,Atom with lone pair,None,None
+1346,CO[C:20](=[O:21])C1=CC=C(C=C1)Br,96,"{20: 2, 21: 3}",96reac1,9,249.38216010760516,Double bond,None,None
+1347,CO[C:20](=[O:21])C1=CC=C(C=C1)Br,96,"{20: 2, 21: 3}",96reac1,5,249.38216010760516,Double bond,None,None
+1348,CO[C:20](=[O:21])C1=CC=C(C=C1)Br,96,"{20: 2, 21: 3}",96reac1,7,239.07948545459658,Double bond,None,None
+1349,CO[C:20](=[O:21])C1=CC=C(C=C1)Br,96,"{20: 2, 21: 3}",96reac1,10,208.3978962264955,Atom with lone pair,None,None
+1350,CC(C)(C)/[N:21]=[CH:20]/C1=CC=CC=C1,97,"{21: 4, 20: 5}",97reac0,5,484.9373284862377,Double bond,None,Connectivity
+1351,CC(C)(C)/[N:21]=[CH:20]/C1=CC=CC=C1,97,"{21: 4, 20: 5}",97reac0,4,461.29674984212033,Imine,None,None
+1352,CC(C)(C)/[N:21]=[CH:20]/C1=CC=CC=C1,97,"{21: 4, 20: 5}",97reac0,9,311.29140077973716,Double bond,None,None
+1353,CC(C)(C)/[N:21]=[CH:20]/C1=CC=CC=C1,97,"{21: 4, 20: 5}",97reac0,7,298.53162778681144,Double bond,None,None
+1354,CC(C)(C)/[N:21]=[CH:20]/C1=CC=CC=C1,97,"{21: 4, 20: 5}",97reac0,11,298.53162778681144,Double bond,None,None
+1355,CC(C)(C)/[N:21]=[CH:20]/C1=CC=CC=C1,97,"{21: 4, 20: 5}",97reac0,8,293.3349792920053,Double bond,None,None
+1356,CC(C)(C)/[N:21]=[CH:20]/C1=CC=CC=C1,97,"{21: 4, 20: 5}",97reac0,10,293.3349792920053,Double bond,None,None
+1357,CC(C)(C)/[N:21]=[CH:20]/C1=CC=CC=C1,97,"{21: 4, 20: 5}",97reac0,6,288.76708764070645,Double bond,None,Connectivity
+1358,[CH2-:10]C1=CC=CC=C1,97,{10: 0},97reac1,0,699.0004173542839,Carbanion,None,None
+1359,[CH2-:10]C1=CC=CC=C1,97,{10: 0},97reac1,4,573.5969917817274,Double bond,None,None
+1360,[CH2-:10]C1=CC=CC=C1,97,{10: 0},97reac1,2,558.2849988896633,Double bond,None,None
+1361,[CH2-:10]C1=CC=CC=C1,97,{10: 0},97reac1,6,558.2849988896633,Double bond,None,None
+1362,[CH2-:10]C1=CC=CC=C1,97,{10: 0},97reac1,1,546.8798495942028,Double bond,None,Connectivity
+1363,[CH2-:10]C1=CC=CC=C1,97,{10: 0},97reac1,3,271.6999126254814,Double bond,None,None
+1364,[CH2-:10]C1=CC=CC=C1,97,{10: 0},97reac1,5,271.6999126254814,Double bond,None,None
+1365,COC1=CC=C(C=C1)COCC[CH:20]=[O:21],98,"{20: 12, 21: 13}",98reac0,12,451.7649991651997,Double bond,None,Connectivity
+1366,COC1=CC=C(C=C1)COCC[CH:20]=[O:21],98,"{20: 12, 21: 13}",98reac0,4,384.9066447992809,Double bond,None,Connectivity
+1367,COC1=CC=C(C=C1)COCC[CH:20]=[O:21],98,"{20: 12, 21: 13}",98reac0,6,384.9066447992809,Double bond,None,Connectivity
+1368,COC1=CC=C(C=C1)COCC[CH:20]=[O:21],98,"{20: 12, 21: 13}",98reac0,5,361.72979294718243,Double bond,None,None
+1369,COC1=CC=C(C=C1)COCC[CH:20]=[O:21],98,"{20: 12, 21: 13}",98reac0,3,349.1984911945183,Double bond,None,None
+1370,COC1=CC=C(C=C1)COCC[CH:20]=[O:21],98,"{20: 12, 21: 13}",98reac0,7,349.1984911945183,Double bond,None,None
+1371,COC1=CC=C(C=C1)COCC[CH:20]=[O:21],98,"{20: 12, 21: 13}",98reac0,9,338.2819377598353,Ether,None,None
+1372,COC1=CC=C(C=C1)COCC[CH:20]=[O:21],98,"{20: 12, 21: 13}",98reac0,13,300.48293826472946,Aldehyde,None,Connectivity
+1373,COC1=CC=C(C=C1)COCC[CH:20]=[O:21],98,"{20: 12, 21: 13}",98reac0,1,290.3546268600039,Ether,None,None
+1374,COC1=CC=C(C=C1)COCC[CH:20]=[O:21],98,"{20: 12, 21: 13}",98reac0,2,264.19218828505836,Double bond,None,None
+1375,[CH2-:10]CC=C,98,{10: 0},98reac1,0,783.8334573649918,Carbanion,None,None
+1376,[CH2-:10]CC=C,98,{10: 0},98reac1,3,772.6954601377947,Double bond,None,Connectivity
+1377,[CH2-:10]CC=C,98,{10: 0},98reac1,2,769.1785697914893,Double bond,None,Connectivity
+1378,CC[Si](CC)(CC)OCC#[C-:10],99,{10: 10},99reac0,10,646.0708887432702,Carbanion,None,None
+1379,CC[Si](CC)(CC)OCC#[C-:10],99,{10: 10},99reac0,7,571.2304860199802,Silyl ether,None,Connectivity
+1380,CC(C)(C=C)C([CH:20]=[O:21])OCC1=CC=CC=C1,99,"{20: 6, 21: 7}",99reac1,3,459.86025717877783,Double bond,None,Connectivity
+1381,CC(C)(C=C)C([CH:20]=[O:21])OCC1=CC=CC=C1,99,"{20: 6, 21: 7}",99reac1,4,445.6274327293504,Double bond,None,Connectivity
+1382,CC(C)(C=C)C([CH:20]=[O:21])OCC1=CC=CC=C1,99,"{20: 6, 21: 7}",99reac1,6,374.77456923993304,Double bond,None,Connectivity
+1383,CC(C)(C=C)C([CH:20]=[O:21])OCC1=CC=CC=C1,99,"{20: 6, 21: 7}",99reac1,13,315.7201070601586,Double bond,None,None
+1384,CC(C)(C=C)C([CH:20]=[O:21])OCC1=CC=CC=C1,99,"{20: 6, 21: 7}",99reac1,7,312.9085182296112,Aldehyde,None,Connectivity
+1385,CC(C)(C=C)C([CH:20]=[O:21])OCC1=CC=CC=C1,99,"{20: 6, 21: 7}",99reac1,8,306.17188301100396,Ether,None,None
+1386,CC(C)(C=C)C([CH:20]=[O:21])OCC1=CC=CC=C1,99,"{20: 6, 21: 7}",99reac1,11,305.78777119051665,Double bond,None,None
+1387,CC(C)(C=C)C([CH:20]=[O:21])OCC1=CC=CC=C1,99,"{20: 6, 21: 7}",99reac1,15,305.78777119051665,Double bond,None,None
+1388,CC(C)(C=C)C([CH:20]=[O:21])OCC1=CC=CC=C1,99,"{20: 6, 21: 7}",99reac1,10,302.70214803516865,Double bond,None,None
+1389,CC(C)(C=C)C([CH:20]=[O:21])OCC1=CC=CC=C1,99,"{20: 6, 21: 7}",99reac1,12,299.9963837035466,Double bond,None,None
+1390,CC(C)(C=C)C([CH:20]=[O:21])OCC1=CC=CC=C1,99,"{20: 6, 21: 7}",99reac1,14,299.9963837035466,Double bond,None,None

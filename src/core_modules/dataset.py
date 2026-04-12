@@ -1,25 +1,4 @@
-# MIT License
-#
-# Copyright (c) 2025 Yuto Iwasaki
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
+# -*- coding: utf-8 -*-
 # Base + V1/V2 DataHub consolidation for Uni-Mol pipelines.
 
 from __future__ import annotations
@@ -69,7 +48,7 @@ def _worker_path_to_feature_v1(args) -> Optional[TDict[str, Any]]:
     Worker for V1: re-open SDF and run coords2unimol.
     Uses a process-global dictionary loaded by _v1_worker_init.
     """
-    path, max_atoms, remove_hs = args
+    path, max_atoms, remove_hs, replace_atom_to_carbon = args
     try:
         mol = _load_first_mol_from_sdf(path, remove_hs=False)
         if mol is None or mol.GetNumConformers() == 0:
@@ -79,7 +58,10 @@ def _worker_path_to_feature_v1(args) -> Optional[TDict[str, Any]]:
             [list(conf.GetAtomPosition(i)) for i in range(mol.GetNumAtoms())],
             dtype=np.float32,
         )
-        atoms = [a.GetSymbol() for a in mol.GetAtoms()]
+        if replace_atom_to_carbon:
+            atoms = ['C' if a.GetSymbol() != 'H' else a.GetSymbol() for a in mol.GetAtoms()]
+        else:
+            atoms = [a.GetSymbol() for a in mol.GetAtoms()]
         # dictionary is provided by initializer
         feat = coords2unimol(
             atoms, coords, dictionary=_GLOBAL_V1_DICT,
@@ -398,6 +380,7 @@ class SingleAtomDataHubV1(_BaseSingleAtomDataHub):
     def __init__(self, data=None, is_train: bool = True, save_path: Optional[str] = None, **params):
         # enable parallel feature building like V2
         self.feature_workers = int(params.get("feature_workers", 0))
+        self.replace_atom_to_carbon = bool(params.get("replace_atom_to_carbon", False))
         super().__init__(data=data, is_train=is_train, save_path=save_path, **params)
 
     def _ensure_dictionary(self, **params):
@@ -454,7 +437,10 @@ class SingleAtomDataHubV1(_BaseSingleAtomDataHub):
                                 [list(conf.GetAtomPosition(i)) for i in range(mol.GetNumAtoms())],
                                 dtype=np.float32,
                             )
-                            atoms = [a.GetSymbol() for a in mol.GetAtoms()]
+                            if self.replace_atom_to_carbon:
+                                atoms = ['C' if a.GetSymbol() != 'H' else a.GetSymbol() for a in mol.GetAtoms()]
+                            else:
+                                atoms = [a.GetSymbol() for a in mol.GetAtoms()]
                             feat = coords2unimol(
                                 atoms, coords, dictionary=self.dictionary,
                                 max_atoms=max_atoms, remove_hs=remove_hs
@@ -465,7 +451,7 @@ class SingleAtomDataHubV1(_BaseSingleAtomDataHub):
                     uniq_feats[uid] = feat
             else:
                 # Parallel path (like V2): initialize Dictionary in each worker once
-                args = [(p, max_atoms, remove_hs) for p in build_paths]
+                args = [(p, max_atoms, remove_hs, self.replace_atom_to_carbon) for p in build_paths]
                 with Pool(
                     processes=self.feature_workers,
                     initializer=_v1_worker_init,

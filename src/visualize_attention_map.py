@@ -1,0 +1,709 @@
+import os
+import numpy as np
+import pandas as pd
+from typing import Dict, List, Optional, Tuple
+
+import torch
+import torch.nn.functional as F
+import matplotlib.pyplot as plt
+from matplotlib import cm
+from matplotlib import colors as mcolors
+from PIL import Image, ImageDraw
+import io
+
+from rdkit import Chem
+from rdkit.Chem import Draw, AllChem
+from rdkit.Chem import rdDetermineBonds
+from unimol_tools.data.conformer import coords2unimol
+from unimol_tools.data import Dictionary
+from unimol_tools.weights import WEIGHT_DIR
+from unimol_tools.config import MODEL_CONFIG
+
+from pathlib import Path
+from core_modules.model import build_model_from_checkpoint
+from core_modules.dataset import _resolve_model_dict_key
+
+PWD = os.path.realpath(os.path.dirname(__file__))
+ROOT_DIR = os.path.realpath(os.path.join(PWD, '..'))
+# Colorblind-friendly sequential map with better perceptual contrast.
+ATTN_CMAP = cm.get_cmap("cividis")
+
+
+def load_sdf(
+    sdf_path: str,
+    remove_hs: bool = False
+):
+    """Load an SDF file and return coordinates, atom symbols, and Uni-Mol features."""
+    dict_key = _resolve_model_dict_key(model_name="unimolv1", remove_hs=remove_hs)
+    dict_path = os.path.join(WEIGHT_DIR, MODEL_CONFIG["dict"][dict_key])
+    supp = Chem.SDMolSupplier(sdf_path, removeHs=remove_hs)
+    mol = supp[0]
+    if mol is not None and mol.GetNumConformers() > 0:
+        conf = mol.GetConformer()
+        coords = np.array(
+            [list(conf.GetAtomPosition(i)) for i in range(mol.GetNumAtoms())],
+            dtype=np.float32,
+        )
+        atoms = [a.GetSymbol() for a in mol.GetAtoms()]
+        # CLS, EOSは座標(0, 0, 0)として扱っている
+        feat = coords2unimol(atoms, coords, dictionary=Dictionary.load(dict_path), remove_hs=remove_hs)
+    return mol, coords, atoms, feat
+
+
+def extract_attention_weights(
+    model,
+    src_tokens: torch.Tensor,
+    src_distance: torch.Tensor,
+    src_coord: torch.Tensor,
+    src_edge_type: torch.Tensor,
+    final_layer_only: bool = True,
+) -> Dict[str, torch.Tensor]:
+    """Extract post-softmax attention probabilities.
+
+    Args:
+        model: Trained UniMolV1Model.
+        src_tokens: (B, L) token indices.
+        src_distance: (B, L, L) distance matrix.
+        src_coord: (B, L, 3) coordinates.
+        src_edge_type: (B, L, L) edge types.
+
+    Returns:
+        Dict mapping layer name to attention probability tensors
+        of shape ``(H, N, N)`` (CLS/EOS stripped, post-softmax).
+        If ``final_layer_only=True`` (default), only the final layer is returned.
+        H = number of attention heads, N = number of atoms.
+    """
+    model.eval()
+    with torch.no_grad():
+        x = model.embed_tokens(src_tokens)
+        graph_attn_bias = model._dist_bias(src_distance, src_edge_type)
+
+        encoder = model.encoder
+
+        # Replicate encoder pre-processing
+        x = encoder.emb_layer_norm(x)
+        x = F.dropout(x, p=encoder.emb_dropout, training=False)
+
+        attn_mask = graph_attn_bias
+
+        # Iterate through layers and collect either all layers or only final one.
+        attn_probs_dict = {}
+        n_layers = len(encoder.layers)
+        for i, encoder_layer in enumerate(encoder.layers):
+            x, attn_mask, attn_probs = encoder_layer(
+                x, padding_mask=None, attn_bias=attn_mask,
+                return_attn=True,
+            )
+
+            # Strip CLS (position 0) and EOS (position -1)
+            attn_probs = attn_probs[:, 1:-1, 1:-1]
+
+            if (not final_layer_only) or (i == n_layers - 1):
+                attn_probs_dict[f'encoder_layer_{i+1}'] = attn_probs.clone().detach().cpu()
+        if encoder.final_layer_norm is not None:
+            x = encoder.final_layer_norm(x)
+        pred = model.single_atom_head(x.squeeze(0)[1:-1,:]).detach().cpu().ravel()
+
+    return attn_probs_dict, pred
+
+
+def select_final_layer_attention(
+    attn_weights_dict: Dict[str, torch.Tensor]
+) -> Tuple[str, torch.Tensor]:
+    """Return the final encoder-layer attention tensor from extracted dict."""
+    if isinstance(attn_weights_dict, tuple):
+        # Backward compatibility: extract_attention_weights may return
+        # (attn_weights_dict, pred_values).
+        attn_weights_dict = attn_weights_dict[0]
+    if not attn_weights_dict:
+        raise ValueError("attn_weights_dict is empty.")
+    ordered = sorted(
+        attn_weights_dict.items(),
+        key=lambda kv: int(kv[0].split("_")[-1]),
+    )
+    return ordered[-1]
+
+
+def visualize_attention_heatmap(
+    attn_matrix: np.ndarray,
+    atoms: List[str],
+    target_atom_idx: Optional[int] = None,
+    title: Optional[str] = None,
+    output_path: Optional[str] = None,
+    figsize: Tuple[int, int] = (10, 8),
+    cmap=ATTN_CMAP,
+    vmin: Optional[float] = None,
+    vmax: Optional[float] = None,
+) -> plt.Figure:
+    """Visualize atom x atom attention as a heatmap.
+
+    Args:
+        attn_matrix: (N, N) attention matrix for a single sample.
+        atoms: List of atom symbols (length N).
+        target_atom_idx: If provided, highlight the target atom row/column.
+        title: Plot title.
+        output_path: Save path (None to skip saving).
+        figsize: Figure size.
+        cmap: Colormap name.
+        vmin: Colorscale minimum.
+        vmax: Colorscale maximum.
+
+    Returns:
+        matplotlib Figure.
+    """
+    fig, ax = plt.subplots(figsize=figsize)
+
+    labels = [f"{i}:{s}" for i, s in enumerate(atoms)]
+
+    im = ax.imshow(attn_matrix, cmap=cmap, aspect="auto", vmin=vmin, vmax=vmax)
+
+    ax.set_xticks(range(len(atoms)))
+    ax.set_yticks(range(len(atoms)))
+    ax.set_xticklabels(labels, rotation=90, fontsize=7)
+    ax.set_yticklabels(labels, fontsize=7)
+    ax.set_xlabel("Key (attended to)", fontsize=11)
+    ax.set_ylabel("Query (attending from)", fontsize=11)
+
+    if target_atom_idx is not None:
+        ax.axhline(y=target_atom_idx, color="red", linewidth=1.5, linestyle="--", alpha=0.7)
+        ax.axvline(x=target_atom_idx, color="red", linewidth=1.5, linestyle="--", alpha=0.7)
+
+    plt.colorbar(im, ax=ax, label="Attention Weight")
+
+    if title:
+        ax.set_title(title, fontsize=13, fontweight="bold")
+
+    plt.tight_layout()
+
+    if output_path:
+        os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
+        plt.savefig(output_path, dpi=300, bbox_inches="tight")
+        print(f"Saved: {output_path}")
+
+    plt.close()
+    return fig
+
+
+def visualize_attention_heatmaps_grid(
+    attn_matrices: Dict[str, np.ndarray],
+    atoms: List[str],
+    title: Optional[str] = None,
+    output_path: Optional[str] = None,
+    cols: int = 3,
+    cmap=ATTN_CMAP,
+) -> plt.Figure:
+    """Visualize layer-wise attention heatmaps in a single figure."""
+    layer_items = list(attn_matrices.items())
+    n_layers = len(layer_items)
+    if n_layers == 0:
+        raise ValueError("attn_matrices is empty.")
+
+    cols = max(1, min(cols, n_layers))
+    rows = int(np.ceil(n_layers / cols))
+
+    all_vals = np.concatenate([m.reshape(-1) for _, m in layer_items])
+    vmin = float(all_vals.min())
+    vmax = float(all_vals.max())
+
+    fig, axes = plt.subplots(rows, cols, figsize=(6.3 * cols, 4.2 * rows))
+    axes = np.atleast_1d(axes).reshape(rows, cols)
+    labels = [f"{i}:{s}" for i, s in enumerate(atoms)]
+
+    last_im = None
+    for i, (layer_name, attn_matrix) in enumerate(layer_items):
+        r, c = divmod(i, cols)
+        ax = axes[r, c]
+        last_im = ax.imshow(attn_matrix, cmap=cmap, aspect="auto", vmin=vmin, vmax=vmax)
+        ax.set_xticks(range(len(atoms)))
+        ax.set_yticks(range(len(atoms)))
+        ax.set_xticklabels(labels, rotation=90, fontsize=6)
+        ax.set_yticklabels(labels, fontsize=6)
+        ax.set_xlabel("Key", fontsize=9)
+        ax.set_ylabel("Query", fontsize=9)
+        layer_num = int(layer_name.split("_")[-1]) if layer_name.split("_")[-1].isdigit() else i + 1
+        ax.text(
+            0.5,
+            -0.28,
+            f"Layer={layer_num}",
+            transform=ax.transAxes,
+            ha="center",
+            va="top",
+            fontsize=11,
+            fontweight="bold",
+            bbox=dict(boxstyle="round,pad=0.2", fc="white", ec="0.6", alpha=0.95),
+        )
+
+    for j in range(n_layers, rows * cols):
+        r, c = divmod(j, cols)
+        axes[r, c].axis("off")
+
+    if last_im is not None:
+        cax = fig.add_axes([0.92, 0.15, 0.015, 0.7])
+        fig.colorbar(last_im, cax=cax, label="Attention Weight")
+
+    if title:
+        fig.suptitle(title, fontsize=14, fontweight="bold")
+        fig.subplots_adjust(top=0.90, right=0.90, bottom=0.12)
+    else:
+        fig.subplots_adjust(top=0.95, right=0.90, bottom=0.12)
+
+    if output_path:
+        os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
+        fig.savefig(output_path, dpi=300, bbox_inches="tight")
+        print(f"Saved: {output_path}")
+
+    plt.close(fig)
+    return fig
+
+
+def _make_mol_overlay_image(
+    mol: Chem.Mol,
+    attn_from_target: np.ndarray,
+    target_atom_idx: int,
+    img_size: Tuple[int, int],
+    vmin: float,
+    vmax: float,
+    show_atom_indices: Optional[bool] = None,
+    target_aspect: float = 1.1,
+    cmap=ATTN_CMAP,
+    atom_highlight_radius: float = 0.28,
+    target_circle_color: str = "red",
+    target_circle_width: int = 5,
+) -> Image.Image:
+    """Create an RDKit 2D drawing image with attention-based atom coloring."""
+    mol_2d = Chem.Mol(mol)
+    AllChem.Compute2DCoords(mol_2d)
+
+    cmap = cm.get_cmap(cmap) if isinstance(cmap, str) else cmap
+    norm = plt.Normalize(vmin=vmin, vmax=vmax)
+    n_atoms = mol.GetNumAtoms()
+    atom_colors = {}
+    for i in range(n_atoms):
+        val = attn_from_target[i] if i < len(attn_from_target) else 0.0
+        atom_colors[i] = cmap(norm(val))[:3]
+
+    w, h = img_size
+    drawer = Draw.MolDraw2DCairo(w, h)
+    draw_opts = drawer.drawOptions()
+    if show_atom_indices is None:
+        show_atom_indices = n_atoms <= 32
+    draw_opts.addAtomIndices = show_atom_indices
+    if hasattr(draw_opts, "atomHighlightsAreCircles"):
+        draw_opts.atomHighlightsAreCircles = True
+    if hasattr(draw_opts, "padding"):
+        draw_opts.padding = 0.01
+    if hasattr(draw_opts, "annotationFontScale"):
+        draw_opts.annotationFontScale = 0.85
+    if hasattr(draw_opts, "baseFontSize"):
+        draw_opts.baseFontSize = 0.50
+    if hasattr(draw_opts, "bondLineWidth"):
+        draw_opts.bondLineWidth = 1.6
+    highlight_radii = {i: atom_highlight_radius for i in range(n_atoms)}
+    drawer.DrawMolecule(
+        mol_2d,
+        highlightAtoms=list(range(n_atoms)),
+        highlightAtomColors=atom_colors,
+        highlightAtomRadii=highlight_radii,
+        highlightBonds=[],
+    )
+    target_xy = drawer.GetDrawCoords(target_atom_idx)
+    bond_lengths = []
+    target_atom = mol_2d.GetAtomWithIdx(target_atom_idx)
+    for bond in target_atom.GetBonds():
+        nbr_idx = bond.GetOtherAtomIdx(target_atom_idx)
+        nbr_xy = drawer.GetDrawCoords(nbr_idx)
+        bond_lengths.append(
+            float(np.hypot(float(target_xy.x - nbr_xy.x), float(target_xy.y - nbr_xy.y)))
+        )
+    if bond_lengths:
+        base_bond_len = float(np.median(bond_lengths))
+    else:
+        all_bond_lengths = []
+        for bond in mol_2d.GetBonds():
+            bxy = drawer.GetDrawCoords(bond.GetBeginAtomIdx())
+            exy = drawer.GetDrawCoords(bond.GetEndAtomIdx())
+            all_bond_lengths.append(
+                float(np.hypot(float(bxy.x - exy.x), float(bxy.y - exy.y)))
+            )
+        base_bond_len = float(np.median(all_bond_lengths)) if all_bond_lengths else 40.0
+    drawer.FinishDrawing()
+    img = Image.open(io.BytesIO(drawer.GetDrawingText()))
+
+    # Emphasize the target atom by outline (not by additional color fill).
+    draw = ImageDraw.Draw(img)
+    rgb = tuple(int(round(v * 255)) for v in mcolors.to_rgb(target_circle_color))
+    tx, ty = float(target_xy.x), float(target_xy.y)
+    r_outer = max(6.0, base_bond_len * atom_highlight_radius)
+    draw.ellipse(
+        (tx - r_outer, ty - r_outer, tx + r_outer, ty + r_outer),
+        outline=rgb,
+        width=max(1, int(target_circle_width)),
+    )
+
+    trimmed = _trim_white_margins(img, pad=10)
+    return _fit_image_to_canvas(trimmed, canvas_size=img_size)
+
+
+def _trim_white_margins(img: Image.Image, pad: int = 8) -> Image.Image:
+    """Trim near-white margins so molecule occupies subplot area better."""
+    rgb = img.convert("RGB")
+    arr = np.array(rgb)
+    bg = (arr > 245).all(axis=2)
+    fg = ~bg
+    ys, xs = np.where(fg)
+    if len(xs) == 0 or len(ys) == 0:
+        return img
+    x0 = max(int(xs.min()) - pad, 0)
+    y0 = max(int(ys.min()) - pad, 0)
+    x1 = min(int(xs.max()) + pad + 1, arr.shape[1])
+    y1 = min(int(ys.max()) + pad + 1, arr.shape[0])
+    return img.crop((x0, y0, x1, y1))
+
+
+def _fit_image_to_canvas(
+    img: Image.Image,
+    canvas_size: Tuple[int, int],
+    margin_ratio: float = 0.08,
+) -> Image.Image:
+    """Place the trimmed molecule image on a fixed canvas for consistent sizing."""
+    canvas_w, canvas_h = canvas_size
+    inner_w = max(1, int(round(canvas_w * (1.0 - 2.0 * margin_ratio))))
+    inner_h = max(1, int(round(canvas_h * (1.0 - 2.0 * margin_ratio))))
+
+    src_w, src_h = img.size
+    scale = min(inner_w / max(src_w, 1), inner_h / max(src_h, 1))
+    resized_w = max(1, int(round(src_w * scale)))
+    resized_h = max(1, int(round(src_h * scale)))
+
+    resized = img.resize((resized_w, resized_h), Image.LANCZOS)
+    canvas = Image.new("RGBA", (canvas_w, canvas_h), (255, 255, 255, 255))
+    offset_x = (canvas_w - resized_w) // 2
+    offset_y = (canvas_h - resized_h) // 2
+    canvas.paste(resized, (offset_x, offset_y))
+    return canvas
+
+
+def visualize_attention_on_structure(
+    mol: Chem.Mol,
+    attn_from_target: np.ndarray,
+    target_atom_idx: int,
+    pred_val: Optional[float] = None,
+    exp_val: Optional[float] = None,
+    output_path: Optional[str] = None,
+    img_size: Tuple[int, int] = (800, 600),
+    figsize: Tuple[int, int] = (12, 6),
+    vmin: float = 0.0,
+    vmax: Optional[float] = 0.2,
+    cmap: str = "cividis",
+    show_atom_indices: bool = False,
+    atom_highlight_radius: float = 0.28,
+    target_circle_color: str = "red",
+    target_circle_width: int = 5,
+    show_title: bool = True,
+    font_size: float = 14,
+) -> plt.Figure:
+    """Visualize attention from a target atom to all others on 2D molecular structure.
+
+    Args:
+        mol: RDKit molecule.
+        attn_from_target: (N,) attention weights from the target atom to all atoms.
+        target_atom_idx: Index of the target (query) atom.
+        pred_val: Predicted value (optional, for display).
+        exp_val: Experimental value (optional, for display).
+        output_path: Save path (None to skip saving).
+        img_size: RDKit drawing size (w, h).
+        figsize: matplotlib figure size.
+        vmin: Colorscale minimum.
+        vmax: Colorscale maximum (if None, use max of attn_from_target).
+
+    Returns:
+        matplotlib Figure.
+    """
+    if vmax is None:
+        vmax = float(attn_from_target.max())
+
+    # --- Colormap ---
+    cmap = cm.get_cmap(cmap) if isinstance(cmap, str) else cmap
+    norm = plt.Normalize(vmin=vmin, vmax=vmax)
+    mol_img = _make_mol_overlay_image(
+        mol=mol,
+        attn_from_target=attn_from_target,
+        target_atom_idx=target_atom_idx,
+        img_size=img_size,
+        vmin=vmin,
+        vmax=vmax,
+        show_atom_indices=show_atom_indices,
+        cmap=cmap,
+        atom_highlight_radius=atom_highlight_radius,
+        target_circle_color=target_circle_color,
+        target_circle_width=target_circle_width,
+    )
+
+    # --- Figure ---
+    fig, (ax_mol, ax_cbar) = plt.subplots(
+        1, 2, figsize=figsize, gridspec_kw={"width_ratios": [5, 0.3]}
+    )
+
+    ax_mol.imshow(mol_img)
+    ax_mol.axis("off")
+
+    if show_title:
+        symbol = mol.GetAtomWithIdx(target_atom_idx).GetSymbol()
+        title_lines = f"Attention Map — Target Atom: {target_atom_idx} ({symbol})"
+        if pred_val is not None and exp_val is not None:
+            title_lines += (
+                f"\nExperimental: {exp_val:.3f} kcal/mol, Predicted: {pred_val:.3f} kcal/mol"
+            )
+        ax_mol.set_title(title_lines, fontsize=font_size, fontweight="bold")
+
+    # --- Colorbar ---
+    sm = cm.ScalarMappable(cmap=cmap, norm=norm)
+    sm.set_array([])
+    cbar = plt.colorbar(sm, cax=ax_cbar)
+    cbar.set_label("Attention Weight", fontsize=max(font_size - 3, 1))
+    cbar.ax.tick_params(labelsize=max(font_size - 4, 1))
+
+    plt.tight_layout()
+
+    if output_path:
+        os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
+        plt.savefig(output_path, dpi=300, bbox_inches="tight")
+        print(f"Saved: {output_path}")
+
+    plt.close()
+    return fig
+
+
+def visualize_attention_on_structure_grid(
+    mol: Chem.Mol,
+    attn_by_layer: Dict[str, np.ndarray],
+    target_atom_idx: int,
+    pred_val: Optional[float] = None,
+    exp_val: Optional[float] = None,
+    output_path: Optional[str] = None,
+    img_size: Tuple[int, int] = (1100, 700),
+    cols: int = 3,
+    vmin: float = 0.0,
+    vmax: Optional[float] = None,
+    show_atom_indices: Optional[bool] = None,
+    cmap: str = "cividis",
+    atom_highlight_radius: float = 0.28,
+    target_circle_color: str = "red",
+    target_circle_width: int = 5,
+) -> plt.Figure:
+    """Visualize layer-wise structure overlays in a single figure."""
+    layer_items = list(attn_by_layer.items())
+    n_layers = len(layer_items)
+    if n_layers == 0:
+        raise ValueError("attn_by_layer is empty.")
+
+    if vmax is None:
+        vmax = float(max(np.max(v) for _, v in layer_items))
+
+    cols = max(1, min(cols, n_layers))
+    rows = int(np.ceil(n_layers / cols))
+    fig, axes = plt.subplots(rows, cols, figsize=(4.8 * cols, 4.2 * rows), facecolor="white")
+    axes = np.atleast_1d(axes).reshape(rows, cols)
+
+    for i, (layer_name, attn_from_target) in enumerate(layer_items):
+        r, c = divmod(i, cols)
+        ax = axes[r, c]
+        mol_img = _make_mol_overlay_image(
+            mol=mol,
+            attn_from_target=attn_from_target,
+            target_atom_idx=target_atom_idx,
+            img_size=img_size,
+            vmin=vmin,
+            vmax=vmax,
+            show_atom_indices=show_atom_indices,
+            cmap=cmap,
+            atom_highlight_radius=atom_highlight_radius,
+            target_circle_color=target_circle_color,
+            target_circle_width=target_circle_width,
+        )
+        ax.imshow(mol_img)
+        ax.axis("off")
+        ax.set_facecolor("white")
+        layer_num = int(layer_name.split("_")[-1]) if layer_name.split("_")[-1].isdigit() else i + 1
+        ax.text(
+            0.5,
+            -0.08,
+            f"Layer={layer_num}",
+            transform=ax.transAxes,
+            ha="center",
+            va="top",
+            fontsize=11,
+            fontweight="bold",
+            bbox=dict(boxstyle="round,pad=0.2", fc="white", ec="0.6", alpha=0.95),
+        )
+
+    for j in range(n_layers, rows * cols):
+        r, c = divmod(j, cols)
+        axes[r, c].axis("off")
+
+    cmap = cm.get_cmap(cmap) if isinstance(cmap, str) else cmap
+    norm = plt.Normalize(vmin=vmin, vmax=vmax)
+    sm = cm.ScalarMappable(cmap=cmap, norm=norm)
+    sm.set_array([])
+    cax = fig.add_axes([0.92, 0.15, 0.015, 0.7])
+    fig.colorbar(sm, cax=cax, label="Attention Weight")
+
+    symbol = mol.GetAtomWithIdx(target_atom_idx).GetSymbol()
+    title_lines = f"Attention Map — Target Atom: {target_atom_idx} ({symbol})"
+    if pred_val is not None and exp_val is not None:
+        title_lines += f"\nExperimental: {exp_val:.3f} kcal/mol, Predicted: {pred_val:.3f} kcal/mol"
+    fig.suptitle(title_lines, fontsize=15, fontweight="bold")
+    fig.subplots_adjust(top=0.95, right=0.90, bottom=0.10)
+
+    if output_path:
+        os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
+        fig.savefig(output_path, dpi=300, bbox_inches="tight")
+        print(f"Saved: {output_path}")
+
+    plt.close(fig)
+    return fig
+
+
+def compute_and_visualize_attention_maps(
+    sdf_path: str,
+    atom_index: int,
+    model,
+    normalize: bool = False,
+    exp_val: Optional[float] = None,
+    pred_val: Optional[float] = None,
+    output_path: Optional[str] = None,
+    img_size = (700, 700),
+    device: str = "cuda:0",
+    cmap: str = "cividis",
+    show_atom_indices: bool = False,
+    atom_highlight_radius: float = 0.28,
+    target_circle_color: str = "red",
+    target_circle_width: int = 5,
+    show_title: bool = True,
+    font_size: float = 14,
+) -> plt.Figure:
+    """Compatibility wrapper with interpretation.compute_and_visualize_attributions.
+
+    This wrapper accepts nearly the same input interface and produces
+    a final-layer attention-on-structure figure for a target atom.
+    Note:
+      - `baseline_method` and `n_steps` are accepted for API compatibility
+        but are not used in attention-map extraction.
+      - `normalize=True` applies per-layer min-max normalization to the
+        target-atom attention vector for display only.
+    """
+    mol, coords, atoms, feat = load_sdf(sdf_path, remove_hs=False)
+
+    # Add bonds if molecule has no bonds
+    if mol is not None and mol.GetNumBonds() == 0:
+        mol_copy = Chem.Mol(mol)
+        charge = [a.GetFormalCharge() for a in mol.GetAtoms()]
+        total_charge = sum(charge)
+        rdDetermineBonds.DetermineBonds(mol_copy, useHueckel=True, charge=total_charge)
+        mol = mol_copy
+
+    src_tokens = torch.tensor(feat["src_tokens"], device=device).unsqueeze(0)
+    src_distance = torch.tensor(feat["src_distance"], device=device).unsqueeze(0)
+    src_coord = torch.tensor(feat["src_coord"], device=device).unsqueeze(0)
+    src_edge_type = torch.tensor(feat["src_edge_type"], device=device).unsqueeze(0)
+
+    attn_weights_dict, _ = extract_attention_weights(
+        model=model,
+        src_tokens=src_tokens,
+        src_distance=src_distance,
+        src_coord=src_coord,
+        src_edge_type=src_edge_type,
+    )
+    final_layer_name, final_layer_attn = select_final_layer_attention(attn_weights_dict)
+    attn_final = final_layer_attn.mean(dim=0).cpu().numpy()
+    attn_from_target = attn_final[atom_index, :].copy()
+    if normalize:
+        vmin, vmax = float(attn_from_target.min()), float(attn_from_target.max())
+        if vmax > vmin:
+            attn_from_target = (attn_from_target - vmin) / (vmax - vmin)
+
+    fig = visualize_attention_on_structure(
+        mol=mol,
+        attn_from_target=attn_from_target,
+        target_atom_idx=atom_index,
+        pred_val=pred_val,
+        exp_val=exp_val,
+        output_path=output_path,
+        cmap=cmap,
+        show_atom_indices=show_atom_indices,
+        img_size=img_size,
+        atom_highlight_radius=atom_highlight_radius,
+        target_circle_color=target_circle_color,
+        target_circle_width=target_circle_width,
+        show_title=show_title,
+        font_size=font_size,
+    )
+    return fig
+
+
+if __name__ == "__main__":
+
+    # --- Settings ---
+    exp_df     = pd.read_csv(f"{ROOT_DIR}/data/references/QMdata4ML/df_nuc_x_sample.csv", index_col=0)
+    pred_df    = pd.read_csv(f"{ROOT_DIR}/data/results/mecap_ref_mca_layer_0/predictions.csv", index_col=0)
+    checkpoint = f"{ROOT_DIR}/data/results/mecap_ref_mca_layer_0/best_model.pt"
+    device     = "cuda:0"
+
+    targets_smiles = ["CN(C)C(=O)CCNC(=O)NCc1ccc(Br)cc1Cl", "NOCc1cccc(I)c1"]
+    base_output_dir = f"{ROOT_DIR}/data/results"
+
+    # --- Load model ---
+    meta_state, model, _ = build_model_from_checkpoint(checkpoint_path=checkpoint, device=device)
+    if meta_state.get('mean_',None) is not None and meta_state.get('std_',None) is not None:
+        restore_scale = lambda val: (val * meta_state['std_']) + meta_state['mean_']
+    else:
+        restore_scale = lambda val: val
+
+    for target_smiles in targets_smiles:
+        target_name = list(set(exp_df.query("smiles == @target_smiles")["name"]))[0]
+        sdf_path = f"{ROOT_DIR}/data/results/confs_from_smiles_rdkit/{target_name}.sdf"
+
+        mol, coords, atoms, feat = load_sdf(sdf_path, remove_hs=False)
+        src_tokens = torch.tensor(feat["src_tokens"], device=device).unsqueeze(0)
+        src_distance = torch.tensor(feat["src_distance"], device=device).unsqueeze(0)
+        src_coord = torch.tensor(feat["src_coord"], device=device).unsqueeze(0)
+        src_edge_type = torch.tensor(feat["src_edge_type"], device=device).unsqueeze(0)
+
+        nuc_sites = list(exp_df.query("smiles == @target_smiles")["nuc_sites"])
+
+        # --- Extract attention weights for this layer ---
+        attn_weights_dict, _ = extract_attention_weights(
+            model, src_tokens, src_distance, src_coord, src_edge_type
+        )
+
+        final_layer_name, final_layer_attn = select_final_layer_attention(attn_weights_dict)
+        attn_final = final_layer_attn.mean(dim=0).cpu().numpy()
+
+        smiles_dir = Path(
+            base_output_dir, "interpretation", target_smiles, "attention"
+        )
+        smiles_dir.mkdir(parents=True, exist_ok=True)
+
+        # --- Heatmap (final layer only) ---
+        visualize_attention_heatmap(
+            attn_final,
+            atoms,
+            title=f"Attention Heatmap ({final_layer_name}) — {target_smiles}",
+            output_path=smiles_dir / "heatmap_final_layer.png",
+        )
+
+        # --- Structure overlay (final layer only; one per nucleophilic site) ---
+        for nuc_site in nuc_sites:
+            exp_val = pred_df.query("smiles == @target_smiles and nuc_sites == @nuc_site")["MCA_values"].values[0]
+            pred_val = pred_df.query("smiles == @target_smiles and nuc_sites == @nuc_site")["pred"].values[0]
+
+            attn_from_target = attn_final[nuc_site, :]
+
+            visualize_attention_on_structure(
+                mol,
+                attn_from_target,
+                target_atom_idx=nuc_site,
+                pred_val=pred_val,
+                exp_val=exp_val,
+                output_path=smiles_dir / f"site_{nuc_site}_final_layer.png",
+            )
