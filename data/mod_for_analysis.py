@@ -964,17 +964,26 @@ def _prepare_abs_error(df):
 def _interval_label(interval):
     return f'{abs(interval.left):.3f}-{abs(interval.right):.3f}'
 
-def _summarize_heatmap(df, name_col, x_col, y_col, top_names, n_bins=5, percentile=0.50):
+def _summarize_heatmap(df, name_col, x_col, y_col, top_names, n_bins=5, percentile=0.90, metrics='percentile'):
     d = df[df[name_col].isin(top_names)][[name_col, x_col, y_col]].dropna().copy()
     if d.empty:
         empty = pd.DataFrame(index=top_names)
         return empty, empty
     d['bin'] = pd.qcut(d[x_col], q=n_bins, duplicates='drop')
-    summary = (
-        d.groupby([name_col, 'bin'], observed=True)
-        .agg(p=(y_col, lambda s: s.quantile(percentile)), count=(y_col, 'size'))
-        .reset_index()
-    )
+    if metrics == 'percentile':
+        summary = (
+            d.groupby([name_col, 'bin'], observed=True)
+            .agg(p=(y_col, lambda s: s.quantile(percentile)), count=(y_col, 'size'))
+            .reset_index()
+        )
+    elif metrics == 'mean':
+        summary = (
+            d.groupby([name_col, 'bin'], observed=True)
+            .agg(p=(y_col, lambda s: s.mean()), count=(y_col, 'size'))
+            .reset_index()
+        )
+    else:
+        raise ValueError(f'Invalid metrics!: {metrics}')
     heatmap = summary.pivot(index=name_col, columns='bin', values='p').reindex(top_names)
     counts = summary.pivot(index=name_col, columns='bin', values='count').reindex(top_names)
     labels = [_interval_label(iv) for iv in heatmap.columns]
@@ -1113,7 +1122,7 @@ def plot_2d_error_heatmap(
     ax.yaxis.tick_left()
     ax.tick_params(axis="y", left=True, labelleft=True, right=False, labelright=False, pad=4)
     ax.set_xlabel("")
-    ax.set_ylabel("Range of Mahalanobis distance", fontsize=label_font_size)
+    ax.set_ylabel("")
     ax.set_title(title, fontsize=title_font_size)
 
     # Cell count annotation (no 'n='), bigger font, color adapted to background
