@@ -56,7 +56,7 @@ RUN_MODE=predict
 
 ${EXEC_PAT} -m ${RUN_MODE} \
   --data ${BASE_DIR}/electrophilicity_fold${FOLD_NUM}.csv \
-  --checkpoint ${SAVE_DIR}/fold${FOLD_NUM}/best_model.pt \
+  --checkpoint ${SAVE_DIR}/${RUN_NAME}/fold${FOLD_NUM}/best_model.pt \
   --atom_index_col atomIdx \
   --sdf_name_col name \
   --sdf_mode per_row \
@@ -94,7 +94,7 @@ RUN_MODE=predict
 
 ${EXEC_PAT} -m ${RUN_MODE} \
   --data ${BASE_DIR}/electrophilicity_whole.csv \
-  --checkpoint ${SAVE_DIR}/whole/best_model.pt \
+  --checkpoint ${SAVE_DIR}/${RUN_NAME}/whole/best_model.pt \
   --atom_index_col atomIdx \
   --sdf_name_col name \
   --sdf_mode per_row \
