@@ -62,6 +62,7 @@ def train_with_splitcol(
     max_atoms: int,
     model_name: str,
     model_size: Optional[int],
+    load_pretrained: bool,
     batch_size: int,
     lr: float,
     epochs: int,
@@ -154,7 +155,7 @@ def train_with_splitcol(
         atom_out_dim=atom_out_dim,
         atom_head_hidden_dim=atom_head_hidden_dim,
         remove_hs=remove_hs,
-        load_original=True,
+        load_original=load_pretrained,
         device=device,
     )
 
@@ -192,6 +193,7 @@ def train_with_splitcol(
     checkpoint = {
         'model_name': model_name,
         'model_size': model_size if model_name == 'unimolv2' else None,
+        'load_pretrained': load_pretrained,
         'atom_out_dim': atom_out_dim,
         'atom_head_hidden_dim': atom_head_hidden_dim,
         'mean_': hub.mean_,
@@ -371,6 +373,11 @@ def parse_args():
     # v1/v2 switch
     p.add_argument("--model_name", type=str, default="unimolv1", choices=["unimolv1", "unimolv2"])
     p.add_argument("--model_size", type=str, default="84m", choices=['84m', '164m', '310m', '570m', '1.1B',])
+    p.add_argument(
+        "--no_pretrained",
+        action="store_true",
+        help="Do not load the original pretrained Uni-Mol weights; start from random initialization.",
+    )
 
     # Dataloader/optimizer/training
     p.add_argument("--batch_size", type=int, default=16)
@@ -436,6 +443,7 @@ def main():
         max_atoms=args.max_atoms,
         model_name=args.model_name,
         model_size=args.model_size,
+        load_pretrained=not args.no_pretrained,
         batch_size=args.batch_size,
         lr=args.lr,
         epochs=args.epochs,
