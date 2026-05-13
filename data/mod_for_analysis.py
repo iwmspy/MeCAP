@@ -24,7 +24,7 @@ if '__file__' in globals():
     import os, sys
     sys.path.append(os.path.join(os.path.dirname(__file__),'..','src'))
 
-from typing import Iterable, Optional, Tuple, Union, Mapping, Any, Dict, Set, List
+from typing import Iterable, Optional, Tuple, Union, Mapping, Any, Dict, List, Literal
 from numbers import Integral
 import ast, io, math, os, re
 from collections import deque
@@ -42,6 +42,7 @@ from rdkit import Chem
 from rdkit.Chem import rdDepictor
 from rdkit.Chem import rdDetermineBonds
 from rdkit.Chem import rdChemReactions
+from rdkit.Chem import rdFingerprintGenerator
 from rdkit.Chem.Draw import rdMolDraw2D
 from rdkit.Geometry import Point3D
 from PIL import Image, ImageDraw, ImageFont
@@ -1154,6 +1155,7 @@ def plot_2d_error_heatmap(
 
     return im
 
+
 def _build_wide_df(which: str) -> pd.DataFrame:
     """Load base prediction + additional predictions and merge into a wide table."""
     base = load_csv(f'./results/mecap_ref_{which}_layer_0/predictions.csv').copy()
@@ -1169,8 +1171,459 @@ def _build_wide_df(which: str) -> pd.DataFrame:
     wide = pd.concat([base, xtb, rmsd], axis=1)
     return wide
 
+
 def is_atom_in_pi_system(mol, atom_idx):
     atom = mol.GetAtomWithIdx(atom_idx)
     if atom.GetIsAromatic():
         return True
     return any(bond.GetIsConjugated() for bond in atom.GetBonds())
+
+
+def paired_mae_permutation_bootstrap(
+    y_true,
+    y_pred_1,
+    y_pred_2,
+    n_permutations: int = 10000,
+    n_bootstrap: int = 10000,
+    ci: float = 0.95,
+    alternative: Literal["two-sided", "less", "greater"] = "two-sided",
+    random_state: Optional[int] = None,
+    remove_nan: bool = True,
+    batch_size: int = 1000,
+) -> Dict[str, Any]:
+    """
+    Compare two regression models by MAE using a paired permutation test and paired bootstrap.
+
+    Parameters
+    ----------
+    y_true : array-like
+        True target values.
+    y_pred_1 : array-like
+        Predictions from model 1.
+    y_pred_2 : array-like
+        Predictions from model 2.
+    n_permutations : int
+        Number of random sign-flip permutations.
+    n_bootstrap : int
+        Number of paired bootstrap resamples.
+    ci : float
+        Confidence level for the bootstrap confidence interval.
+    alternative : {"two-sided", "less", "greater"}
+        Alternative hypothesis for delta_mae = MAE(model1) - MAE(model2).
+        "less" means model 1 has lower MAE than model 2.
+        "greater" means model 1 has higher MAE than model 2.
+    random_state : int or None
+        Random seed.
+    remove_nan : bool
+        If True, samples with non-finite values in any input array are removed.
+        If False, non-finite values raise an error.
+    batch_size : int
+        Batch size for Monte Carlo computations.
+
+    Returns
+    -------
+    dict
+        Summary statistics, permutation p-value, and bootstrap confidence interval.
+    """
+
+    rng = np.random.default_rng(random_state)
+
+    y_true = np.asarray(y_true, dtype=float).ravel()
+    y_pred_1 = np.asarray(y_pred_1, dtype=float).ravel()
+    y_pred_2 = np.asarray(y_pred_2, dtype=float).ravel()
+
+    if not (y_true.shape == y_pred_1.shape == y_pred_2.shape):
+        raise ValueError("All input arrays must have the same shape after flattening.")
+
+    if alternative not in {"two-sided", "less", "greater"}:
+        raise ValueError("alternative must be one of: 'two-sided', 'less', 'greater'.")
+
+    if not (0.0 < ci < 1.0):
+        raise ValueError("ci must be between 0 and 1.")
+
+    finite_mask = np.isfinite(y_true) & np.isfinite(y_pred_1) & np.isfinite(y_pred_2)
+
+    if remove_nan:
+        y_true = y_true[finite_mask]
+        y_pred_1 = y_pred_1[finite_mask]
+        y_pred_2 = y_pred_2[finite_mask]
+    elif not np.all(finite_mask):
+        raise ValueError("Input arrays contain non-finite values.")
+
+    n = y_true.size
+
+    if n < 2:
+        raise ValueError("At least two valid paired samples are required.")
+
+    abs_err_1 = np.abs(y_true - y_pred_1)
+    abs_err_2 = np.abs(y_true - y_pred_2)
+
+    mae_1 = float(np.mean(abs_err_1))
+    mae_2 = float(np.mean(abs_err_2))
+
+    # Negative delta means model 1 has lower MAE.
+    loss_diff = abs_err_1 - abs_err_2
+    delta_mae = float(np.mean(loss_diff))
+
+    # Paired permutation test by random sign flipping of per-sample loss differences.
+    # This is equivalent to randomly swapping model labels within each paired sample.
+    extreme_count = 0
+
+    for start in range(0, n_permutations, batch_size):
+        current_batch_size = min(batch_size, n_permutations - start)
+
+        signs = rng.choice(
+            np.array([-1.0, 1.0]),
+            size=(current_batch_size, n),
+            replace=True,
+        )
+
+        permuted_deltas = signs @ loss_diff / n
+
+        if alternative == "two-sided":
+            extreme_count += int(np.sum(np.abs(permuted_deltas) >= abs(delta_mae)))
+        elif alternative == "less":
+            extreme_count += int(np.sum(permuted_deltas <= delta_mae))
+        else:
+            extreme_count += int(np.sum(permuted_deltas >= delta_mae))
+
+    # Add-one correction avoids zero p-values in Monte Carlo testing.
+    permutation_p_value = (extreme_count + 1.0) / (n_permutations + 1.0)
+
+    # Paired bootstrap resampling of samples.
+    bootstrap_deltas = np.empty(n_bootstrap, dtype=float)
+
+    write_pos = 0
+    for start in range(0, n_bootstrap, batch_size):
+        current_batch_size = min(batch_size, n_bootstrap - start)
+
+        indices = rng.integers(
+            low=0,
+            high=n,
+            size=(current_batch_size, n),
+        )
+
+        bootstrap_deltas[write_pos:write_pos + current_batch_size] = np.mean(
+            loss_diff[indices],
+            axis=1,
+        )
+
+        write_pos += current_batch_size
+
+    alpha = 1.0 - ci
+    ci_low, ci_high = np.quantile(
+        bootstrap_deltas,
+        [alpha / 2.0, 1.0 - alpha / 2.0],
+    )
+
+    # Bootstrap probability that model 1 has lower MAE than model 2.
+    prob_model_1_better = float(np.mean(bootstrap_deltas < 0.0))
+
+    return {
+        "n_samples": int(n),
+        "mae_model_1": mae_1,
+        "mae_model_2": mae_2,
+        "delta_mae": delta_mae,
+        "delta_definition": "MAE(model1) - MAE(model2)",
+        "better_model_by_mae": "model_1" if mae_1 < mae_2 else "model_2" if mae_2 < mae_1 else "tie",
+        "permutation_p_value": float(permutation_p_value),
+        "alternative": alternative,
+        "n_permutations": int(n_permutations),
+        "bootstrap_ci_level": float(ci),
+        "bootstrap_ci_low": float(ci_low),
+        "bootstrap_ci_high": float(ci_high),
+        "n_bootstrap": int(n_bootstrap),
+        "bootstrap_prob_model_1_better": prob_model_1_better,
+    }
+
+
+def get_target_atom_radius1_morgan_hash(smiles: str, atom_idx: int) -> int:
+    # Parse SMILES.
+    mol = Chem.MolFromSmiles(smiles)
+    if mol is None:
+        raise ValueError(f"Invalid SMILES: {smiles}")
+
+    # Validate atom index.
+    if atom_idx < 0 or atom_idx >= mol.GetNumAtoms():
+        raise IndexError(
+            f"atom_idx={atom_idx} is out of range. "
+            f"The molecule has {mol.GetNumAtoms()} atoms."
+        )
+
+    # Create a Morgan fingerprint generator.
+    generator = rdFingerprintGenerator.GetMorganGenerator(radius=1)
+
+    # Collect bit information so that the center atom and radius can be recovered.
+    additional_output = rdFingerprintGenerator.AdditionalOutput()
+    additional_output.AllocateBitInfoMap()
+
+    # Generate a sparse count fingerprint using only the target atom as a center.
+    generator.GetSparseCountFingerprint(
+        mol,
+        fromAtoms=[atom_idx],
+        additionalOutput=additional_output,
+    )
+
+    # Extract the hash corresponding exactly to the radius-1 environment
+    # centered on the target atom.
+    bit_info = additional_output.GetBitInfoMap()
+    for hash_value, environments in bit_info.items():
+        for center_idx, env_radius in environments:
+            if center_idx == atom_idx and env_radius == 1:
+                return int(hash_value)
+
+    raise ValueError(
+        f"No radius-1 Morgan environment was found for atom_idx={atom_idx}."
+    )
+
+
+def prepare_hash_count_error_by_split(
+    df: pd.DataFrame,
+    split_col: str,
+    hash_col: str,
+    true_col: str,
+    pred_col: str,
+    train_label: str = "train",
+    test_label: str = "test",
+    q: int = 10,
+    zero_label: str = "0",
+) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    """
+    Relate test-set prediction errors to the number of matching hash values in train.
+
+    Returns
+    -------
+    df_test : pd.DataFrame
+        Test rows with train_hash_count, abs_error, signed_error, test_hash_n,
+        and train_hash_count_bin columns added.
+    summary : pd.DataFrame
+        Per-bin summary with test counts and error statistics.
+    """
+    required_cols = [split_col, hash_col, true_col, pred_col]
+    missing_cols = [col for col in required_cols if col not in df.columns]
+    if missing_cols:
+        raise KeyError(f"Missing required columns: {missing_cols}")
+
+    work = df.dropna(subset=[split_col, hash_col, true_col, pred_col]).copy()
+    split = work[split_col].astype(str).str.strip().str.lower()
+    train_label = train_label.lower()
+    test_label = test_label.lower()
+
+    # Accept both "train" and labels such as "Train_fold1" after lower-casing.
+    train_mask = split.eq(train_label) | split.str.startswith(f"{train_label}_")
+    test_mask = split.eq(test_label)
+
+    if not train_mask.any():
+        raise ValueError(f"No train rows found in '{split_col}' using label '{train_label}'.")
+    if not test_mask.any():
+        raise ValueError(f"No test rows found in '{split_col}' using label '{test_label}'.")
+
+    train_hash_count = work.loc[train_mask, hash_col].value_counts()
+
+    df_test = work.loc[test_mask].copy()
+    df_test["train_hash_count"] = (
+        df_test[hash_col].map(train_hash_count).fillna(0).astype(int)
+    )
+    df_test["abs_error"] = (df_test[true_col] - df_test[pred_col]).abs()
+    df_test["signed_error"] = df_test[pred_col] - df_test[true_col]
+    df_test["test_hash_n"] = df_test.groupby(hash_col)[hash_col].transform("size")
+
+    df_test["train_hash_count_bin"] = _make_zero_separated_qcut_bins(
+        df_test["train_hash_count"],
+        q=q,
+        zero_label=zero_label,
+    )
+
+    summary = (
+        df_test
+        .groupby("train_hash_count_bin", observed=True)
+        .agg(
+            n_test=("abs_error", "size"),
+            n_unique_hash=(hash_col, "nunique"),
+            train_hash_count_min=("train_hash_count", "min"),
+            train_hash_count_max=("train_hash_count", "max"),
+            mae=("abs_error", "mean"),
+            median_abs_error=("abs_error", "median"),
+            q75_abs_error=("abs_error", lambda x: x.quantile(0.75)),
+            q90_abs_error=("abs_error", lambda x: x.quantile(0.90)),
+            max_abs_error=("abs_error", "max"),
+        )
+        .reset_index()
+    )
+
+    return df_test, summary
+
+
+def plot_hash_count_error_boxen(
+    df: pd.DataFrame,
+    split_col: str,
+    hash_col: str,
+    true_col: str,
+    pred_col: str,
+    train_label: str = "train",
+    test_label: str = "test",
+    q: int = 10,
+    ax: Optional[plt.Axes] = None,
+    title: Optional[str] = None,
+    color: Optional[str] = None,
+) -> Tuple[plt.Axes, pd.DataFrame, pd.DataFrame]:
+    """
+    Plot test absolute error grouped by zero-separated quantile bins of train hash count.
+
+    The zero-count bin is kept independent because it corresponds to hash values
+    absent from the training data. Non-zero counts are split by quantiles.
+    """
+    df_test, summary = prepare_hash_count_error_by_split(
+        df=df,
+        split_col=split_col,
+        hash_col=hash_col,
+        true_col=true_col,
+        pred_col=pred_col,
+        train_label=train_label,
+        test_label=test_label,
+        q=q,
+    )
+
+    if ax is None:
+        _, ax = plt.subplots(figsize=(8, 4))
+
+    sns.boxenplot(
+        data=df_test,
+        x="train_hash_count_bin",
+        y="abs_error",
+        ax=ax,
+        color=color,
+    )
+
+    ax.set_xlabel("Occurrences of same hash in train")
+    ax.set_ylabel("Absolute error [kJ/mol]")
+    if title is not None:
+        ax.set_title(title)
+    ax.tick_params(axis="x", rotation=45)
+    for label in ax.get_xticklabels():
+        label.set_horizontalalignment("right")
+
+    return ax, df_test, summary
+
+
+def plot_hash_count_bin_counts(
+    df: pd.DataFrame,
+    split_col: str,
+    hash_col: str,
+    true_col: str,
+    pred_col: str,
+    train_label: str = "train",
+    test_label: str = "test",
+    q: int = 10,
+    error_stat: str = "median_abs_error",
+    ax: Optional[plt.Axes] = None,
+    title: Optional[str] = None,
+    bar_color: str = "tab:blue",
+    line_color: str = "tab:red",
+    show_error_line: bool = True,
+) -> Tuple[plt.Axes, pd.DataFrame, pd.DataFrame]:
+    """
+    Plot the number of test samples in each train-hash-count bin.
+
+    The left y-axis is the test sample count. When show_error_line=True, the
+    selected error statistic from the summary table is overlaid on the right
+    y-axis.
+    """
+    df_test, summary = prepare_hash_count_error_by_split(
+        df=df,
+        split_col=split_col,
+        hash_col=hash_col,
+        true_col=true_col,
+        pred_col=pred_col,
+        train_label=train_label,
+        test_label=test_label,
+        q=q,
+    )
+
+    if error_stat not in summary.columns:
+        raise KeyError(
+            f"error_stat must be one of {summary.columns.tolist()}, got '{error_stat}'."
+        )
+
+    if ax is None:
+        _, ax = plt.subplots(figsize=(8, 4))
+
+    x = np.arange(len(summary))
+    labels = summary["train_hash_count_bin"].astype(str).tolist()
+
+    ax.bar(
+        x,
+        summary["n_test"],
+        color=bar_color,
+        alpha=0.75,
+    )
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels, rotation=45, ha="right")
+    ax.set_xlabel("Occurrences of same hash in train")
+    ax.set_ylabel("Number of test samples")
+    if title is not None:
+        ax.set_title(title)
+
+    if show_error_line:
+        ax_error = ax.twinx()
+        ax_error.plot(
+            x,
+            summary[error_stat],
+            marker="o",
+            color=line_color,
+            linewidth=1.8,
+        )
+        ax_error.set_ylabel(f"{error_stat.replace('_', ' ')} [kJ/mol]")
+
+    return ax, df_test, summary
+
+
+def _make_zero_separated_qcut_bins(
+    values: pd.Series,
+    q: int = 10,
+    zero_label: str = "0",
+) -> pd.Series:
+    """Create a categorical bin series with zero separated and non-zero values qcut."""
+    values = values.astype(int)
+    labels = pd.Series(index=values.index, dtype="object")
+    zero_mask = values.eq(0)
+    labels.loc[zero_mask] = zero_label
+
+    nonzero = values.loc[~zero_mask]
+    if nonzero.empty:
+        return pd.Categorical(labels, categories=[zero_label], ordered=True)
+
+    n_unique = nonzero.nunique()
+    q_eff = min(q, n_unique)
+    if q_eff < 2:
+        nonzero_labels = pd.Series(
+            [f"{int(nonzero.min())}"] * len(nonzero),
+            index=nonzero.index,
+            dtype="object",
+        )
+    else:
+        nonzero_bins = pd.qcut(nonzero, q=q_eff, duplicates="drop")
+        nonzero_labels = nonzero_bins.map(_format_interval_label).astype("object")
+
+    labels.loc[nonzero.index] = nonzero_labels
+
+    categories = []
+    if zero_mask.any():
+        categories.append(zero_label)
+    if q_eff < 2:
+        categories.extend(pd.unique(nonzero_labels).tolist())
+    else:
+        categories.extend([
+            _format_interval_label(interval)
+            for interval in nonzero_bins.cat.categories
+        ])
+
+    return pd.Categorical(labels, categories=categories, ordered=True)
+
+
+def _format_interval_label(interval: pd.Interval) -> str:
+    left = int(math.floor(interval.left)) + 1
+    right = int(math.floor(interval.right))
+    if left == right:
+        return f"{left}"
+    return f"{left}-{right}"
