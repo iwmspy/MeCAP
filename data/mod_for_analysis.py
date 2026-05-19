@@ -35,7 +35,7 @@ import pandas as pd
 from tqdm import tqdm
 from scipy.stats import pearsonr
 from sklearn.metrics import r2_score
-from scipy.stats import kendalltau
+from scipy.stats import kendalltau, t, ttest_rel, wilcoxon, binomtest
 import matplotlib.pyplot as plt
 import seaborn as sns
 from rdkit import Chem
@@ -1179,20 +1179,22 @@ def is_atom_in_pi_system(mol, atom_idx):
     return any(bond.GetIsConjugated() for bond in atom.GetBonds())
 
 
-def paired_mae_permutation_bootstrap(
+def paired_absolute_error_difference_distribution(
     y_true,
     y_pred_1,
     y_pred_2,
-    n_permutations: int = 10000,
-    n_bootstrap: int = 10000,
     ci: float = 0.95,
     alternative: Literal["two-sided", "less", "greater"] = "two-sided",
-    random_state: Optional[int] = None,
     remove_nan: bool = True,
-    batch_size: int = 1000,
 ) -> Dict[str, Any]:
     """
-    Compare two regression models by MAE using a paired permutation test and paired bootstrap.
+    Summarize the per-sample absolute error difference between two regression models.
+
+    The error difference is defined as:
+        |y_true - y_pred_1| - |y_true - y_pred_2|
+
+    A positive value means that model 2 has a smaller absolute error for that sample.
+    A negative value means that model 1 has a smaller absolute error for that sample.
 
     Parameters
     ----------
@@ -1202,31 +1204,20 @@ def paired_mae_permutation_bootstrap(
         Predictions from model 1.
     y_pred_2 : array-like
         Predictions from model 2.
-    n_permutations : int
-        Number of random sign-flip permutations.
-    n_bootstrap : int
-        Number of paired bootstrap resamples.
     ci : float
-        Confidence level for the bootstrap confidence interval.
-    alternative : {"two-sided", "less", "greater"}
-        Alternative hypothesis for delta_mae = MAE(model1) - MAE(model2).
-        "less" means model 1 has lower MAE than model 2.
-        "greater" means model 1 has higher MAE than model 2.
+        Central interval level for the empirical distribution.
     random_state : int or None
-        Random seed.
+        Random seed. This argument is included for interface compatibility.
+        It is not used because this function does not perform random resampling.
     remove_nan : bool
         If True, samples with non-finite values in any input array are removed.
         If False, non-finite values raise an error.
-    batch_size : int
-        Batch size for Monte Carlo computations.
 
     Returns
     -------
     dict
-        Summary statistics, permutation p-value, and bootstrap confidence interval.
+        Summary statistics for the per-sample absolute error difference distribution.
     """
-
-    rng = np.random.default_rng(random_state)
 
     y_true = np.asarray(y_true, dtype=float).ravel()
     y_pred_1 = np.asarray(y_pred_1, dtype=float).ravel()
@@ -1235,11 +1226,11 @@ def paired_mae_permutation_bootstrap(
     if not (y_true.shape == y_pred_1.shape == y_pred_2.shape):
         raise ValueError("All input arrays must have the same shape after flattening.")
 
-    if alternative not in {"two-sided", "less", "greater"}:
-        raise ValueError("alternative must be one of: 'two-sided', 'less', 'greater'.")
-
     if not (0.0 < ci < 1.0):
         raise ValueError("ci must be between 0 and 1.")
+
+    if alternative not in {"two-sided", "less", "greater"}:
+        raise ValueError("alternative must be one of: 'two-sided', 'less', 'greater'.")
 
     finite_mask = np.isfinite(y_true) & np.isfinite(y_pred_1) & np.isfinite(y_pred_2)
 
@@ -1258,82 +1249,101 @@ def paired_mae_permutation_bootstrap(
     abs_err_1 = np.abs(y_true - y_pred_1)
     abs_err_2 = np.abs(y_true - y_pred_2)
 
-    mae_1 = float(np.mean(abs_err_1))
-    mae_2 = float(np.mean(abs_err_2))
-
-    # Negative delta means model 1 has lower MAE.
-    loss_diff = abs_err_1 - abs_err_2
-    delta_mae = float(np.mean(loss_diff))
-
-    # Paired permutation test by random sign flipping of per-sample loss differences.
-    # This is equivalent to randomly swapping model labels within each paired sample.
-    extreme_count = 0
-
-    for start in range(0, n_permutations, batch_size):
-        current_batch_size = min(batch_size, n_permutations - start)
-
-        signs = rng.choice(
-            np.array([-1.0, 1.0]),
-            size=(current_batch_size, n),
-            replace=True,
-        )
-
-        permuted_deltas = signs @ loss_diff / n
-
-        if alternative == "two-sided":
-            extreme_count += int(np.sum(np.abs(permuted_deltas) >= abs(delta_mae)))
-        elif alternative == "less":
-            extreme_count += int(np.sum(permuted_deltas <= delta_mae))
-        else:
-            extreme_count += int(np.sum(permuted_deltas >= delta_mae))
-
-    # Add-one correction avoids zero p-values in Monte Carlo testing.
-    permutation_p_value = (extreme_count + 1.0) / (n_permutations + 1.0)
-
-    # Paired bootstrap resampling of samples.
-    bootstrap_deltas = np.empty(n_bootstrap, dtype=float)
-
-    write_pos = 0
-    for start in range(0, n_bootstrap, batch_size):
-        current_batch_size = min(batch_size, n_bootstrap - start)
-
-        indices = rng.integers(
-            low=0,
-            high=n,
-            size=(current_batch_size, n),
-        )
-
-        bootstrap_deltas[write_pos:write_pos + current_batch_size] = np.mean(
-            loss_diff[indices],
-            axis=1,
-        )
-
-        write_pos += current_batch_size
+    error_diff = abs_err_1 - abs_err_2
 
     alpha = 1.0 - ci
-    ci_low, ci_high = np.quantile(
-        bootstrap_deltas,
+
+    empirical_interval_low, empirical_interval_high = np.quantile(
+        error_diff,
         [alpha / 2.0, 1.0 - alpha / 2.0],
     )
 
-    # Bootstrap probability that model 1 has lower MAE than model 2.
-    prob_model_1_better = float(np.mean(bootstrap_deltas < 0.0))
+    mean_diff = float(np.mean(error_diff))
+    std_diff = float(np.std(error_diff, ddof=1))
+    se_diff = std_diff / np.sqrt(n)
+    df = n - 1
+
+    # Two-sided t confidence interval for the mean paired difference.
+    t_crit = float(t.ppf(1.0 - alpha / 2.0, df=df))
+    t_ci_low = mean_diff - t_crit * se_diff
+    t_ci_high = mean_diff + t_crit * se_diff
+
+    # Paired t-test on absolute errors.
+    ttest_result = ttest_rel(
+        abs_err_1,
+        abs_err_2,
+        alternative=alternative,
+        nan_policy="raise",
+    )
+
+    n_model_1_better = int(np.sum(error_diff < 0.0))
+    n_model_2_better = int(np.sum(error_diff > 0.0))
+    n_tie = int(np.sum(error_diff == 0.0))
+
+    nonzero_diff = error_diff[error_diff != 0.0]
+    n_nonzero = int(nonzero_diff.size)
+
+    if n_nonzero == 0:
+        wilcoxon_statistic = np.nan
+        wilcoxon_p_value = np.nan
+        sign_test_p_value = np.nan
+    else:
+        wilcoxon_result = wilcoxon(
+            nonzero_diff,
+            alternative=alternative,
+            zero_method="wilcox",
+            correction=False,
+            method="auto",
+        )
+        wilcoxon_statistic = float(wilcoxon_result.statistic)
+        wilcoxon_p_value = float(wilcoxon_result.pvalue)
+
+        if alternative == "two-sided":
+            binom_alternative = "two-sided"
+        elif alternative == "greater":
+            binom_alternative = "greater"
+        else:
+            binom_alternative = "less"
+
+        sign_test_result = binomtest(
+            k=n_model_2_better,
+            n=n_nonzero,
+            p=0.5,
+            alternative=binom_alternative,
+        )
+        sign_test_p_value = float(sign_test_result.pvalue)
 
     return {
         "n_samples": int(n),
-        "mae_model_1": mae_1,
-        "mae_model_2": mae_2,
-        "delta_mae": delta_mae,
-        "delta_definition": "MAE(model1) - MAE(model2)",
-        "better_model_by_mae": "model_1" if mae_1 < mae_2 else "model_2" if mae_2 < mae_1 else "tie",
-        "permutation_p_value": float(permutation_p_value),
+        "n_nonzero_differences": n_nonzero,
+        "mae_model_1": float(np.mean(abs_err_1)),
+        "mae_model_2": float(np.mean(abs_err_2)),
+        "error_diff_definition": "|y_true - y_pred_1| - |y_true - y_pred_2|",
+        "error_diff_values": error_diff,
+        "error_diff_mean": mean_diff,
+        "error_diff_median": float(np.median(error_diff)),
+        "error_diff_std": std_diff,
+        "error_diff_min": float(np.min(error_diff)),
+        "error_diff_max": float(np.max(error_diff)),
+        "empirical_interval_level": float(ci),
+        "empirical_interval_low": float(empirical_interval_low),
+        "empirical_interval_high": float(empirical_interval_high),
+        "mean_diff_ci_level": float(ci),
+        "mean_diff_t_ci_low": float(t_ci_low),
+        "mean_diff_t_ci_high": float(t_ci_high),
+        "mean_diff_standard_error": float(se_diff),
+        "ttest_statistic": float(ttest_result.statistic),
+        "ttest_p_value": float(ttest_result.pvalue),
+        "wilcoxon_statistic": wilcoxon_statistic,
+        "wilcoxon_p_value": wilcoxon_p_value,
+        "sign_test_p_value": sign_test_p_value,
         "alternative": alternative,
-        "n_permutations": int(n_permutations),
-        "bootstrap_ci_level": float(ci),
-        "bootstrap_ci_low": float(ci_low),
-        "bootstrap_ci_high": float(ci_high),
-        "n_bootstrap": int(n_bootstrap),
-        "bootstrap_prob_model_1_better": prob_model_1_better,
+        "n_model_1_better": n_model_1_better,
+        "n_model_2_better": n_model_2_better,
+        "n_tie": n_tie,
+        "fraction_model_1_better": float(n_model_1_better / n),
+        "fraction_model_2_better": float(n_model_2_better / n),
+        "fraction_tie": float(n_tie / n),
     }
 
 
