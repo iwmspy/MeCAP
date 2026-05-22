@@ -24,7 +24,7 @@ if '__file__' in globals():
     import os, sys
     sys.path.append(os.path.join(os.path.dirname(__file__),'..','src'))
 
-from typing import Iterable, Optional, Tuple, Union, Mapping, Any, Dict, Set, List
+from typing import Iterable, Optional, Tuple, Union, Mapping, Any, Dict, List, Literal
 from numbers import Integral
 import ast, io, math, os, re
 from collections import deque
@@ -35,13 +35,14 @@ import pandas as pd
 from tqdm import tqdm
 from scipy.stats import pearsonr
 from sklearn.metrics import r2_score
-from scipy.stats import kendalltau
+from scipy.stats import kendalltau, t, ttest_rel, wilcoxon, binomtest
 import matplotlib.pyplot as plt
 import seaborn as sns
 from rdkit import Chem
 from rdkit.Chem import rdDepictor
 from rdkit.Chem import rdDetermineBonds
 from rdkit.Chem import rdChemReactions
+from rdkit.Chem import rdFingerprintGenerator
 from rdkit.Chem.Draw import rdMolDraw2D
 from rdkit.Geometry import Point3D
 from PIL import Image, ImageDraw, ImageFont
@@ -1154,6 +1155,7 @@ def plot_2d_error_heatmap(
 
     return im
 
+
 def _build_wide_df(which: str) -> pd.DataFrame:
     """Load base prediction + additional predictions and merge into a wide table."""
     base = load_csv(f'./results/mecap_ref_{which}_layer_0/predictions.csv').copy()
@@ -1169,8 +1171,469 @@ def _build_wide_df(which: str) -> pd.DataFrame:
     wide = pd.concat([base, xtb, rmsd], axis=1)
     return wide
 
+
 def is_atom_in_pi_system(mol, atom_idx):
     atom = mol.GetAtomWithIdx(atom_idx)
     if atom.GetIsAromatic():
         return True
     return any(bond.GetIsConjugated() for bond in atom.GetBonds())
+
+
+def paired_absolute_error_difference_distribution(
+    y_true,
+    y_pred_1,
+    y_pred_2,
+    ci: float = 0.95,
+    alternative: Literal["two-sided", "less", "greater"] = "two-sided",
+    remove_nan: bool = True,
+) -> Dict[str, Any]:
+    """
+    Summarize the per-sample absolute error difference between two regression models.
+
+    The error difference is defined as:
+        |y_true - y_pred_1| - |y_true - y_pred_2|
+
+    A positive value means that model 2 has a smaller absolute error for that sample.
+    A negative value means that model 1 has a smaller absolute error for that sample.
+
+    Parameters
+    ----------
+    y_true : array-like
+        True target values.
+    y_pred_1 : array-like
+        Predictions from model 1.
+    y_pred_2 : array-like
+        Predictions from model 2.
+    ci : float
+        Central interval level for the empirical distribution.
+    random_state : int or None
+        Random seed. This argument is included for interface compatibility.
+        It is not used because this function does not perform random resampling.
+    remove_nan : bool
+        If True, samples with non-finite values in any input array are removed.
+        If False, non-finite values raise an error.
+
+    Returns
+    -------
+    dict
+        Summary statistics for the per-sample absolute error difference distribution.
+    """
+
+    y_true = np.asarray(y_true, dtype=float).ravel()
+    y_pred_1 = np.asarray(y_pred_1, dtype=float).ravel()
+    y_pred_2 = np.asarray(y_pred_2, dtype=float).ravel()
+
+    if not (y_true.shape == y_pred_1.shape == y_pred_2.shape):
+        raise ValueError("All input arrays must have the same shape after flattening.")
+
+    if not (0.0 < ci < 1.0):
+        raise ValueError("ci must be between 0 and 1.")
+
+    if alternative not in {"two-sided", "less", "greater"}:
+        raise ValueError("alternative must be one of: 'two-sided', 'less', 'greater'.")
+
+    finite_mask = np.isfinite(y_true) & np.isfinite(y_pred_1) & np.isfinite(y_pred_2)
+
+    if remove_nan:
+        y_true = y_true[finite_mask]
+        y_pred_1 = y_pred_1[finite_mask]
+        y_pred_2 = y_pred_2[finite_mask]
+    elif not np.all(finite_mask):
+        raise ValueError("Input arrays contain non-finite values.")
+
+    n = y_true.size
+
+    if n < 2:
+        raise ValueError("At least two valid paired samples are required.")
+
+    abs_err_1 = np.abs(y_true - y_pred_1)
+    abs_err_2 = np.abs(y_true - y_pred_2)
+
+    error_diff = abs_err_1 - abs_err_2
+
+    alpha = 1.0 - ci
+
+    empirical_interval_low, empirical_interval_high = np.quantile(
+        error_diff,
+        [alpha / 2.0, 1.0 - alpha / 2.0],
+    )
+
+    mean_diff = float(np.mean(error_diff))
+    std_diff = float(np.std(error_diff, ddof=1))
+    se_diff = std_diff / np.sqrt(n)
+    df = n - 1
+
+    # Two-sided t confidence interval for the mean paired difference.
+    t_crit = float(t.ppf(1.0 - alpha / 2.0, df=df))
+    t_ci_low = mean_diff - t_crit * se_diff
+    t_ci_high = mean_diff + t_crit * se_diff
+
+    # Paired t-test on absolute errors.
+    ttest_result = ttest_rel(
+        abs_err_1,
+        abs_err_2,
+        alternative=alternative,
+        nan_policy="raise",
+    )
+
+    n_model_1_better = int(np.sum(error_diff < 0.0))
+    n_model_2_better = int(np.sum(error_diff > 0.0))
+    n_tie = int(np.sum(error_diff == 0.0))
+
+    nonzero_diff = error_diff[error_diff != 0.0]
+    n_nonzero = int(nonzero_diff.size)
+
+    if n_nonzero == 0:
+        wilcoxon_statistic = np.nan
+        wilcoxon_p_value = np.nan
+        sign_test_p_value = np.nan
+    else:
+        wilcoxon_result = wilcoxon(
+            nonzero_diff,
+            alternative=alternative,
+            zero_method="wilcox",
+            correction=False,
+            method="auto",
+        )
+        wilcoxon_statistic = float(wilcoxon_result.statistic)
+        wilcoxon_p_value = float(wilcoxon_result.pvalue)
+
+        if alternative == "two-sided":
+            binom_alternative = "two-sided"
+        elif alternative == "greater":
+            binom_alternative = "greater"
+        else:
+            binom_alternative = "less"
+
+        sign_test_result = binomtest(
+            k=n_model_2_better,
+            n=n_nonzero,
+            p=0.5,
+            alternative=binom_alternative,
+        )
+        sign_test_p_value = float(sign_test_result.pvalue)
+
+    return {
+        "n_samples": int(n),
+        "n_nonzero_differences": n_nonzero,
+        "mae_model_1": float(np.mean(abs_err_1)),
+        "mae_model_2": float(np.mean(abs_err_2)),
+        "error_diff_definition": "|y_true - y_pred_1| - |y_true - y_pred_2|",
+        "error_diff_values": error_diff,
+        "error_diff_mean": mean_diff,
+        "error_diff_median": float(np.median(error_diff)),
+        "error_diff_std": std_diff,
+        "error_diff_min": float(np.min(error_diff)),
+        "error_diff_max": float(np.max(error_diff)),
+        "empirical_interval_level": float(ci),
+        "empirical_interval_low": float(empirical_interval_low),
+        "empirical_interval_high": float(empirical_interval_high),
+        "mean_diff_ci_level": float(ci),
+        "mean_diff_t_ci_low": float(t_ci_low),
+        "mean_diff_t_ci_high": float(t_ci_high),
+        "mean_diff_standard_error": float(se_diff),
+        "ttest_statistic": float(ttest_result.statistic),
+        "ttest_p_value": float(ttest_result.pvalue),
+        "wilcoxon_statistic": wilcoxon_statistic,
+        "wilcoxon_p_value": wilcoxon_p_value,
+        "sign_test_p_value": sign_test_p_value,
+        "alternative": alternative,
+        "n_model_1_better": n_model_1_better,
+        "n_model_2_better": n_model_2_better,
+        "n_tie": n_tie,
+        "fraction_model_1_better": float(n_model_1_better / n),
+        "fraction_model_2_better": float(n_model_2_better / n),
+        "fraction_tie": float(n_tie / n),
+    }
+
+
+def get_target_atom_radius1_morgan_hash(smiles: str, atom_idx: int) -> int:
+    # Parse SMILES.
+    mol = Chem.MolFromSmiles(smiles)
+    if mol is None:
+        raise ValueError(f"Invalid SMILES: {smiles}")
+
+    # Validate atom index.
+    if atom_idx < 0 or atom_idx >= mol.GetNumAtoms():
+        raise IndexError(
+            f"atom_idx={atom_idx} is out of range. "
+            f"The molecule has {mol.GetNumAtoms()} atoms."
+        )
+
+    # Create a Morgan fingerprint generator.
+    generator = rdFingerprintGenerator.GetMorganGenerator(radius=1)
+
+    # Collect bit information so that the center atom and radius can be recovered.
+    additional_output = rdFingerprintGenerator.AdditionalOutput()
+    additional_output.AllocateBitInfoMap()
+
+    # Generate a sparse count fingerprint using only the target atom as a center.
+    generator.GetSparseCountFingerprint(
+        mol,
+        fromAtoms=[atom_idx],
+        additionalOutput=additional_output,
+    )
+
+    # Extract the hash corresponding exactly to the radius-1 environment
+    # centered on the target atom.
+    bit_info = additional_output.GetBitInfoMap()
+    for hash_value, environments in bit_info.items():
+        for center_idx, env_radius in environments:
+            if center_idx == atom_idx and env_radius == 1:
+                return int(hash_value)
+
+    raise ValueError(
+        f"No radius-1 Morgan environment was found for atom_idx={atom_idx}."
+    )
+
+
+def prepare_hash_count_error_by_split(
+    df: pd.DataFrame,
+    split_col: str,
+    hash_col: str,
+    true_col: str,
+    pred_col: str,
+    train_label: str = "train",
+    test_label: str = "test",
+    q: int = 10,
+    zero_label: str = "0",
+) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    """
+    Relate test-set prediction errors to the number of matching hash values in train.
+
+    Returns
+    -------
+    df_test : pd.DataFrame
+        Test rows with train_hash_count, abs_error, signed_error, test_hash_n,
+        and train_hash_count_bin columns added.
+    summary : pd.DataFrame
+        Per-bin summary with test counts and error statistics.
+    """
+    required_cols = [split_col, hash_col, true_col, pred_col]
+    missing_cols = [col for col in required_cols if col not in df.columns]
+    if missing_cols:
+        raise KeyError(f"Missing required columns: {missing_cols}")
+
+    work = df.dropna(subset=[split_col, hash_col, true_col, pred_col]).copy()
+    split = work[split_col].astype(str).str.strip().str.lower()
+    train_label = train_label.lower()
+    test_label = test_label.lower()
+
+    # Accept both "train" and labels such as "Train_fold1" after lower-casing.
+    train_mask = split.eq(train_label) | split.str.startswith(f"{train_label}_")
+    test_mask = split.eq(test_label)
+
+    if not train_mask.any():
+        raise ValueError(f"No train rows found in '{split_col}' using label '{train_label}'.")
+    if not test_mask.any():
+        raise ValueError(f"No test rows found in '{split_col}' using label '{test_label}'.")
+
+    train_hash_count = work.loc[train_mask, hash_col].value_counts()
+
+    df_test = work.loc[test_mask].copy()
+    df_test["train_hash_count"] = (
+        df_test[hash_col].map(train_hash_count).fillna(0).astype(int)
+    )
+    df_test["abs_error"] = (df_test[true_col] - df_test[pred_col]).abs()
+    df_test["signed_error"] = df_test[pred_col] - df_test[true_col]
+    df_test["test_hash_n"] = df_test.groupby(hash_col)[hash_col].transform("size")
+
+    df_test["train_hash_count_bin"] = _make_zero_separated_qcut_bins(
+        df_test["train_hash_count"],
+        q=q,
+        zero_label=zero_label,
+    )
+
+    summary = (
+        df_test
+        .groupby("train_hash_count_bin", observed=True)
+        .agg(
+            n_test=("abs_error", "size"),
+            n_unique_hash=(hash_col, "nunique"),
+            train_hash_count_min=("train_hash_count", "min"),
+            train_hash_count_max=("train_hash_count", "max"),
+            mae=("abs_error", "mean"),
+            median_abs_error=("abs_error", "median"),
+            q75_abs_error=("abs_error", lambda x: x.quantile(0.75)),
+            q90_abs_error=("abs_error", lambda x: x.quantile(0.90)),
+            max_abs_error=("abs_error", "max"),
+        )
+        .reset_index()
+    )
+
+    return df_test, summary
+
+
+def plot_hash_count_error_boxen(
+    df: pd.DataFrame,
+    split_col: str,
+    hash_col: str,
+    true_col: str,
+    pred_col: str,
+    train_label: str = "train",
+    test_label: str = "test",
+    q: int = 10,
+    ax: Optional[plt.Axes] = None,
+    title: Optional[str] = None,
+    color: Optional[str] = None,
+) -> Tuple[plt.Axes, pd.DataFrame, pd.DataFrame]:
+    """
+    Plot test absolute error grouped by zero-separated quantile bins of train hash count.
+
+    The zero-count bin is kept independent because it corresponds to hash values
+    absent from the training data. Non-zero counts are split by quantiles.
+    """
+    df_test, summary = prepare_hash_count_error_by_split(
+        df=df,
+        split_col=split_col,
+        hash_col=hash_col,
+        true_col=true_col,
+        pred_col=pred_col,
+        train_label=train_label,
+        test_label=test_label,
+        q=q,
+    )
+
+    if ax is None:
+        _, ax = plt.subplots(figsize=(8, 4))
+
+    sns.boxenplot(
+        data=df_test,
+        x="train_hash_count_bin",
+        y="abs_error",
+        ax=ax,
+        color=color,
+    )
+
+    ax.set_xlabel("Occurrences of same hash in train")
+    ax.set_ylabel("Absolute error [kJ/mol]")
+    if title is not None:
+        ax.set_title(title)
+    ax.tick_params(axis="x", rotation=45)
+    for label in ax.get_xticklabels():
+        label.set_horizontalalignment("right")
+
+    return ax, df_test, summary
+
+
+def plot_hash_count_bin_counts(
+    df: pd.DataFrame,
+    split_col: str,
+    hash_col: str,
+    true_col: str,
+    pred_col: str,
+    train_label: str = "train",
+    test_label: str = "test",
+    q: int = 10,
+    error_stat: str = "median_abs_error",
+    ax: Optional[plt.Axes] = None,
+    title: Optional[str] = None,
+    bar_color: str = "tab:blue",
+    line_color: str = "tab:red",
+    show_error_line: bool = True,
+) -> Tuple[plt.Axes, pd.DataFrame, pd.DataFrame]:
+    """
+    Plot the number of test samples in each train-hash-count bin.
+
+    The left y-axis is the test sample count. When show_error_line=True, the
+    selected error statistic from the summary table is overlaid on the right
+    y-axis.
+    """
+    df_test, summary = prepare_hash_count_error_by_split(
+        df=df,
+        split_col=split_col,
+        hash_col=hash_col,
+        true_col=true_col,
+        pred_col=pred_col,
+        train_label=train_label,
+        test_label=test_label,
+        q=q,
+    )
+
+    if error_stat not in summary.columns:
+        raise KeyError(
+            f"error_stat must be one of {summary.columns.tolist()}, got '{error_stat}'."
+        )
+
+    if ax is None:
+        _, ax = plt.subplots(figsize=(8, 4))
+
+    x = np.arange(len(summary))
+    labels = summary["train_hash_count_bin"].astype(str).tolist()
+
+    ax.bar(
+        x,
+        summary["n_test"],
+        color=bar_color,
+        alpha=0.75,
+    )
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels, rotation=45, ha="right")
+    ax.set_xlabel("Occurrences of same hash in train")
+    ax.set_ylabel("Number of test samples")
+    if title is not None:
+        ax.set_title(title)
+
+    if show_error_line:
+        ax_error = ax.twinx()
+        ax_error.plot(
+            x,
+            summary[error_stat],
+            marker="o",
+            color=line_color,
+            linewidth=1.8,
+        )
+        ax_error.set_ylabel(f"{error_stat.replace('_', ' ')} [kJ/mol]")
+
+    return ax, df_test, summary
+
+
+def _make_zero_separated_qcut_bins(
+    values: pd.Series,
+    q: int = 10,
+    zero_label: str = "0",
+) -> pd.Series:
+    """Create a categorical bin series with zero separated and non-zero values qcut."""
+    values = values.astype(int)
+    labels = pd.Series(index=values.index, dtype="object")
+    zero_mask = values.eq(0)
+    labels.loc[zero_mask] = zero_label
+
+    nonzero = values.loc[~zero_mask]
+    if nonzero.empty:
+        return pd.Categorical(labels, categories=[zero_label], ordered=True)
+
+    n_unique = nonzero.nunique()
+    q_eff = min(q, n_unique)
+    if q_eff < 2:
+        nonzero_labels = pd.Series(
+            [f"{int(nonzero.min())}"] * len(nonzero),
+            index=nonzero.index,
+            dtype="object",
+        )
+    else:
+        nonzero_bins = pd.qcut(nonzero, q=q_eff, duplicates="drop")
+        nonzero_labels = nonzero_bins.map(_format_interval_label).astype("object")
+
+    labels.loc[nonzero.index] = nonzero_labels
+
+    categories = []
+    if zero_mask.any():
+        categories.append(zero_label)
+    if q_eff < 2:
+        categories.extend(pd.unique(nonzero_labels).tolist())
+    else:
+        categories.extend([
+            _format_interval_label(interval)
+            for interval in nonzero_bins.cat.categories
+        ])
+
+    return pd.Categorical(labels, categories=categories, ordered=True)
+
+
+def _format_interval_label(interval: pd.Interval) -> str:
+    left = int(math.floor(interval.left)) + 1
+    right = int(math.floor(interval.right))
+    if left == right:
+        return f"{left}"
+    return f"{left}-{right}"
